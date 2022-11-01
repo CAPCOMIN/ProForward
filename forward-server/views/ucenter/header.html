@@ -193,14 +193,15 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList');" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 端口转发列表
-                <i class="right fas fa-angle-left"></i>
+                <!-- <i class="right fas fa-angle-left"></i> -->
               </p>
             </a>
-            <ul class="nav nav-treeview">
+			
+            <!-- <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="../../static/index.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -221,7 +222,8 @@
                   <p>帮助说明</p>
                 </a>
               </li>
-            </ul>
+            </ul> -->
+			
           </li>
 
           <li class="nav-item">
@@ -285,28 +287,87 @@
         <div class="row">
           <div class="col-12">
             <!-- Default box -->
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Title</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                Start creating your amazing application!
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                Footer
-              </div>
-              <!-- /.card-footer-->
-            </div>
+			<div class="card card-success">
+						  <div class="card-header">
+						    <h3 class="card-title">Different Width</h3>
+						  </div>
+						  <div class="card-body">
+						    <div class="row">
+								
+						      <div class="col-3">
+								<label for="exampleInputEmail1">本地端口</label>
+						        <input type="text" id="port" name="port" class="form-control" placeholder="本地监听端口">
+						      </div>
+							  
+						      <div class="col-4">
+								<label for="exampleInputEmail1">目标地址</label>
+						        <input type="text" id="targetAddr" name="targetAddr" class="form-control" placeholder="转发到地址">
+						      </div>
+							  
+						      <div class="col-5">
+								<label for="exampleInputEmail1">目标端口</label>
+						        <input type="text" id="targetPort" name="targetPort" class="form-control" placeholder="转发到端口">
+						      </div>
+							  
+						    </div>
+							
+						  </div>
+						  <!-- /.card-body -->
+						  <div class="card-footer">
+						    <button type="submit" class="btn btn-success" onclick="query(1);" >查询</button>
+						  </div>
+						</div>
+						
+			<div class="card card-success">
+			  <div class="card-header">
+			    <h3 class="card-title">Different Width</h3>
+			  </div>
+			  
+						 <div class="layui-form">
+						   <table class="layui-table">
+						     <colgroup>
+						       <col width="20">
+						       <col width="50">
+						       <col width="300">
+						       <col width="150">
+						       <col width="120">
+						       <col width="150">
+						       <col width="50">
+						       <col width="150">
+						       <col width="100">
+						       <col width="70">
+						       <col width="200">
+						     </colgroup>
+						     <thead>
+						       <tr>
+						         <th>
+						           <input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose">
+						         </th>
+						         <th>ID</th>
+						         <th>名称</th>
+						         <th>本地监听地址</th>
+						         <th>本地监听端口</th>
+						         <th>转发方式</th>
+						         <th>协议</th>
+						         <th>转发到地址</th>
+						         <th>转发到端口</th>
+						         <th>状态</th>
+						         <th>操作</th>
+						       </tr>
+						     </thead>
+						     <tbody id="gridBody">
+						     </tbody>
+						   </table>
+						 </div>
+						 <div id="pagination"></div>
+						 
+			  <!-- /.card-body -->
+			  <div class="card-footer">
+			    <button type="submit" class="btn btn-success" onclick="query(1);" >查询</button>
+			  </div>
+			</div>
+			
+            
             <!-- /.card -->
           </div>
         </div>
