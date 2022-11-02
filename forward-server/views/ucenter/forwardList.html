@@ -334,7 +334,7 @@
 									<div class="card-header">
 										<h3 class="card-title">汇总框</h3>
 									</div>
-									
+
 									<!-- <div class="card-body">
 									<button class="btn btn-success" onclick="addForward();"><i
 											class="layui-icon"></i> 添加转发</button>
@@ -348,14 +348,14 @@
 
 									<div class="card-body">
 										<h4>
-										<button class="btn btn-success" onclick="addForward();"><i
-												class="layui-icon"></i> 添加转发</button>
-										<button class="btn btn-success" onclick="delForward();"><i
-												class="layui-icon"></i> 批量删除</button>
-										<button class="btn btn-success" onclick="AddBatchForward();"><i
-												class="layui-icon"></i> 快速批量添加</button>
-										<button class="btn btn-success" onclick="ImportForward();"><i
-												class="layui-icon"></i> 批量导入</button>
+											<button class="btn btn-success" onclick="addForward();"><i
+													class="layui-icon"></i> 添加转发</button>
+											<button class="btn btn-success" onclick="delForward();"><i
+													class="layui-icon"></i> 批量删除</button>
+											<button class="btn btn-success" onclick="AddBatchForward();"><i
+													class="layui-icon"></i> 快速批量添加</button>
+											<button class="btn btn-success" onclick="ImportForward();"><i
+													class="layui-icon"></i> 批量导入</button>
 										</h4>
 										<table class="table table-bordered table-hover">
 											<colgroup>
@@ -401,10 +401,66 @@
 										<!--               <button type="submit" class="btn btn-success" onclick="query(1);" >查询</button>-->
 									</div>
 								</div>
-
-
-
 								<!-- /.card -->
+								<div class="card card-success">
+
+									<div class="card-header">
+										<h3 class="card-title">快捷功能</h3>
+									</div>
+
+									<div class="card-body">
+										<h4>
+											<button class="btn btn-success" onclick="OpenAllForward();">一键开启</button>
+											<button class="btn btn-success" onclick="CloseAllForward();">一键关闭</button>
+										</h4>
+										<div class="layui-inline pull-left">
+											<pre class="layui-code text-left">
+一键开启说明：
+1、不需要批量勾选规则，只要规则设置了支持“一键开启”都会被一键开启转发。
+2、通过在配置文件中添加  onstart.forward = "true" ，可让程序每次运行后就开始转发该规则。
+3、也可以通过在列表页面通过点击“一键开启” “一键关闭”来开启/关闭所有转发。
+										</pre>
+
+											<div class="layui-form text-left">
+												<div class="layui-inline pull-left">
+													<label class="form-label">详细日志</label>
+													<p>
+														<input type="checkbox" name="debugStatus" lay-skin="switch"
+															{{if eq .ForWardDebug true}} checked {{end}}
+															lay-filter="ForWardDebug" lay-text="ON|OFF">
+													</p>
+													<pre class="layui-code text-left">
+详细日志开关说明：
+1、主要对网络流量突然增大时，连接多、日志多，这个时候不想打印太多日志，可以临时关闭。
+2、详细日志开启时，日志文件会记录较多的后台处理信息，可以帮助分析问题。
+3、开源版本的详细日志，默认开启，只能临时关闭。
+												</pre>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="card-footer">
+										<div id="pagination"></div>
+									</div>
+
+								</div>
+								<div class="card card-success">
+									<div class="card-header">
+										<h3 class="card-title">帮助说明</h3>
+									</div>
+									<div class="card-body">
+										<div class="layui-inline pull-left">
+											<pre class="layui-code">
+说明文档请访问：<a href="https://gitee.com/tavenli/port-forward" target="_blank">https://gitee.com/tavenli/port-forward</a>
+使用问题或个性化需求可加QQ号：17020415 （申请时请备注：端口转发）                                        
+											</div>
+										</div>
+										<div class="card-footer">
+											<div id="pagination"></div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
