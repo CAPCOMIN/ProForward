@@ -196,28 +196,34 @@
             <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList');" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                端口转发列表
+                端口转发控制
                  <i class="right fas fa-angle-left"></i>
               </p>
             </a>
 
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../../static/index.html" class="nav-link">
+                <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList'); document.querySelector('#forwardSearch').scrollIntoView({behavior:'smooth',block:'end',inline:'nearest'})" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>转发查询</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList'); document.querySelector('#forwardTable').scrollIntoView({behavior:'smooth',block:'end',inline:'nearest'})" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>端口转发列表</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="../../static/index2.html" class="nav-link">
+                <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList'); document.querySelector('#shortcutOptions').scrollIntoView({behavior:'smooth',block:'end',inline:'nearest'})" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>快捷功能</p>
+                  <p>快捷选项</p>
                 </a>
               </li>
-
               <li class="nav-item">
-                <a href="../../static/index3.html" class="nav-link">
+                <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList'); document.querySelector('#help1').scrollIntoView({behavior:'smooth',block:'end',inline:'nearest'})" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>帮助说明</p>
                 </a>
