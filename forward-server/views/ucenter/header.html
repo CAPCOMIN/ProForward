@@ -189,7 +189,7 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
@@ -201,7 +201,7 @@
               </p>
             </a>
 
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" >
               <li class="nav-item">
                 <a href="javascript:void(0);" onclick="loadFrameContent('/u/ForwardList'); document.querySelector('#forwardSearch').scrollIntoView({behavior:'smooth',block:'end',inline:'nearest'})" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -234,7 +234,7 @@
 
           <li class="nav-item">
             <a href="javascript:void(0);" onclick="loadFrameContent('/u/NetAgent');" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+              <i class="fa fa-network-wired nav-icon"></i>
               <p>
                 内网穿透服务
               </p>
@@ -243,12 +243,63 @@
 
 		  <li class="nav-item">
 		    <a href="javascript:void(0);" onclick="loadFrameContent('/u/ApiDoc');" class="nav-link">
-		      <i class="nav-icon far fa-image"></i>
+		      <i class="nav-icon fa fa-link"></i>
 		      <p>
 		        API接口
 		      </p>
 		    </a>
 		  </li>
+          <li class="nav-item">
+            <a href="javascript:void(0);" onclick="loadFrameContent('/u/index');" class="nav-link">
+              <i class="nav-icon fa fa-server"></i>
+              <p>
+                当前服务器信息
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="javascript:void(0);" onclick="" class="nav-link">
+              <i class="nav-icon fa fa-filter"></i>
+              <p>
+                选项
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+
+            <ul class="nav nav-treeview" >
+              <li class="nav-item">
+                <a href="javascript:void(0);" onclick="loadFrameContent('/u/changePwd');" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>账号管理</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="javascript:void(0);" onclick="loadFrameContent('/u/changePwd');" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>修改当前账号登录密码</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/logout" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>退出控制台</p>
+                </a>
+              </li>
+            </ul>
+
+
+          </li>
+          <li class="nav-item">
+            <a href="javascript:void(0);" onclick="" class="nav-link">
+              <i class="nav-icon fa fa-info-circle"></i>
+              <p>
+                关于本项目
+              </p>
+            </a>
+          </li>
+
+
 
 
         </ul>
