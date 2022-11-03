@@ -282,7 +282,20 @@ func (c *ForwardCtrl) CloseAllForward() {
 
 // @router /u/ApiDoc [get]
 func (c *ForwardCtrl) ApiDoc() {
-
+	magicAddr := beego.AppConfig.DefaultString("magic.service", ":7000")
+	c.Data["magicAddr"] = magicAddr
+	
+	agentForward := Service.MagicServ.ForwardInfo
+	if agentForward == nil {
+		agentForward = new(Models.PortForward)
+		agentForward.Addr = ""
+		agentForward.Port = 3307
+		agentForward.Protocol = "TCP"
+		agentForward.TargetAddr = "127.0.0.1"
+		agentForward.TargetPort = 3306
+		agentForward.FType = 2
+	}
+	c.Data["agentForward"] = agentForward
 	c.TplName = "ucenter/apiDoc.html"
 
 }

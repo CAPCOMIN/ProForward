@@ -14,7 +14,25 @@
 		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+
+
+
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+		<!-- Theme style -->
+		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+		<!-- summernote -->
+		<link rel="stylesheet" href="../../static/plugins/summernote/summernote-bs4.min.css">
+		<!-- CodeMirror -->
+		<link rel="stylesheet" href="../../static/plugins/codemirror/codemirror.css">
+		<link rel="stylesheet" href="../../static/plugins/codemirror/theme/monokai.css">
+		<!-- SimpleMDE -->
+		<link rel="stylesheet" href="../../static/plugins/simplemde/simplemde.min.css">
+
 	</head>
+
 	<body class="hold-transition sidebar-mini layout-fixed">
 		<!-- Site wrapper -->
 		<div class="wrapper">
@@ -26,7 +44,7 @@
 					<div class="container-fluid">
 						<div class="row mb-2">
 							<div class="col-sm-6">
-								<h1>内网穿透服务</h1>
+								<h1>API接口</h1>
 							</div>
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-right">
@@ -52,26 +70,35 @@
 
 								<!-- </div> -->
 								<!-- /.card -->
+
+								<form id="form2" class="layui-form  layui-form-pane" action="/u/StartAgentJob"
+									method="POST">
+
+									<div class="callout callout-info">
+										<p>本工具提供RestfulApi，方便与其它系统工具进行集成，可在其它系统中直接通过接口，实现端口转发的开启和关闭。</p><br>
+										当前API的AUTH鉴权密钥为：<span
+											style="color: #17a2b8;">{{config "String" "api.auth" "请在data.conf中配置api.auth属性"}}</span>
+									</div>
+								</form>
 								<div id="shortcutOptions" class="card card-info card-outline card-tabs">
+
+
+
 									<div class="card-header p-0 pt-1 border-bottom-0">
 										<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
 											<li class="nav-item">
 												<a class="nav-link active" id="custom-tabs-three-home-tab"
 													data-toggle="pill" href="#custom-tabs-three-home" role="tab"
-													aria-controls="custom-tabs-three-home" aria-selected="true">穿透服务</a>
+													aria-controls="custom-tabs-three-home" aria-selected="true">开启端口转发
+													接口</a>
 											</li>
 											<li class="nav-item">
 												<a class="nav-link" id="custom-tabs-three-profile-tab"
 													data-toggle="pill" href="#custom-tabs-three-profile" role="tab"
 													aria-controls="custom-tabs-three-profile"
-													aria-selected="false">内网穿透代理</a>
+													aria-selected="false">关闭端口转发 接口</a>
 											</li>
-											<li class="nav-item">
-												<a class="nav-link" id="custom-tabs-three-control-tab"
-													data-toggle="pill" href="#custom-tabs-three-control" role="tab"
-													aria-controls="custom-tabs-three-control"
-													aria-selected="false">透传控制</a>
-											</li>
+
 										</ul>
 									</div>
 									<div class="card-body">
@@ -79,269 +106,323 @@
 											<div class="tab-pane fade show active" id="custom-tabs-three-home"
 												role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
 
-												<!-- <blockquote class="layui-elem-quote"> -->
-												服务端状态：[ {{.magicAddr}} ] <span id="magicStatus">
-													<font color='red'>未运行</font>
-													<br><br>
-													<button class='btn btn-outline-info'
-														onclick='OpenMagicService();'>开启服务</button>
-												</span>
-												<!-- </blockquote> -->
 
-												
+												<!-- <div class="card">
+													<div class="card-header">
+														<h3 class="card-title">Bordered Table</h3>
+													</div> -->
+												<!-- /.card-header -->
+												<!-- <div class="card-body"> -->
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td>接口地址</td>
+															<td>
+																/api/v1/OpenForward
+															</td>
+														</tr>
+														<tr>
+															<td>2</td>
+															<td>请求方式</td>
+															<td>
+																GET 或 POST
+															</td>
+
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>请求示例</td>
+															<td>
+																/api/v1/OpenForward?auth=26CCD056107481F45D1AC805A24A9E59&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP
+															</td>
+														</tr>
+
+														<tr>
+															<td>4</td>
+															<td>auth</td>
+															<td>
+																接口访问，鉴权密钥；密钥不对访问接口将失败
+															</td>
+														</tr>
+
+														<tr>
+															<td>5</td>
+															<td>fromAddr</td>
+															<td>
+																本地监听的地址和端口，例如 :8010 或 0.0.0.0:8010
+															</td>
+														</tr>
+
+														<tr>
+															<td>6</td>
+															<td>toAddr</td>
+															<td>
+																要将本地监听端口转发到哪个目标地址和端口，例如：192.168.1.100:3306
+															</td>
+														</tr>
+
+														<tr>
+															<td>7</td>
+															<td>protocol</td>
+															<td>
+																网络协议TCP或UDP
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												<!-- </div> -->
+												<!-- </div> -->
+												<!-- /.card -->
+
+
+												<!-- <form class="layui-form layui-form-pane" action="" method="POST">
+													<div class="layui-form-item">
+														<label class="layui-form-label">接口地址</label>
+														<div class="layui-input-inline">
+															<input type="text" value="/api/v1/OpenForward"
+																disabled="disabled" class="layui-input">
+														</div>
+
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">请求方式</label>
+														<div class="layui-input-block">
+															<input type="text" value="GET 或 POST" disabled="disabled"
+																class="layui-input">
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">请求示例</label>
+														<div class="layui-input-block">
+															<input type="text"
+																value="/api/v1/OpenForward?auth={{config "String" "api.auth" "xxxx"}}&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP"
+																disabled="disabled" class="layui-input">
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">参数说明：</label>
+
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">auth</label>
+														<div class="layui-input-block">
+															<input type="text" value="接口访问，鉴权密钥；密钥不对访问接口将失败"
+																disabled="disabled" class="layui-input">
+
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">fromAddr</label>
+														<div class="layui-input-block">
+															<input type="text"
+																value="本地监听的地址和端口，例如 :8010 或 0.0.0.0:8010"
+																disabled="disabled" class="layui-input">
+
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">toAddr</label>
+														<div class="layui-input-block">
+															<input type="text"
+																value="要将本地监听端口转发到哪个目标地址和端口，例如：192.168.1.100:3306"
+																disabled="disabled" class="layui-input">
+
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">protocol</label>
+														<div class="layui-input-block">
+															<input type="text" value="网络协议TCP或UDP" disabled="disabled"
+																class="layui-input">
+
+														</div>
+													</div>
+
+												</form> -->
 
 											</div>
+
+
 											<div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel"
 												aria-labelledby="custom-tabs-three-profile-tab">
 
-												<!-- <blockquote class="layui-elem-quote"> -->
-												NetAgent状态：<span id="netAgentStatus">
-													<font color=red>未检测到Agent连接</font>
-												</span>
-												<!-- </blockquote> -->
-												<br><br>
-												<button class="btn btn-outline-info"
-													onclick="GetNetAgentStatus();">刷新服务</button>
-												<button class='btn btn-outline-info'
-													onclick='ClearNetAgentStatus();'>清空连接</button>
+												<table class="table table-bordered">
+													<tbody>
+														<tr>
+															<td>1</td>
+															<td>接口地址</td>
+															<td>
+																/api/v1/CloseForward
+															</td>
+														</tr>
+														<tr>
+															<td>2</td>
+															<td>请求方式</td>
+															<td>
+																GET 或 POST
+															</td>
+												
+														</tr>
+														<tr>
+															<td>3</td>
+															<td>请求示例</td>
+															<td>
+																/api/v1/CloseForward?auth=26CCD056107481F45D1AC805A24A9E59&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP
+															</td>
+														</tr>
+												
+														<tr>
+															<td>4</td>
+															<td>auth</td>
+															<td>
+																接口访问，鉴权密钥；密钥不对访问接口将失败
+															</td>
+														</tr>
+												
+														<tr>
+															<td>5</td>
+															<td>fromAddr</td>
+															<td>
+																已经开启的转发，其本地监听的地址和端口
+															</td>
+														</tr>
+												
+														<tr>
+															<td>6</td>
+															<td>toAddr</td>
+															<td>
+																已经开启的转发，其目标地址和端口，例如：192.168.1.100:3306
+															</td>
+														</tr>
+												
+														<tr>
+															<td>7</td>
+															<td>protocol</td>
+															<td>
+																网络协议TCP或UDP
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												
+												<!-- <form class="layui-form layui-form-pane" action="" method="POST">
+													<div class="layui-form-item">
+														<label class="layui-form-label">接口地址</label>
+														<div class="layui-input-inline">
+															<input type="text" value="/api/v1/CloseForward"
+																disabled="disabled" class="layui-input">
+														</div>
+
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">请求方式</label>
+														<div class="layui-input-block">
+															<input type="text" value="GET 或 POST" disabled="disabled"
+																class="layui-input">
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">请求示例</label>
+														<div class="layui-input-block">
+															<input type="text"
+																value="/api/v1/CloseForward?auth={{config "String" "api.auth" "xxxx"}}&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP"
+																disabled="disabled" class="layui-input">
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">参数说明：</label>
+
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">auth</label>
+														<div class="layui-input-block">
+															<input type="text" value="接口访问，鉴权密钥；密钥不对访问接口将失败"
+																disabled="disabled" class="layui-input">
+
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">fromAddr</label>
+														<div class="layui-input-block">
+															<input type="text" value="已经开启的转发，其本地监听的地址和端口"
+																disabled="disabled" class="layui-input">
+
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">toAddr</label>
+														<div class="layui-input-block">
+															<input type="text"
+																value="已经开启的转发，其目标地址和端口，例如：192.168.1.100:3306"
+																disabled="disabled" class="layui-input">
+
+														</div>
+													</div>
+													<div class="layui-form-item">
+														<label class="layui-form-label">protocol</label>
+														<div class="layui-input-block">
+															<input type="text" value="网络协议TCP或UDP" disabled="disabled"
+																class="layui-input">
+
+														</div>
+													</div>
+
+
+												</form> -->
 
 											</div>
 
-											<div class="tab-pane fade" id="custom-tabs-three-control" role="tabpanel"
-												aria-labelledby="custom-tabs-three-control-tab">
-
-												<!-- <blockquote id="agentForwardInfo" class="layui-elem-quote"> -->
-												监听地址：{{.agentForward.Addr}}:{{.agentForward.Port}}
-												透传给：{{.agentForward.TargetAddr}}:{{.agentForward.TargetPort}}
-												协议：{{.agentForward.Protocol}}
-												透传模式：{{if eq .agentForward.FType 1}}外网透传到内网{{end}}
-												{{if eq .agentForward.FType 2}}内网透传到外网{{end}}
-												<br><br>
-												<!-- <button class='btn btn-outline-info'
-													onclick='StopAgentJob();'>停止透传</button> -->
-												<!-- </blockquote> -->
-												<form id="form2" class="layui-form  layui-form-pane" action="/u/StartAgentJob" method="POST">
-												
-												    <div class="callout callout-danger">
-												        <!-- <label class="layui-form-label">监听地址</label> -->
-														&nbsp;&nbsp;监听地址&nbsp;&nbsp;&nbsp;
-												        <div class="layui-input-inline col-md-2">
-															<!-- 监听地址 -->
-												            <input type="text" name="lAddr" value="{{.agentForward.Addr}}:{{.agentForward.Port}}" placeholder="如：0.0.0.0:3306" autocomplete="off" class="layui-input">
-															
-												        </div>
-												    </div>
-												
-												    <div class="callout callout-info">
-												        <!-- <label class="layui-form-label">协议</label> -->
-														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;协&nbsp;&nbsp;&nbsp;&nbsp;议&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												        <div class="layui-input-inline col-md-2">
-												            <select name="protocol">
-												                <option value="TCP">TCP</option>
-												            </select>
-												        </div>
-												    </div>
-												    <div class="callout callout-warning">
-												        <!-- <label class="layui-form-label">转发到地址</label> -->
-														转发到地址
-												        <div class="layui-input-inline col-md-2">
-												            <input type="text" name="targetAddr" value="{{.agentForward.TargetAddr}}:{{.agentForward.TargetPort}}" lay-verify="required" placeholder="如：127.0.0.1:3306" autocomplete="off" class="layui-input">
-												        </div>
-												    </div>
-												    <div class="callout callout-success">
-												        <!-- <label class="layui-form-label">转发方式</label> -->
-														&nbsp;&nbsp;转发方式&nbsp;&nbsp;&nbsp;
-												        <div class="layui-input-inline col-md-2">
-												            <select name="fType">
-												                <option value="1" {{if eq .agentForward.FType 1}}selected="selected"{{end}}>外网透传到内网</option>
-												                <option value="2" {{if eq .agentForward.FType 2}}selected="selected"{{end}}>内网透传到外网</option>
-												            </select>
-												        </div>
-												    </div>
-												
-												
-												</form>
-												<!-- <div class="layui-form-item"> -->
-												<button class='btn btn-outline-info' onclick='StartAgentJob();'>开始透传</button>
-												<button class='btn btn-outline-info'
-													onclick='StopAgentJob();'>停止透传</button>
-												<!-- </div> -->
-
-											</div>
-
+											<!-- Main content -->
+											<section class="content">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="card card-outline card-info">
+															<div class="card-header">
+																<h3 class="card-title">
+																	注意
+																</h3>
+															</div>
+															<!-- /.card-header -->
+															<div class="card-body p-0">
+																<textarea id="codeMirrorDemo" class="p-3">
+/*
+接口返回JSON：
+Code：0表示成功，1表示失败
+Msg: 成功或失败的消息内容
+*/
+{
+  "Code": 0,
+  "Msg": ""
+}
+											              </textarea>
+															</div>
+															<div class="card-footer">
+																Visit <a href="https://codemirror.net/">CodeMirror</a>
+																documentation for more examples
+																and information about the plugin.
+															</div>
+														</div>
+													</div>
+													<!-- /.col-->
+												</div>
+												<!-- ./row -->
+											</section>
+											<!-- /.content -->
 										</div>
 									</div>
 									<!-- /.card -->
-								</div>
-							</div>
-
-
-							<div class="row">
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-header">
-											<h3 class="card-title">服务类型</h3>
-										</div>
-									<!-- /.card-header -->
-									<div class="card-body">
-										<!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
-										<div id="accordion">
-											<div class="card card-primary">
-												<div class="card-header">
-													<h4 class="card-title w-100">
-														<a class="d-block w-100" data-toggle="collapse"
-															href="#collapseOne">
-															穿透服务
-														</a>
-													</h4>
-												</div>
-												<div id="collapseOne" class="collapse show" data-parent="#accordion">
-													<div class="card-body">
-						
-														服务端状态：[ {{.magicAddr}} ] <span id="magicStatus">
-															<font color='red'>未运行</font>
-															<br><br>
-															<button class='btn btn-outline-info'
-																onclick='OpenMagicService();'>开启服务</button>
-														</span>	
-													
-														
-													</div>
-												</div>
-											</div>
-											<div class="card card-danger">
-												<div class="card-header">
-													<h4 class="card-title w-100">
-														<a class="d-block w-100" data-toggle="collapse"
-															href="#collapseTwo">
-															内网穿透代理
-														</a>
-													</h4>
-												</div>
-												<div id="collapseTwo" class="collapse" data-parent="#accordion">
-													<div class="card-body">
-														<!-- <blockquote class="layui-elem-quote"> -->
-														NetAgent状态：<span id="netAgentStatus">
-															<font color=red>未检测到Agent连接</font>
-														</span>
-														<!-- </blockquote> -->
-														<br><br>
-														<button class="btn btn-outline-info"
-															onclick="GetNetAgentStatus();">刷新服务</button>
-														<button class='btn btn-outline-info'
-															onclick='ClearNetAgentStatus();'>清空连接</button>
-
-													</div>
-												</div>
-											</div>
-											<div class="card card-success">
-												<div class="card-header">
-													<h4 class="card-title w-100">
-														<a class="d-block w-100" data-toggle="collapse"
-															href="#collapseThree">
-															透传控制
-														</a>
-													</h4>
-												</div>
-												<div id="collapseThree" class="collapse" data-parent="#accordion">
-													<div class="card-body">
-														<!-- <blockquote id="agentForwardInfo" class="layui-elem-quote"> -->
-														监听地址：{{.agentForward.Addr}}:{{.agentForward.Port}}
-														透传给：{{.agentForward.TargetAddr}}:{{.agentForward.TargetPort}}
-														协议：{{.agentForward.Protocol}}
-														透传模式：{{if eq .agentForward.FType 1}}外网透传到内网{{end}}
-														{{if eq .agentForward.FType 2}}内网透传到外网{{end}}
-														<br><br>
-														
-														<!-- </blockquote> -->
-														
-														<form id="form2" class="layui-form  layui-form-pane" action="/u/StartAgentJob" method="POST">
-														
-														    <div class="layui-form-item">
-														        <label class="layui-form-label">监听地址</label>
-														        <div class="layui-input-inline">
-														            <input type="text" name="lAddr" value="{{.agentForward.Addr}}:{{.agentForward.Port}}" placeholder="如：0.0.0.0:3306" autocomplete="off" class="layui-input">
-														
-														        </div>
-														    </div>
-														
-														    <div class="layui-form-item">
-														        <label class="layui-form-label">协议</label>
-														        <div class="layui-input-inline">
-														            <select name="protocol">
-														                <option value="TCP">TCP</option>
-														            </select>
-														        </div>
-														    </div>
-														    <div class="layui-form-item">
-														        <label class="layui-form-label">转发到地址</label>
-														        <div class="layui-input-inline">
-														            <input type="text" name="targetAddr" value="{{.agentForward.TargetAddr}}:{{.agentForward.TargetPort}}" lay-verify="required" placeholder="如：127.0.0.1:3306" autocomplete="off" class="layui-input">
-														        </div>
-														    </div>
-														    <div class="layui-form-item">
-														        <label class="layui-form-label">转发方式</label>
-														        <div class="layui-input-inline">
-														            <select name="fType">
-														                <option value="1" {{if eq .agentForward.FType 1}}selected="selected"{{end}}>外网透传到内网</option>
-														                <option value="2" {{if eq .agentForward.FType 2}}selected="selected"{{end}}>内网透传到外网</option>
-														            </select>
-														        </div>
-														    </div>
-														
-														
-														</form>
-														<!-- <div class="layui-form-item"> -->
-														<button class='btn btn-outline-info' onclick='StartAgentJob();'>开始透传</button>
-														<button class='btn btn-outline-info'
-															onclick='StopAgentJob();'>停止透传</button>
-														<!-- </div> -->
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<!-- /.card-body -->
-								</div>
-								<!-- /.card -->
-							</div>
-
-
-							<div class="col-md-6">
-								<div id="help1" class="card card-success card-outline">
-									<div class="card-header">
-										<h3 class="card-title">帮助说明</h3>
-									</div>
-									<div class="card-body">
-
-
-										<!-- <pre class="layui-code"> -->
-										如果需要实现外网与内网端口的穿透，请将 Port-Forward 端部署在外网服务器上，将 NetAgent 部署在您的内网。
-										
-										NetAgent： 所在内网机器必须要能上网，能访问到 Port-Forward 所在的服务器。
-										Port-Forward： 所在服务器，要确定相应的端口不被防火墙拦截，如果有拦截请修改防火墙配置。
-										
-										外网透传到内网：在外网上开启一个端口监听服务，并且透传到内网的某个服务端口上。（可以绕开服务端防火墙限制）
-										内网透传到外网：在内网开启一个端口监听服务，并且透传到服务器的某个服务端口上。（可以绕开服务端防火墙限制）
-										
-										透传功能正在重新设计和完善中...
-										<br>
-										NetAgent 下载 <a href="http://git.oschina.net/tavenli/port-forward/releases" target="_blank">http://git.oschina.net/tavenli/port-forward/releases</a>
-										      <!-- </pre> -->
-									</div>
 
 								</div>
 							</div>
-						</div>
+
 						</div>
 					</div>
 			</div>
 		</div>
 		</section>
 		<!-- /.content -->
-		</div>
 		<!-- /.content-wrapper -->
-
 		<footer class="main-footer">
 			<div class="float-right d-none d-sm-block">
 				<b>Version</b> 3.2.0
@@ -349,7 +430,6 @@
 			<strong>Copyright &copy; 2014-2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
 			reserved.
 		</footer>
-
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
 			<!-- Control sidebar content goes here -->
@@ -366,122 +446,41 @@
 		<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="../../static/dist/js/adminlte.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="../../static/dist/js/adminlte.min.js"></script>
+		<!-- Summernote -->
+		<script src="../../static/plugins/summernote/summernote-bs4.min.js"></script>
+		<!-- CodeMirror -->
+		<script src="../../static/plugins/codemirror/codemirror.js"></script>
+		<script src="../../static/plugins/codemirror/mode/css/css.js"></script>
+		<script src="../../static/plugins/codemirror/mode/xml/xml.js"></script>
+		<script src="../../static/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script src="../../static/dist/js/demo.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
 
-<script type="text/javascript">
+				layui.use(['jquery', 'layer', 'form', 'element'], function() {
+					var $ = layui.jquery,
+						form = layui.form;
 
-    $(document).ready(function () {
 
-        layui.use(['jquery','layer', 'form', 'element'], function () {
-            var $ = layui.jquery, form = layui.form;
-            form.render('select');
+				});
 
-        });
+			});
+		</script>
+		<script>
+			$(function() {
+				// Summernote
+				$('#summernote').summernote()
 
-        GetMagicStatus();
-        GetNetAgentStatus();
-
-    });
-
-    function OpenMagicService(){
-        layer.confirm("确定开启穿透服务吗？", {
-            btn: ['确定', '取消'] //按钮
-        }, function(index, layero) {
-            $.post("/u/OpenMagicService", {rnd: Math.random()}, function(json) {
-            if (json.Code == 0) { //成功
-                layer.msg("执行成功.");
-                GetMagicStatus();
-            } else { //失败
-                layer.alert(json.Msg, {icon: 2});
-
-            }
-            }, 'json');
-        });
-    }
-
-    function CloseMagicService(){
-        layer.confirm("确定关闭穿透服务吗？", {
-            btn: ['确定', '取消'] //按钮
-        }, function(index, layero) {
-            $.post("/u/CloseMagicService", {rnd: Math.random()}, function(json) {
-            if (json.Code == 0) { //成功
-                layer.msg("执行成功.");
-                GetMagicStatus();
-            } else { //失败
-                layer.alert(json.Msg, {icon: 2});
-
-            }
-            }, 'json');
-        });
-    }
-
-    function GetMagicStatus(){
-        $.post("/u/GetMagicStatus",{rnd:Math.random()}, function(json) {
-            var html = "";
-            if(json.Code == 0){
-                html += "<font color='green'>"+json.Msg+"</font> <br><br><button class='btn btn-outline-info' onclick='CloseMagicService();'>停止服务</button>";                            
-            }else{
-                html += "<font color='red'>"+json.Msg+"</font> <br><br> <button class='btn btn-outline-info' onclick='OpenMagicService();'>开启服务</button>";
-            }
-            
-            $("#magicStatus").html(html);
-
-        }, 'json');
-    }
-
-    function GetNetAgentStatus(){
-        $.post("/u/GetNetAgentStatus",{rnd:Math.random()}, function(json) {
-            var html = "";
-            if(json.Code == 0){
-                html += "<font color='green'>"+json.Msg+"</font>";                            
-            }else{
-                html += "<font color='red'>"+json.Msg+"</font>";
-            }
-            
-            $("#netAgentStatus").html(html);
-
-        }, 'json');
-    }
-
-    function ClearNetAgentStatus(){
-        $.post("/u/ClearNetAgentStatus",{rnd:Math.random()}, function(json) {
-            var html = "";
-            if(json.Code == 0){
-                $("#netAgentStatus").html("<font color='red'>未检测到Agent连接</font>");
-            }else{
-                layer.alert(json.Msg, {icon: 2});
-            }            
-            
-
-        }, 'json');
-    }
-
-    function StartAgentJob(){
-        var formData = $("#form2").serialize();
-        $.post("/u/StartAgentJob",formData, function(json) {
-
-            if(json.Code == 0){
-                //$("#agentForwardInfo").html("");
-                loadFrameContent("/u/NetAgent");
-            }else{
-                layer.alert(json.Msg, {icon: 2});
-            }
-
-        }, 'json');
-    }
-
-    function StopAgentJob(){
-        $.post("/u/StopAgentJob",{rnd:Math.random()}, function(json) {
-            if(json.Code == 0){
-                loadFrameContent("/u/NetAgent");
-            }else{
-                layer.alert(json.Msg, {icon: 2});
-            }
-
-        }, 'json');
-    }
-
-</script>
-
+				// CodeMirror
+				CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+					mode: "htmlmixed",
+					theme: "monokai"
+				});
+			})
+		</script>
 
 	</body>
 </html>
