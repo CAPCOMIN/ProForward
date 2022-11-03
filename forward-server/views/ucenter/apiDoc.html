@@ -262,7 +262,7 @@
 															<td>
 																GET 或 POST
 															</td>
-												
+
 														</tr>
 														<tr>
 															<td>3</td>
@@ -271,7 +271,7 @@
 																/api/v1/CloseForward?auth=26CCD056107481F45D1AC805A24A9E59&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP
 															</td>
 														</tr>
-												
+
 														<tr>
 															<td>4</td>
 															<td>auth</td>
@@ -279,7 +279,7 @@
 																接口访问，鉴权密钥；密钥不对访问接口将失败
 															</td>
 														</tr>
-												
+
 														<tr>
 															<td>5</td>
 															<td>fromAddr</td>
@@ -287,7 +287,7 @@
 																已经开启的转发，其本地监听的地址和端口
 															</td>
 														</tr>
-												
+
 														<tr>
 															<td>6</td>
 															<td>toAddr</td>
@@ -295,7 +295,7 @@
 																已经开启的转发，其目标地址和端口，例如：192.168.1.100:3306
 															</td>
 														</tr>
-												
+
 														<tr>
 															<td>7</td>
 															<td>protocol</td>
@@ -305,7 +305,7 @@
 														</tr>
 													</tbody>
 												</table>
-												
+
 												<!-- <form class="layui-form layui-form-pane" action="" method="POST">
 													<div class="layui-form-item">
 														<label class="layui-form-label">接口地址</label>
@@ -374,18 +374,25 @@
 											</div>
 
 											<!-- Main content -->
-											<section class="content">
-												<div class="row">
-													<div class="col-md-12">
-														<div class="card card-outline card-info">
-															<div class="card-header">
-																<h3 class="card-title">
-																	注意
-																</h3>
-															</div>
-															<!-- /.card-header -->
-															<div class="card-body p-0">
-																<textarea id="codeMirrorDemo" class="p-3">
+
+											<!-- /.content -->
+										</div>
+									</div>
+									<!-- /.card -->
+
+								</div>
+								<section class="content">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="card card-outline card-info">
+												<div class="card-header">
+													<h3 class="card-title">
+														注意
+													</h3>
+												</div>
+												<!-- /.card-header -->
+												<div class="card-body p-0">
+													<textarea id="codeMirrorDemo" class="p-3">
 /*
 接口返回JSON：
 Code：0表示成功，1表示失败
@@ -395,25 +402,19 @@ Msg: 成功或失败的消息内容
   "Code": 0,
   "Msg": ""
 }
-											              </textarea>
-															</div>
-															<div class="card-footer">
-																Visit <a href="https://codemirror.net/">CodeMirror</a>
-																documentation for more examples
-																and information about the plugin.
-															</div>
-														</div>
-													</div>
-													<!-- /.col-->
+													</textarea>
 												</div>
-												<!-- ./row -->
-											</section>
-											<!-- /.content -->
+												<div class="card-footer">
+													Visit <a href="https://codemirror.net/">CodeMirror</a>
+													documentation for more examples
+													and information about the plugin.
+												</div>
+											</div>
 										</div>
+										<!-- /.col-->
 									</div>
-									<!-- /.card -->
-
-								</div>
+									<!-- ./row -->
+								</section>
 							</div>
 
 						</div>
