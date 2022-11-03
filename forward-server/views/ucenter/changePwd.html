@@ -14,6 +14,10 @@
 		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+		 <!-- SweetAlert2 -->
+		 <link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		 <!-- Toastr -->
+		 <link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
 	</head>
 	<body class="hold-transition sidebar-mini layout-fixed">
 		<!-- Site wrapper -->
@@ -68,8 +72,9 @@
 											
 											<!--  <div class="layui-form-item">
 											    <div class="layui-input-block"> -->
-											      <button class="btn btn-outline-info" lay-submit="" lay-filter="pwd">修改密码</button>
-											    <!-- </div>
+											      <button class="btn btn-outline-info swalDefaultSuccess" lay-submit="" lay-filter="pwd">修改密码</button>
+													
+												<!-- </div>
 											  </div> -->
 											
 											</form>
@@ -113,143 +118,66 @@
 		<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="../../static/dist/js/adminlte.min.js"></script>
+		<!-- SweetAlert2 -->
+		<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+		<!-- Toastr -->
+		<script src="../../static/plugins/toastr/toastr.min.js"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script src="../../static/dist/js/demo.js"></script>
+		<!-- Page specific script -->
+
 
 		<script type="text/javascript">
-			$(document).ready(function() {
-
-				layui.use(['jquery', 'layer', 'form', 'element'], function() {
-					var $ = layui.jquery,
-						form = layui.form;
-					form.render('select');
-
-				});
-
-				GetMagicStatus();
-				GetNetAgentStatus();
-
+		  $(function() {
+		    var Toast = Swal.mixin({
+		      toast: true,
+		      position: 'top-end',
+		      showConfirmButton: false,
+		      timer: 3000
+		    });
+		  
+		  
+			$(document).ready(function () {
+			
+			  layui.use(["form", "element"], function () {
+			    var form = layui.form;
+			
+			    form.on('submit(pwd)', function(data){
+			      
+			      submitForm();
+			      loadFrameContent('/u/changePwd');
+			      return false;
+			    });
+			
+			  });
+			
 			});
-
-			function OpenMagicService() {
-				layer.confirm("确定开启穿透服务吗？", {
-					btn: ['确定', '取消'] //按钮
-				}, function(index, layero) {
-					$.post("/u/OpenMagicService", {
-						rnd: Math.random()
-					}, function(json) {
-						if (json.Code == 0) { //成功
-							layer.msg("执行成功.");
-							GetMagicStatus();
-						} else { //失败
-							layer.alert(json.Msg, {
-								icon: 2
-							});
-
-						}
-					}, 'json');
-				});
+			
+			function submitForm() {
+			  var postData = $("#form1").serializeArray();
+			  $.post($("#form1").attr("action"), postData, function (json) {
+			    //var data = $.parseJSON(json);
+			    if (json.Code == 0) {
+			      //成功
+				  Toast.fire({
+				    icon: 'success',
+				    title: '修改成功'
+				  })
+			      // layer.alert("修改成功");
+			    } else {
+			      //
+				Toast.fire({
+				  icon: 'error',
+				  title: '修改失败：两次输入的密码不一致'
+				})
+			      // layer.alert("失败了：" + json.Msg, { icon: 2 });
+			    }
+			  }, "json");
 			}
-
-			function CloseMagicService() {
-				layer.confirm("确定关闭穿透服务吗？", {
-					btn: ['确定', '取消'] //按钮
-				}, function(index, layero) {
-					$.post("/u/CloseMagicService", {
-						rnd: Math.random()
-					}, function(json) {
-						if (json.Code == 0) { //成功
-							layer.msg("执行成功.");
-							GetMagicStatus();
-						} else { //失败
-							layer.alert(json.Msg, {
-								icon: 2
-							});
-
-						}
-					}, 'json');
-				});
-			}
-
-			function GetMagicStatus() {
-				$.post("/u/GetMagicStatus", {
-					rnd: Math.random()
-				}, function(json) {
-					var html = "";
-					if (json.Code == 0) {
-						html += "<font color='green'>" + json.Msg +
-							"</font> <br><br><button class='btn btn-outline-info' onclick='CloseMagicService();'>停止服务</button>";
-					} else {
-						html += "<font color='red'>" + json.Msg +
-							"</font> <br><br> <button class='btn btn-outline-info' onclick='OpenMagicService();'>开启服务</button>";
-					}
-
-					$("#magicStatus").html(html);
-
-				}, 'json');
-			}
-
-			function GetNetAgentStatus() {
-				$.post("/u/GetNetAgentStatus", {
-					rnd: Math.random()
-				}, function(json) {
-					var html = "";
-					if (json.Code == 0) {
-						html += "<font color='green'>" + json.Msg + "</font>";
-					} else {
-						html += "<font color='red'>" + json.Msg + "</font>";
-					}
-
-					$("#netAgentStatus").html(html);
-
-				}, 'json');
-			}
-
-			function ClearNetAgentStatus() {
-				$.post("/u/ClearNetAgentStatus", {
-					rnd: Math.random()
-				}, function(json) {
-					var html = "";
-					if (json.Code == 0) {
-						$("#netAgentStatus").html("<font color='red'>未检测到Agent连接</font>");
-					} else {
-						layer.alert(json.Msg, {
-							icon: 2
-						});
-					}
-
-
-				}, 'json');
-			}
-
-			function StartAgentJob() {
-				var formData = $("#form2").serialize();
-				$.post("/u/StartAgentJob", formData, function(json) {
-
-					if (json.Code == 0) {
-						//$("#agentForwardInfo").html("");
-						loadFrameContent("/u/NetAgent");
-					} else {
-						layer.alert(json.Msg, {
-							icon: 2
-						});
-					}
-
-				}, 'json');
-			}
-
-			function StopAgentJob() {
-				$.post("/u/StopAgentJob", {
-					rnd: Math.random()
-				}, function(json) {
-					if (json.Code == 0) {
-						loadFrameContent("/u/NetAgent");
-					} else {
-						layer.alert(json.Msg, {
-							icon: 2
-						});
-					}
-
-				}, 'json');
-			}
+			  
+			});
+			
+			
 		</script>
 
 

@@ -1,4 +1,4 @@
-<div class="card card-success card-outline">
+<div class="card card-info">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,90 +13,83 @@
   <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
-<div class="card-body">
+
   <form id="form1"  action="/u/SaveForward" method="POST">
     <div class="form-group">
-        <label for="forwardName">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称</label>
-		<div class="layui-input-inline col-md-6">
-        <input id="forwardName" type="text" class="form-control col-md-10" name="name" value="{{.entity.Name}}" lay-verify="required" autocomplete="off" placeholder="取个名称，用以区分" >
+        <label for="forwardName">名称</label>
+        <input id="forwardName" type="text" class="form-control" name="name" value="{{.entity.Name}}" lay-verify="required" autocomplete="off" placeholder="取个名称，用以区分" >
         <input type="hidden" name="id" value="{{.entity.Id}}">
-		</div>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
-    <div class="">
-      <label>本地监听地址</label>
-      <div class="layui-input-inline col-md-5">
+    <div class="layui-form-item">
+      <label class="layui-form-label">本地监听地址</label>
+      <div class="layui-input-inline">
         <input type="text" name="addr" value="{{.entity.Addr}}" placeholder="默认监听所有地址" autocomplete="off" class="layui-input">
+        
       </div>
     </div>
-	<br>
-    <div class="">
-      <label >本地监听端口</label>
-      <div class="layui-input-inline col-md-5">
+    <div class="layui-form-item">
+      <label class="layui-form-label">本地监听端口</label>
+      <div class="layui-input-inline">
         <input type="text" name="port" value="{{if gt .entity.Port 0}}{{.entity.Port}}{{end}}" lay-verify="required|number" placeholder="端口号，例如8080" autocomplete="off" class="layui-input">
       </div>
     </div>
-	<br>
-    <div class="">
-      <label class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;转发方式&nbsp;&nbsp;&nbsp;</label>
-      <!-- <div class="layui-input-inline"> -->
-        <select name="fType" class="col-md-4">
+    <div class="layui-form-item">
+      <label class="layui-form-label">转发方式</label>
+      <div class="layui-input-inline">
+        <select name="fType">
           <option value="0" {{if eq .entity.FType 0}}selected="selected"{{end}}>端口到端口映射</option>
         </select>
       </div>
-	  <br>
-    <!-- </div> -->
-    <div class="">
-      <label class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;协议&nbsp;&nbsp;&nbsp;</label>
-      <!-- <div class="layui-input-inline"> -->
-        <select name="protocol" class="col-md-4">
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">协议</label>
+      <div class="layui-input-inline">
+        <select name="protocol">
           <option value="TCP" {{if eq .entity.Protocol "TCP"}}selected="selected"{{end}}>TCP</option>
           <option value="UDP" {{if eq .entity.Protocol "UDP"}}selected="selected"{{end}}>UDP</option>
         </select>
-      <!-- </div> -->
+      </div>
     </div>
-	<br>
-    <div class="">
-      <label>&nbsp;&nbsp;&nbsp;&nbsp;转发到地址</label>
-      <div class="layui-input-inline col-md-5">
+    <div class="layui-form-item">
+      <label class="layui-form-label">转发到地址</label>
+      <div class="layui-input-inline">
         <input type="text" name="targetAddr" value="{{.entity.TargetAddr}}" lay-verify="required" placeholder="目标地址" autocomplete="off" class="layui-input">
       </div>
     </div>
-	<br>
-    <div class="">
-      <label>&nbsp;&nbsp;&nbsp;&nbsp;转发到端口</label>
-      <div class="layui-input-inline col-md-5">
+    <div class="layui-form-item">
+      <label class="layui-form-label">转发到端口</label>
+      <div class="layui-input-inline">
         <input type="text" name="targetPort" value="{{if gt .entity.TargetPort 0}}{{.entity.TargetPort}}{{end}}" lay-verify="required|number" placeholder="目标端口号，例如3306" autocomplete="off" class="layui-input">
       </div>
     </div>
-	<br>
-    <div class="">
-      <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多分发</label>
-      <div class="layui-input-inline col-md-5">
+    <div class="layui-form-item">
+      <label class="layui-form-label">多分发</label>
+      <div class="layui-input-block">
         <input type="text" name="others" value="{{.entity.Others}}" placeholder="如 192.1.1.100:8081;192.1.1.100:8082" title="多个用 ; 号隔开" autocomplete="off" class="layui-input">
       </div>
     </div>
-	<br>
-    <div class="">
-      <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一键开启</label>
-      <div class="layui-input-inline col-md-6">
+    <div class="layui-form-item">
+      <label class="layui-form-label">一键开启</label>
+      <div class="layui-input-block">
         <input type="radio" name="status" value="0" title="不支持" {{if eq .entity.Status 0}} checked {{end}}>
         <input type="radio" name="status" value="1" title="支持" {{if eq .entity.Status 1}} checked {{end}}>
       </div>
     </div>
-	
-	<div class="callout callout-info">
-		<!-- <label class="layui-form-label">协议</label> -->
-*多分发说明：<br>
-如果不需要“多分发”，请留空；<br>
-如果需要分发到多个端口，填写格式为 “IP:端口”，多个用 ; 号隔开<br>
-如 192.1.1.100:8081;192.1.1.100:8082<br>
-<br>
-*一键开启说明，设置为“支持”后：<br>
-通过在配置文件中添加  onstart.forward = "true" ，可让程序每次运行后就开始转发该规则，或者在列表页面通过点击“一键开启”。<br>
-	</div>
+    <div class="layui-form-item">
+        <pre class="layui-code" style="text-align: left;">
+*多分发说明：
+如果不需要“多分发”，请留空；
+如果需要分发到多个端口，填写格式为 “IP:端口”，多个用 ; 号隔开
+如 192.1.1.100:8081;192.1.1.100:8082
+
+*一键开启说明，设置为“支持”后：
+通过在配置文件中添加  onstart.forward = "true" ，可让程序每次运行后就开始转发该规则，或者在列表页面通过点击“一键开启”。
+
+        </pre> 
+    </div>
   </form>
-</div>
+
 </div>
 
 <script type="text/javascript">
