@@ -14,6 +14,12 @@
 		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+
+
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<!-- Toastr -->
+		<link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
 	</head>
 	<body class="hold-transition sidebar-mini layout-fixed">
 		<!-- Site wrapper -->
@@ -200,12 +206,78 @@
 											<div class="tab-pane fade show active" id="custom-tabs-three-home"
 												role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
 												<h4>
-													<button class="btn btn-outline-info" onclick="OpenAllForward();"><i
+													<!-- <button class="btn btn-outline-info" onclick="OpenAllForward();"><i
 															class="fa fa-play-circle"></i> 一键开启
+													</button> -->
+
+													<button type="button" class="btn btn-outline-info"
+														data-toggle="modal" data-target="#modal-default">
+														<i class="fa fa-play-circle"></i>一键开启
 													</button>
-													<button class="btn btn-outline-info" onclick="CloseAllForward();"><i
+													<div class="modal fade" id="modal-default">
+														<div class="modal-dialog">
+															<div class="modal-content" >
+																<div class="modal-header">
+																	<h4 class="modal-title">信息</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="modal-body">
+																	<p>确定一键开启所有转发吗？</p>
+																</div>
+																<div class="modal-footer justify-content-between">
+
+																	<button type="button" class="btn btn-primary Prabtn"
+																		data-dismiss="modal">确定</button>
+																	<button type="button" class="btn btn-default"
+																		data-dismiss="modal">取消</button>
+
+																</div>
+															</div>
+
+														</div>
+
+													</div>
+
+
+
+
+													<!-- <button class="btn btn-outline-info" onclick="CloseAllForward();"><i
 															class="fa fa-stop-circle"></i> 一键关闭
+													</button> -->
+
+													<button type="button" class="btn btn-outline-info"
+														data-toggle="modal" data-target="#modal-defaults">
+														<i class="fa fa-stop-circle"></i>一键关闭
 													</button>
+													<div class="modal fade" id="modal-defaults">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h4 class="modal-title">信息</h4>
+																	<button type="button" class="close"
+																		data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="modal-body">
+																	<p>确定一键关闭所有转发吗？</p>
+																</div>
+																<div class="modal-footer justify-content-between">
+
+																	<button type="button" class="btn btn-primary Btnpra"
+																		data-dismiss="modal">确定</button>
+																	<button type="button" class="btn btn-default"
+																		data-dismiss="modal">取消</button>
+
+																</div>
+															</div>
+
+														</div>
+
+													</div>
 												</h4>
 												<br>
 												<b> 一键开启说明：</b> <br>
@@ -298,6 +370,12 @@
 		<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="../../static/dist/js/adminlte.min.js"></script>
+
+		<!-- SweetAlert2 -->
+		<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+		<!-- Toastr -->
+		<script src="../../static/plugins/toastr/toastr.min.js"></script>
+		<!-- Page specific script -->
 
 
 		<script id="grid_tpl" type="text/html">
@@ -667,7 +745,7 @@
 
 			function OpenForward2(id) {
 				layer.confirm("确定启动该转发吗？", {
-					btn: ['确定', '取消'] //按钮
+					btn: ['确定', '取消'], //按钮
 				}, function(index, layero) {
 					$.post("/u/OpenForward", {
 						rnd: Math.random(),
@@ -709,16 +787,68 @@
 				});
 			}
 
-			function OpenAllForward() {
-				layer.confirm("确定一键开启所有转发吗？", {
-					btn: ['确定', '取消'] //按钮
-				}, function(index, layero) {
+
+
+
+			// function OpenAllForward() {
+			// 	layer.confirm("确定一键开启所有转发吗？", {
+			// 		btn: ['确定', '取消'] //按钮
+			// 	}, function(index, layero) {
+			// 		$.post("/u/OpenAllForward", {
+			// 			rnd: Math.random()
+			// 		}, function(json) {
+			// 			if (json.Code == 0) { //成功
+			// 				layer.msg("执行成功.");
+			// 				layer.close(index);
+			// 				query(1);
+			// 			} else { //失败
+			// 				layer.alert(json.Msg, {
+			// 					icon: 2
+			// 				});
+			// 				query(1);
+			// 			}
+			// 		}, 'json');
+			// 	});
+			// }
+
+			// function CloseAllForward() {
+			// 	layer.confirm("确定一键关闭所有转发吗？", {
+			// 		btn: ['确定', '取消'] //按钮
+			// 	}, function(index, layero) {
+			// 		$.post("/u/CloseAllForward", {
+			// 			rnd: Math.random()
+			// 		}, function(json) {
+			// 			if (json.Code == 0) { //成功
+			// 				layer.msg("执行成功.");
+			// 				layer.close(index);
+			// 				query(1);
+			// 			} else { //失败
+			// 				layer.alert(json.Msg, {
+			// 					icon: 2
+			// 				});
+			// 				query(1);
+			// 			}
+			// 		}, 'json');
+			// 	});
+			// }
+
+
+			$(function() {
+				//  var Toast = Swal.mixin({
+				//    toast: true,
+				//    position: 'top-end',
+				//    showConfirmButton: false,
+				//    timer: 3000,
+
+				//  });
+
+				$('.Prabtn').click(function() {
+					query(1);
 					$.post("/u/OpenAllForward", {
 						rnd: Math.random()
 					}, function(json) {
 						if (json.Code == 0) { //成功
-							layer.msg("执行成功.");
-							layer.close(index);
+
 							query(1);
 						} else { //失败
 							layer.alert(json.Msg, {
@@ -727,19 +857,14 @@
 							query(1);
 						}
 					}, 'json');
-				});
-			}
 
-			function CloseAllForward() {
-				layer.confirm("确定一键关闭所有转发吗？", {
-					btn: ['确定', '取消'] //按钮
-				}, function(index, layero) {
+				});
+
+				$('.Btnpra').click(function() {
 					$.post("/u/CloseAllForward", {
 						rnd: Math.random()
 					}, function(json) {
 						if (json.Code == 0) { //成功
-							layer.msg("执行成功.");
-							layer.close(index);
 							query(1);
 						} else { //失败
 							layer.alert(json.Msg, {
@@ -748,9 +873,13 @@
 							query(1);
 						}
 					}, 'json');
+					// close;
 				});
-			}
+
+
+
+			});
 		</script>
-		
+
 	</body>
 </html>
