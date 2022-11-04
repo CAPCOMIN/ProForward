@@ -184,7 +184,7 @@
 								alt="User Image">
 						</div>
 						<div class="info">
-							<a href="#" class="d-block">Alexander Pierce</a>
+							<a href="#" class="d-block">{{.loginUserName}}</a>
 						</div>
 					</div>
 
@@ -300,6 +300,13 @@
 									</p>
 								</a>
 							</li>
+							<li class="nav-item">
+								<a href="javascript:void(0);" onclick="loadFrameContent('/u/userManage');"
+								   class="nav-link">
+									<i class="fa fa-user-edit nav-icon"></i>
+									<p>用户管理</p>
+								</a>
+							</li>
 
 							<li class="nav-item">
 								<a href="javascript:void(0);" onclick="" class="nav-link">
@@ -311,13 +318,7 @@
 								</a>
 
 								<ul class="nav nav-treeview">
-									<li class="nav-item">
-										<a href="javascript:void(0);" onclick="loadFrameContent('/u/userManage');"
-											class="nav-link">
-											<i class="far fa-circle nav-icon"></i>
-											<p>用户管理</p>
-										</a>
-									</li>
+
 									<li class="nav-item">
 										<a href="javascript:void(0);" onclick="loadFrameContent('/u/changePwd');"
 											class="nav-link">

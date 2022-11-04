@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="renderer" content="webkit">
-  <title>{{config "String" "app.cname" "端口转发系统"}} - V1.3.5</title>
+  <title>{{config "String" "app.cname" "ProForward"}} - V1.3.5</title>
   <meta name="keywords" content="端口转发">
 
   <script src="/static/js/jquery.min.js"></script>
@@ -17,33 +17,7 @@
   <script src="/static/js/moment.min.js"></script>
   <script src="/static/js/timer.min.js"></script>
 
-  <style type="text/css">
-    /*layui-skin-pilicat 自定义皮肤*/
-    
-    body .layer-skin-pilicat .layui-layer-title {
-      background: #F8F8F8;
-      color: #84868a;
-      border: none
-    }
-    
-    body .layui-skin-pilicat .layui-layer-btn {
-      background: #009688
-    }
-    
-    body .layui-skin-pilicat .layui-layer-btn a {
-      background: #009688
-    }
-    
-    body .layui-layer-btn .layui-layer-btn0 {
-      border-color: #009688;
-      background-color: #009688;
-      color: #fff;
-    }
-    
-    body .layui-skin-pilicat .layui-layer-btn .layui-layer-btn1 {
-      background: #92B8B1
-    }
-  </style>
+  <style type="text/css"></style>
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -71,7 +45,7 @@
     }
 
     function getChkValues(chkName) {
-      var selectedItems = new Array();
+      var selectedItems = [];
       $("input[name='" + chkName + "']:checked").each(function () {
         selectedItems.push($(this).val());//向数组中添加元素  
       });

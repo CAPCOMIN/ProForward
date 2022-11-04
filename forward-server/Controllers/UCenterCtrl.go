@@ -5,6 +5,7 @@ import (
 	"forward-core/Utils"
 	"forward-server/Controllers/BaseCtrl"
 	"forward-server/Service"
+	"github.com/astaxie/beego/logs"
 	"runtime"
 	"time"
 )
@@ -16,6 +17,7 @@ type UCenterCtrl struct {
 // @router /u/main [get]
 func (c *UCenterCtrl) Main() {
 
+	c.Data["loginUserName"] = c.LoginUser.UserName
 	c.Layout = "ucenter/layout.html"
 	c.TplName = "ucenter/main.html"
 
@@ -52,6 +54,35 @@ func (c *UCenterCtrl) UserManage() {
 	//logs.Warn("UserManage", userList[0].UserName)
 
 	c.TplName = "ucenter/userManage.html"
+}
+
+func (c *UCenterCtrl) BanUser() {
+	id, err := c.GetInt("id")
+	if err != nil {
+		logs.Error("BanUser")
+	}
+	err2 := Service.SysDataS.ChangeSysUserStatus(id, 0)
+	if err2 != nil || err != nil {
+		logs.Error("BanUser2", err2)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "停用账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功停用账户，ID:" + err.Error()}
+	}
+	c.ServeJSON()
+}
+func (c *UCenterCtrl) EnableUser() {
+	id, err := c.GetInt("id")
+	if err != nil {
+		logs.Error("EnableUser")
+	}
+	err2 := Service.SysDataS.ChangeSysUserStatus(id, 1)
+	if err2 != nil || err != nil {
+		logs.Error("EnableUser2", err2)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "启用账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功启用账户，ID:" + err.Error()}
+	}
+	c.ServeJSON()
 }
 
 // @router /u/changePwd [get]
