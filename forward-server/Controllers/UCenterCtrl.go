@@ -7,6 +7,7 @@ import (
 	"forward-server/Service"
 	"github.com/astaxie/beego/logs"
 	"runtime"
+	"strconv"
 	"time"
 )
 
@@ -59,7 +60,7 @@ func (c *UCenterCtrl) UserManage() {
 func (c *UCenterCtrl) BanUser() {
 	id, err := c.GetInt("id")
 	if err != nil {
-		logs.Error("BanUser")
+		logs.Error("BanUser GetInt")
 	}
 	err2 := Service.SysDataS.ChangeSysUserStatus(id, 0)
 	if err2 != nil || err != nil {
@@ -73,14 +74,29 @@ func (c *UCenterCtrl) BanUser() {
 func (c *UCenterCtrl) EnableUser() {
 	id, err := c.GetInt("id")
 	if err != nil {
-		logs.Error("EnableUser")
+		logs.Error("EnableUser GetInt")
 	}
 	err2 := Service.SysDataS.ChangeSysUserStatus(id, 1)
 	if err2 != nil || err != nil {
 		logs.Error("EnableUser2", err2)
 		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "启用账户失败，" + err.Error()}
 	} else {
-		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功启用账户，ID:" + err.Error()}
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功启用账户，ID:" + strconv.Itoa(id)}
+	}
+	c.ServeJSON()
+}
+
+func (c *UCenterCtrl) DeleteOneUser() {
+	id, err := c.GetInt("id")
+	if err != nil {
+		logs.Error("DeleteOneUser GetInt")
+	}
+	err2 := Service.SysDataS.DelOneSysUsers(id)
+	if err2 != nil || err != nil {
+		logs.Error("DeleteOneUser", err2)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "删除账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功删除账户，ID:" + strconv.Itoa(id)}
 	}
 	c.ServeJSON()
 }

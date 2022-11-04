@@ -25,4 +25,6 @@ func init() {
 	beego.Router("/manageUser/ban", &Controllers.UCenterCtrl{}, "get:BanUser")
 	beego.Router("/manageUser/enable", &Controllers.UCenterCtrl{}, "get:EnableUser")
 
+	beego.Router("/manageUser/del", &Controllers.UCenterCtrl{}, "get:DeleteOneUser")
+
 }

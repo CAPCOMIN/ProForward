@@ -94,6 +94,20 @@ func (_self *SysDataService) UpdateSysUser(entity *Models.SysUser) error {
 	return err
 }
 
+func (_self *SysDataService) DelOneSysUsers(id int) error {
+
+	entity := _self.GetSysUserById(id)
+	_, err := OrmerS.Delete(entity)
+	if err != nil {
+		logs.Error("DelOneSysUsers err：", err)
+		return err
+	} else {
+		logs.Debug("DelOneSysUsers id：", id)
+	}
+
+	return err
+}
+
 func (_self *SysDataService) DelSysUsers(ids []int) error {
 
 	//批量删除
