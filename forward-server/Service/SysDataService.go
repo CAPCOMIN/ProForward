@@ -13,6 +13,20 @@ import (
 type SysDataService struct {
 }
 
+func (_self *SysDataService) GetAllSysUser() []*Models.SysUser {
+
+	var userList []*Models.SysUser
+	entity := new(Models.SysUser)
+	qs := OrmerS.QueryTable(entity)
+	userNum, err := qs.All(&userList)
+	if err != nil {
+		logs.Error("GetAllSysUser ", err)
+		return nil
+	}
+	logs.Warn("GetAllSysUser 获取所有用户信息成功，获取的用户数目：", userNum)
+	return userList
+}
+
 func (_self *SysDataService) GetSysUserById(userId int) *Models.SysUser {
 
 	entity := new(Models.SysUser)

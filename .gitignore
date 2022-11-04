@@ -4,5 +4,7 @@ logs
 .vscode
 .idea
 /forward-server/data/
-*.db
 *.exe~
+*.pprof
+*.memprof
+*.tmp

@@ -42,6 +42,18 @@ func (c *UCenterCtrl) GetServerTime() {
 
 }
 
+// @router /u/userManage [get]
+func (c *UCenterCtrl) UserManage() {
+
+	userList := Service.SysDataS.GetAllSysUser()
+
+	c.Data["userList"] = userList
+
+	//logs.Warn("UserManage", userList[0].UserName)
+
+	c.TplName = "ucenter/userManage.html"
+}
+
 // @router /u/changePwd [get]
 func (c *UCenterCtrl) ChangePwd() {
 
