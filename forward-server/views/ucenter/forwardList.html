@@ -89,23 +89,20 @@
 										</button>
 									</div>
 								</div>
-
-								<!-- <div class="card card-success"> -->
-
-								<!-- </div> -->
-
+								
+								<!-- /.modal -->
 								<div class="modal fade" id="modal-addForward">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title">Large Modal</h4>
+												<h4 class="modal-title">添加网络转发端口</h4>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
 											<div class="modal-body">
-												<p>One fine body&hellip;</p>
+												网络转发端口
 											</div>
 											<div class="modal-footer justify-content-between">
 												<button type="button" class="btn btn-default"
@@ -113,9 +110,7 @@
 												<button type="button" class="btn btn-primary">Save changes</button>
 											</div>
 										</div>
-										<!-- /.modal-content -->
 									</div>
-									<!-- /.modal-dialog -->
 								</div>
 								<!-- /.modal -->
 
@@ -130,9 +125,8 @@
 											<button class="btn btn-outline-success" onclick="addForward();"><i
 													class="fa fa-plus-circle"></i>添加转发
 											</button>
-											<button class="btn btn-outline-success" data-toggle="modal"
-												data-target="#modal-addForward"><i class="fa fa-plus-circle"></i>Test
-												AddForward
+											<button class="btn btn-outline-success addbtn" data-toggle="modal"
+												data-target="#modal-addForward"><i class="fa fa-plus-circle"></i>添加转发
 											</button>
 											<button class="btn btn-outline-success" onclick="delForward();"><i
 													class="fa fa-minus-circle"></i>批量删除
@@ -214,6 +208,11 @@
 														data-toggle="modal" data-target="#modal-default">
 														<i class="fa fa-play-circle"></i>一键开启
 													</button>
+													<button type="button" class="btn btn-outline-info"
+														data-toggle="modal" data-target="#modal-defaults">
+														<i class="fa fa-stop-circle"></i>一键关闭
+													</button>
+													</h4>
 													<div class="modal fade" id="modal-default">
 														<div class="modal-dialog">
 															<div class="modal-content" >
@@ -241,17 +240,11 @@
 
 													</div>
 
-
-
-
 													<!-- <button class="btn btn-outline-info" onclick="CloseAllForward();"><i
 															class="fa fa-stop-circle"></i> 一键关闭
 													</button> -->
 
-													<button type="button" class="btn btn-outline-info"
-														data-toggle="modal" data-target="#modal-defaults">
-														<i class="fa fa-stop-circle"></i>一键关闭
-													</button>
+
 													<div class="modal fade" id="modal-defaults">
 														<div class="modal-dialog">
 															<div class="modal-content">
@@ -264,6 +257,7 @@
 																</div>
 																<div class="modal-body">
 																	<p>确定一键关闭所有转发吗？</p>
+																	
 																</div>
 																<div class="modal-footer justify-content-between">
 
@@ -278,8 +272,8 @@
 														</div>
 
 													</div>
-												</h4>
-												<br>
+												
+												<!-- <br> -->
 												<b> 一键开启说明：</b> <br>
 												1、不需要批量勾选规则，只要规则设置了支持“一键开启”都会被一键开启转发。 <br>
 												2、通过在配置文件中添加 onstart.forward = "true" ，可让程序每次运行后就开始转发该规则。 <br>
@@ -834,13 +828,13 @@
 
 
 			$(function() {
-				//  var Toast = Swal.mixin({
-				//    toast: true,
-				//    position: 'top-end',
-				//    showConfirmButton: false,
-				//    timer: 3000,
+				 // var Toast = Swal.mixin({
+				 //   toast: true,
+				 //   position: 'top-end',
+				 //   showConfirmButton: false,
+				 //   timer: 3000,
 
-				//  });
+				 // });
 
 				$('.Prabtn').click(function() {
 					query(1);
@@ -874,6 +868,20 @@
 						}
 					}, 'json');
 					// close;
+				});
+				
+				$('.addbtn').click(function() {
+					
+					// Toast.fire({
+					//   icon: 'success',
+					//   title: '修改成功'
+					// })
+					
+					// function addForward() {
+					  
+					// }
+					
+				
 				});
 
 

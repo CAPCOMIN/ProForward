@@ -22,5 +22,7 @@ func init() {
 	)
 
 	beego.AddNamespace(api_ns)
+	beego.Router("/manageUser/ban", &Controllers.UCenterCtrl{}, "get:BanUser")
+	beego.Router("/manageUser/enable", &Controllers.UCenterCtrl{}, "get:EnableUser")
 
 }

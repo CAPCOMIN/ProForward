@@ -62,10 +62,9 @@
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
-												
-												<button class="btn btn-outline-success" onclick=""><i
-														class="fa fa-plus-circle"></i>添加用户
-												</button>
+                                            </button>
+                                            <button class="btn btn-success" onclick=""><i
+                                                    class="fa fa-plus-circle"></i>添加用户
                                             </button>
                                         </div>
                                     </div>
@@ -91,14 +90,14 @@
                                         <td>{{if .Status}}<i style="color: limegreen" class="fa fa-check"></i>{{else}}<i
                                                 style="color: orange" class="fa fa-pause"></i>{{end}}
                                         </td>
-                                        <td> {{.PassWord}}</td>
+                                        <td> <code>{{.PassWord}}</code></td>
                                         <td>{{.CreateTime.Format "Jan 02,2006 15:04:05 Monday"}}</td>
                                         <td>{{if .Status}}
                                             <button class='btn btn-outline-warning'
-                                                    onclick=''>停用账号</button>
+                                                    onclick="window.location.href='/manageUser/ban?id={{.Id}}'">停用账号</button>
                                             {{else}}
                                             <button class='btn btn-outline-success'
-                                                    onclick=''>启用账号</button>
+                                                    onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
                                             {{end}}
                                             <button class='btn btn-info' onclick=''>编辑</button>
                                             <button class='btn btn-danger' onclick=''>删除</button>

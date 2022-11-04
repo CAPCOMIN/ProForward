@@ -23,7 +23,7 @@ func (_self *SysDataService) GetAllSysUser() []*Models.SysUser {
 		logs.Error("GetAllSysUser ", err)
 		return nil
 	}
-	logs.Warn("GetAllSysUser 获取所有用户信息成功，获取的用户数目：", userNum)
+	logs.Debug("GetAllSysUser 获取所有用户信息成功，获取的用户数目：", userNum)
 	return userList
 }
 
@@ -58,9 +58,19 @@ func (_self *SysDataService) GetSysUserByName(userName string) *Models.SysUser {
 		logs.Error("GetSysUserByName ", err)
 		return nil
 	}
-
 	return entity
+}
 
+func (_self *SysDataService) ChangeSysUserStatus(userId int, newStatus int) error {
+	entity := _self.GetSysUserById(userId)
+	entity.Status = newStatus
+	_, err := OrmerS.Update(entity, "Status")
+	if err != nil {
+		logs.Error("ChangeSysUserStatus", err)
+	} else {
+		logs.Warn(" ChangeSysUserStatus 更新用户状态成功", userId, newStatus)
+	}
+	return err
 }
 
 func (_self *SysDataService) ChangeUserPwd(id int, password string) error {
