@@ -1,213 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>AdminLTE 3 | Fixed Sidebar</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
-</head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<!-- Site wrapper -->
-<div class="wrapper">
+		<!-- Google Font: Source Sans Pro -->
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+		<!-- overlayScrollbars -->
+		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+		<!-- Theme style -->
+		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<!-- Toastr -->
+		<link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
+	</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<!-- Site wrapper -->
+		<div class="wrapper">
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>用户管理</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                            <li class="breadcrumb-item active">Fixed Layout</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1>用户管理</h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a href="#">Home</a></li>
+									<li class="breadcrumb-item"><a href="#">Layout</a></li>
+									<li class="breadcrumb-item active">Fixed Layout</li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
 
-        <!-- Main content -->
-        <section class="content">
-
-
-            <div class="container-fluid">
-                <!--        <div class="row">-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-danger card-outline">
-                            <div class="card-header">
-                                <h3 class="card-title">系统用户管理</h3>
-                                <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 300px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                               placeholder="Search">
-
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                            <button class="btn btn-success" onclick=""><i
-                                                    class="fa fa-plus-circle"></i>添加用户
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>用户名</th>
-                                        <th>当前状态</th>
-                                        <th>密码哈希</th>
-                                        <th>创建时间</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {{range .userList}}
-                                    <tr>
-                                        <td>{{.Id}}</td>
-                                        <td>{{.UserName}}</td>
-                                        <td>{{if .Status}}<i style="color: limegreen" class="fa fa-check"></i>{{else}}<i
-                                                style="color: orange" class="fa fa-pause"></i>{{end}}
-                                        </td>
-                                        <td> <code>{{.PassWord}}</code></td>
-                                        <td>{{.CreateTime.Format "Jan 02,2006 15:04:05 Monday"}}</td>
-                                        <td>{{if .Status}}
-                                            <button class='btn btn-outline-warning'
-                                                    onclick="window.location.href='/manageUser/ban?id={{.Id}}'">停用账号</button>
-                                            {{else}}
-                                            <button class='btn btn-outline-success'
-                                                    onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
-                                            {{end}}
-                                            <button class='btn btn-info' onclick=''>编辑</button>
-                                            <button class='btn btn-danger' onclick="window.location.href='/manageUser/del?id={{.Id}}'">删除</button>
-                                        </td>
-                                    </tr>
-                                    {{end}}
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <span style="text-align: center;display:block;" class="direct-chat-timestamp float">Top Secret. Unauthorized distribution is prohibited.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </div>
-</div>
-</div>
-</section>
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-
-<footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-        <b>Version</b> 3.2.0
-    </div>
-    <strong>Copyright &copy; 2014-2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
-</footer>
-
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="../../static/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../static/dist/js/adminlte.min.js"></script>
-<!-- SweetAlert2 -->
-<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
-<!-- Toastr -->
-<script src="../../static/plugins/toastr/toastr.min.js"></script>
-<!-- Page specific script -->
+				<!-- Main content -->
+				<section class="content">
 
 
-<script type="text/javascript">
-    $(function () {
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
+					<div class="container-fluid">
+						<!--        <div class="row">-->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card card-danger card-outline">
+									<div class="card-header">
+										<h3 class="card-title">系统用户管理</h3>
+										<div class="card-tools">
+											<div class="input-group input-group-sm" style="width: 300px;">
+												<input type="text" name="table_search" class="form-control float-right"
+													placeholder="Search">
+
+												<div class="input-group-append">
+													<button type="submit" class="btn btn-default">
+														<i class="fas fa-search"></i>
+													</button>
+													<button class="btn btn-success" onclick=""><i
+															class="fa fa-plus-circle"></i>添加用户
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card-body table-responsive p-0">
+										<table class="table table-hover text-nowrap">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>用户名</th>
+													<th>当前状态</th>
+													<th>密码哈希</th>
+													<th>创建时间</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody>
+												{{range .userList}}
+												<tr>
+													<td>{{.Id}}</td>
+													<td>{{.UserName}}</td>
+													<td>{{if .Status}}<i style="color: limegreen"
+															class="fa fa-check"></i>
+														{{else}}<i style="color: orange" class="fa fa-pause"></i>{{end}}
+													</td>
+													<td> <code>{{.PassWord}}</code></td>
+													<td>{{.CreateTime.Format "Jan 02,2006 15:04:05 Monday"}}</td>
+
+													<td>{{if .Status}}
+														<button class='btn btn-outline-warning'
+															onclick="window.location.href='/manageUser/ban?id={{.Id}}'">停用账号</button>
+														{{else}}
+															<button class='btn btn-outline-success'
+																onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
+															{{end}}
+															<button class='btn btn-info' onclick=''>编辑</button>
 
 
-        $(document).ready(function () {
+															<button class='btn btn-danger'
+																data-toggle="modal" data-target="#modal-defaulted"
+																onclick="dels({{.Id}});"
+																>删除</button>
+															<!-- <form action="" method="post"> -->
+															<!-- <button class='btn btn-danger deleted'
+															data-toggle="modal" data-target="#modal-defaulted"
+															
+															onclick="del();"
+															>删除</button> -->
+															<!-- </form> -->
+															<!-- onclick="window.location.href='/manageUser/del?id={{.Id}}'" -->
+															<!-- data-toggle="modal" data-target="#modal-defaulted" -->
+															<!-- lay-filter="dele" -->
+															<!-- onclick="del({{.Id}});" -->
+															
+													</td>
+												</tr>
+												{{end}}
 
-            layui.use(["form", "element"], function () {
-                var form = layui.form;
+											</tbody>
+										</table>
+									</div>
 
-                form.on('submit(pwd)', function (data) {
+									<!-- <div class="modal fade" id="modal-defaulted">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title">提示</h4>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>确定删除吗？</p>
+												</div>
+												<div class="modal-footer justify-content-between">
+													<button type="button" class="btn btn-primary"
+														 data-dismiss="modal">确定</button>
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal">取消</button>
+												</div>
+											</div>
+										</div>
+									
+									</div> -->
 
-                    submitForm();
-                    loadFrameContent('/u/changePwd');
-                    return false;
-                });
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<span style="text-align: center;display:block;"
+											class="direct-chat-timestamp float">Top Secret. Unauthorized distribution is
+											prohibited.</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		</div>
+		</section>
+		<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
 
-            });
+		<footer class="main-footer">
+			<div class="float-right d-none d-sm-block">
+				<b>Version</b> 3.2.0
+			</div>
+			<strong>Copyright &copy; 2014-2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+			reserved.
+		</footer>
 
-        });
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+		</div>
+		<!-- ./wrapper -->
 
-        function submitForm() {
-            var postData = $("#form1").serializeArray();
-            $.post($("#form1").attr("action"), postData, function (json) {
-                //var data = $.parseJSON(json);
-                if (json.Code == 0) {
-                    //成功
-                    Toast.fire({
-                        icon: 'success',
-                        title: '修改成功'
-                    })
-                    // layer.alert("修改成功");
-                } else {
-                    //
-                    Toast.fire({
-                        icon: 'error',
-                        title: '修改失败：两次输入的密码不一致'
-                    })
-                    // layer.alert("失败了：" + json.Msg, { icon: 2 });
-                }
-            }, "json");
-        }
-
-    });
+		<!-- jQuery -->
+		<script src="../../static/plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+		<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- overlayScrollbars -->
+		<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="../../static/dist/js/adminlte.min.js"></script>
+		<!-- SweetAlert2 -->
+		<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+		<!-- Toastr -->
+		<script src="../../static/plugins/toastr/toastr.min.js"></script>
+		<!-- Page specific script -->
 
 
-</script>
+
+		<script type="text/javascript">
+		
+			function dels(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+				
+				$.get("/manageUser/del", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: '删除成功',
+						})
+						
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: '删除失败',
+						})
+					}
+				}, 'json');
+				
+				loadFrameContent('/u/userManage');
+			}
 
 
-</body>
+			$(function() {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+
+				});
+
+			// 	$('.deleted').click(function(id) {
+
+			// 		Toast.fire({
+			// 			icon: 'error',
+			// 			title: '删除失败',
+			// 		})
+			// 		$.get("/manageUser/del", {
+			// 			rnd: Math.random(),
+			// 			id: id
+			// 		}, function(json) {
+			// 			if (json.Code == 0) { //成功
+			// 				Toast.fire({
+			// 					icon: 'error',
+			// 					title: '删除成功',
+			// 				})
+			// 			} else { //失败
+			// 				Toast.fire({
+			// 					icon: 'error',
+			// 					title: '删除失败',
+			// 				})
+			// 			}
+			// 		}, 'json');
+
+			// 		loadFrameContent('/u/userManage');
+			// 	});
+
+			});
+		</script>
+
+
+	</body>
 </html>

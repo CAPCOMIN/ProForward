@@ -303,6 +303,7 @@ func init() {
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
+		
 
 	beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
 		beego.ControllerComments{
@@ -345,6 +346,15 @@ func init() {
 			Method:           "UserManage",
 			Router:           "/u/userManage",
 			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
+		beego.ControllerComments{
+			Method:           "DeleteOneUser",
+			Router:           `/manageUser/del`,
+			AllowHTTPMethods: []string{"get", "post"},
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})

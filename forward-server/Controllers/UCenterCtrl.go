@@ -86,6 +86,7 @@ func (c *UCenterCtrl) EnableUser() {
 	c.ServeJSON()
 }
 
+
 func (c *UCenterCtrl) DeleteOneUser() {
 	id, err := c.GetInt("id")
 	if err != nil {
@@ -97,6 +98,7 @@ func (c *UCenterCtrl) DeleteOneUser() {
 		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "删除账户失败，" + err.Error()}
 	} else {
 		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功删除账户，ID:" + strconv.Itoa(id)}
+		// c.Ctx.Redirect(302, "/u/main")
 	}
 	c.ServeJSON()
 }
