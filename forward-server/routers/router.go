@@ -27,4 +27,8 @@ func init() {
 
 	beego.Router("/manageUser/del", &Controllers.UCenterCtrl{}, "get:DeleteOneUser")
 
+	beego.Router("/manageUser/add", &Controllers.UCenterCtrl{}, "post:AddUser")
+
+	//beego.SetStaticPath("/swagger", "swagger")
+
 }

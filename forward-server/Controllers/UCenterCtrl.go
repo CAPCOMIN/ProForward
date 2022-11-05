@@ -57,6 +57,31 @@ func (c *UCenterCtrl) UserManage() {
 	c.TplName = "ucenter/userManage.html"
 }
 
+func (c *UCenterCtrl) AddUser() {
+	var newUser Models.SysUser
+
+	newUser.UserName = c.GetString("UserName")
+	newUser.PassWord = Utils.GetMd5(c.GetString("PassWord"))
+	newUser.CreateTime = time.Now()
+	Switch := c.GetString("Status")
+
+	if Switch == "on" {
+		newUser.Status = 0
+	} else {
+		newUser.Status = 1
+	}
+	logs.Warn("AddUser", newUser.UserName, newUser.PassWord, newUser.Status, newUser.CreateTime)
+
+	id, err := Service.SysDataS.AddOneUser(&newUser)
+	if err != nil {
+		logs.Error("AddUser", err)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "添加账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功添加账户，ID:" + strconv.FormatInt(id, 10)}
+	}
+	c.ServeJSON()
+}
+
 func (c *UCenterCtrl) BanUser() {
 	id, err := c.GetInt("id")
 	if err != nil {
@@ -67,7 +92,7 @@ func (c *UCenterCtrl) BanUser() {
 		logs.Error("BanUser2", err2)
 		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "停用账户失败，" + err.Error()}
 	} else {
-		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功停用账户，ID:" + err.Error()}
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功停用账户，ID:"}
 	}
 	c.ServeJSON()
 }
@@ -85,7 +110,6 @@ func (c *UCenterCtrl) EnableUser() {
 	}
 	c.ServeJSON()
 }
-
 
 func (c *UCenterCtrl) DeleteOneUser() {
 	id, err := c.GetInt("id")

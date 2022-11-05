@@ -63,13 +63,54 @@
 													<button type="submit" class="btn btn-default">
 														<i class="fas fa-search"></i>
 													</button>
-													<button class="btn btn-success" onclick=""><i
+                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i
 															class="fa fa-plus-circle"></i>添加用户
 													</button>
 												</div>
 											</div>
 										</div>
 									</div>
+
+                            <div class="modal fade" id="modal-default">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">添加系统用户</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/manageUser/add" method="post">
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">用户名（不得重复）</label>
+                                                        <input type="text" class="form-control" name="UserName" id="exampleInputEmail1" placeholder="输入唯一的用户名">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">密码</label>
+                                                        <input type="password" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch custom-switch-on-danger">
+                                                        <input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
+                                                        <label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                                    <button type="submit" class="btn btn-primary">提交</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
 									<div class="card-body table-responsive p-0">
 										<table class="table table-hover text-nowrap">
 											<thead>
@@ -111,7 +152,7 @@
 															<!-- <form action="" method="post"> -->
 															<!-- <button class='btn btn-danger deleted'
 															data-toggle="modal" data-target="#modal-defaulted"
-															
+
 															onclick="del();"
 															>删除</button> -->
 															<!-- </form> -->
@@ -119,7 +160,7 @@
 															<!-- data-toggle="modal" data-target="#modal-defaulted" -->
 															<!-- lay-filter="dele" -->
 															<!-- onclick="del({{.Id}});" -->
-															
+
 													</td>
 												</tr>
 												{{end}}
@@ -149,7 +190,7 @@
 												</div>
 											</div>
 										</div>
-									
+
 									</div> -->
 
 									<!-- /.card-body -->
@@ -203,7 +244,7 @@
 
 
 		<script type="text/javascript">
-		
+
 			function dels(id) {
 				var Toast = Swal.mixin({
 					toast: true,
@@ -211,7 +252,7 @@
 					showConfirmButton: false,
 					timer: 3000,
 				});
-				
+
 				$.get("/manageUser/del", {
 					rnd: Math.random(),
 					id: id
@@ -221,7 +262,7 @@
 							icon: 'success',
 							title: '删除成功',
 						})
-						
+
 					} else { //失败
 						Toast.fire({
 							icon: 'error',
@@ -229,7 +270,7 @@
 						})
 					}
 				}, 'json');
-				
+
 				loadFrameContent('/u/userManage');
 			}
 

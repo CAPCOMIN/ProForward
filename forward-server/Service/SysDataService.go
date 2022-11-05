@@ -61,6 +61,17 @@ func (_self *SysDataService) GetSysUserByName(userName string) *Models.SysUser {
 	return entity
 }
 
+func (_self *SysDataService) AddOneUser(entity *Models.SysUser) (int64, error) {
+
+	id, err := OrmerS.Insert(entity)
+	if err != nil {
+		logs.Error("AddOneUserByName", err)
+	} else {
+		logs.Warn("AddOneUserByName 成功添加新用户 ID，UserName：", id, entity.UserName)
+	}
+	return id, err
+}
+
 func (_self *SysDataService) ChangeSysUserStatus(userId int, newStatus int) error {
 	entity := _self.GetSysUserById(userId)
 	entity.Status = newStatus
