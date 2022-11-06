@@ -32,6 +32,7 @@ func (c *UCenterCtrl) Index() {
 	c.Data["runtime_GOARCH"] = runtime.GOARCH
 	c.Data["runtime_NumGoroutine"] = runtime.NumGoroutine()
 	c.Data["server_Time"] = time.Now()
+	//c.Data["runtime_NumGoroutine"] = runtime.
 
 	c.TplName = "ucenter/index.html"
 }

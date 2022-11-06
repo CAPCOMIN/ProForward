@@ -149,18 +149,6 @@
 																data-toggle="modal" data-target="#modal-defaulted"
 																onclick="dels({{.Id}});"
 																>删除</button>
-															<!-- <form action="" method="post"> -->
-															<!-- <button class='btn btn-danger deleted'
-															data-toggle="modal" data-target="#modal-defaulted"
-
-															onclick="del();"
-															>删除</button> -->
-															<!-- </form> -->
-															<!-- onclick="window.location.href='/manageUser/del?id={{.Id}}'" -->
-															<!-- data-toggle="modal" data-target="#modal-defaulted" -->
-															<!-- lay-filter="dele" -->
-															<!-- onclick="del({{.Id}});" -->
-
 													</td>
 												</tr>
 												{{end}}
@@ -168,30 +156,6 @@
 											</tbody>
 										</table>
 									</div>
-
-									<!-- <div class="modal fade" id="modal-defaulted">
-										<div class="modal-dialog">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h4 class="modal-title">提示</h4>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-													<p>确定删除吗？</p>
-												</div>
-												<div class="modal-footer justify-content-between">
-													<button type="button" class="btn btn-primary"
-														 data-dismiss="modal">确定</button>
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">取消</button>
-												</div>
-											</div>
-										</div>
-
-									</div> -->
 
 									<!-- /.card-body -->
 									<div class="card-footer">
@@ -203,6 +167,7 @@
 							</div>
 						</div>
 					</div>
+
 			</div>
 		</div>
 		</div>
@@ -283,32 +248,6 @@
 					timer: 3000,
 
 				});
-
-			// 	$('.deleted').click(function(id) {
-
-			// 		Toast.fire({
-			// 			icon: 'error',
-			// 			title: '删除失败',
-			// 		})
-			// 		$.get("/manageUser/del", {
-			// 			rnd: Math.random(),
-			// 			id: id
-			// 		}, function(json) {
-			// 			if (json.Code == 0) { //成功
-			// 				Toast.fire({
-			// 					icon: 'error',
-			// 					title: '删除成功',
-			// 				})
-			// 			} else { //失败
-			// 				Toast.fire({
-			// 					icon: 'error',
-			// 					title: '删除失败',
-			// 				})
-			// 			}
-			// 		}, 'json');
-
-			// 		loadFrameContent('/u/userManage');
-			// 	});
 
 			});
 		</script>

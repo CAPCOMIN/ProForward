@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
+	"forward-core/Models"
 	"forward-server/Service"
 	_ "forward-server/routers"
-
-	"forward-core/Models"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/vmihailenco/msgpack"
+	_ "net/http/pprof"
 )
 
 func main() {
@@ -31,6 +31,15 @@ func main() {
 		//logs.SetLogger(logs.AdapterFile, logFileConfig)
 		logs.SetLogger(logs.AdapterMultiFile, logFileConfig)
 	}
+
+	//go func() {
+	//	err := http.ListenAndServe("localhost:8888", nil)
+	//	if err != nil {
+	//		logs.Error("port 8888 Pprof Error")
+	//	} else {
+	//		logs.Debug("port 8888 successfully ListenAndServe! ")
+	//	}
+	//}()
 
 	//输出文件名和行号
 	logs.EnableFuncCallDepth(true)

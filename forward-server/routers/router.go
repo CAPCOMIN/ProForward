@@ -29,6 +29,8 @@ func init() {
 
 	beego.Router("/manageUser/add", &Controllers.UCenterCtrl{}, "post:AddUser")
 
+	beego.Router("/performance/goroutine", &Controllers.PerformanceController{}, "get:PerfGoroutine")
+
 	//beego.SetStaticPath("/swagger", "swagger")
 
 }

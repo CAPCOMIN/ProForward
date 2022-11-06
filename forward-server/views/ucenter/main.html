@@ -274,6 +274,56 @@
 								</a>
 							</li>
 							<li class="nav-item">
+								<a href="javascript:void(0);" onclick="" class="nav-link">
+									<i class="nav-icon fa fa-shield-alt"></i>
+									<p>
+										性能/Performance
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+
+								<ul class="nav nav-treeview">
+
+									<li class="nav-item">
+										<a href="javascript:void(0);" onclick="loadFrameContent('/performance/goroutine');"
+										   class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>协程性能信息</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>堆栈信息</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>线程创建信息</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>块/block信息</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>内存性能信息</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="" class="nav-link">
+											<i class="far fa-circle nav-icon"></i>
+											<p>汇总信息</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
 								<a href="javascript:void(0);"
 									onclick="window.location.href = 'http://127.0.0.1:8088/qps'" class="nav-link">
 									<i class="nav-icon fa fa-link"></i>
@@ -333,9 +383,8 @@
 										</a>
 									</li>
 								</ul>
-
-
 							</li>
+
 							<li class="nav-item">
 								<a href="javascript:void(0);" onclick="" class="nav-link">
 									<i class="nav-icon fa fa-info-circle"></i>
