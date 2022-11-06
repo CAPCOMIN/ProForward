@@ -58,14 +58,17 @@ func (c *UCenterCtrl) UserManage() {
 	c.TplName = "ucenter/userManage.html"
 }
 
-func (c *UCenterCtrl) Adduser() {
-	entity := Models.PortForward{}
-	entity.Status = 1
+// func (c *ForwardCtrl) Edituser() {
+
+// 	id, _ := c.GetInt("id")
+
+// 	entity := Service.SysDataS.GetPortForwardById(id)
 	
-	c.Data["entity"] = entity
-	
-	c.TplName = "ucenter/userForm.html"
-}
+// 	c.Data["entity"] = entity
+
+// 	c.TplName = "ucenter/userForm.html"
+
+// }
 
 func (c *UCenterCtrl) AddUser() {
 	var newUser Models.SysUser

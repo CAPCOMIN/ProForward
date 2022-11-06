@@ -102,12 +102,70 @@
 												</button>
 											</div>
 											<div class="modal-body">
-												网络转发端口
+				
+												<form id="form1" action="/manageUser/add" method="post">
+												    <div class="card-body">
+												        <div class="form-group">
+												            <label for="exampleInputEmail1">名称</label>
+												            <input type="text" class="form-control" name="UserName" id="exampleInputEmail1" placeholder="输入唯一的用户名">
+												        </div>
+												        <div class="form-group">
+												            <label for="exampleInputPassword1">本地监听地址</label>
+												            <input type="text" class="form-control" name="addr" value="{{.entity.Addr}}" id="exampleInputPassword1" placeholder="默认监听所有地址" autocomplete="off">
+												        </div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">本地监听端口</label>
+														    <input type="text" class="form-control" name="port" value="{{if gt .entity.Port 0}}{{.entity.Port}}{{end}}" id="exampleInputPassword1" placeholder="默认监听所有地址" autocomplete="off">
+														</div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">转发方式</label>
+														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+														</div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">协议</label>
+														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+														</div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">转发到地址</label>
+														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+														</div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">转发到端口</label>
+														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+														</div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">多分发</label>
+														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+														</div>
+														<div class="form-group">
+														    <label for="exampleInputPassword1">一键开启</label>
+														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+														</div>
+												        <!-- <div class="custom-control custom-switch custom-switch-on-danger">
+												            <input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
+												            <label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
+												        </div> -->
+	<div class="callout callout-info">
+		<!-- <label class="layui-form-label">协议</label> -->
+*多分发说明：<br>
+如果不需要“多分发”，请留空；<br>
+如果需要分发到多个端口，填写格式为 “IP:端口”，多个用 ; 号隔开<br>
+如 192.1.1.100:8081;192.1.1.100:8082<br>
+<br>
+*一键开启说明，设置为“支持”后：<br>
+通过在配置文件中添加  onstart.forward = "true" ，可让程序每次运行后就开始转发该规则，或者在列表页面通过点击“一键开启”。<br>
+	</div>
+												    </div>
+												    <!-- <div class="modal-footer justify-content-between">
+												        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+												        <button type="button" class="btn btn-primary" onclick="adduser() $('#modal-default').modal('hide'); $('#modal-default').modal('hide');" data-dismiss="modal" >提交</button>
+												    </div> -->
+												</form>
 											</div>
 											<div class="modal-footer justify-content-between">
 												<button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-primary">Save changes</button>
+													data-dismiss="modal">关闭</button>
+												<button type="button" class="btn btn-primary">保存</button>
 											</div>
 										</div>
 									</div>

@@ -63,15 +63,17 @@
 													<button type="submit" class="btn btn-default">
 														<i class="fas fa-search"></i>
 													</button>
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"  onclick="adduser()"><i
+                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal-default" 
+											><i
 															class="fa fa-plus-circle"></i>添加用户
+															<!-- onclick="adduser()" -->
 													</button>
 												</div>
 											</div>
 										</div>
 									</div>
 
-                            <!-- <div class="modal fade" id="modal-default">
+                            <div class="modal fade" id="modal-default">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -81,7 +83,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="/manageUser/add" method="post">
+                                            <form id="form1" action="/manageUser/add" method="post">
                                                 <div class="card-body">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">用户名（不得重复）</label>
@@ -101,7 +103,7 @@
 
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                    <button type="submit" class="btn btn-primary">提交</button>
+                                                    <button type="button" class="btn btn-primary" onclick="adduser() $('#modal-default').modal('hide'); $('#modal-default').modal('hide');" data-dismiss="modal" >提交</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -109,7 +111,7 @@
 
                                 </div>
 
-                            </div> -->
+                            </div>
 
 									<div class="card-body table-responsive p-0">
 										<table class="table table-hover text-nowrap">
@@ -148,7 +150,7 @@
 																onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
 															 -->
 															{{end}}
-															<button class='btn btn-info' onclick=''>编辑</button>
+															<button class='btn btn-info' onclick='edituser({{.Id}});'>编辑</button>
 
 
 															<button class='btn btn-danger'
@@ -303,34 +305,77 @@
 				loadFrameContent('/u/userManage');
 			}
 			
-			function adduser() {
-				
-				$.get('/u/Adduser', {
-					rnd: Math.random()
-				}, function(html) {
-					layer.open({
-						type: 1, //page层
-						area: ['800px', '360px'],
-						title: '添加用户',
-						shade: 0.6, //遮罩透明度
-						moveType: 0, //拖拽风格，0是默认，1是传统拖动
-						shift: 1, //0-6的动画形式，-1不开启
-						maxmin: false,
-						content: html,
-						btn: ['确定', '取消'],
-						yes: function(index, layero) {
-							submitForm(index);
-						},
-						btn2: function(index) {
-							layer.close(index);
-						},
-						cancel: function(index) {
-							layer.close(index);
-						}
-					});
+			function edituser(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
 				});
+			
+				$.get("/manageUser/edituser", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: '编辑成功',
+						})
+			
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: '编辑失败',
+						})
+					}
+				}, 'json');
+			
+				loadFrameContent('/u/userManage');
 			}
 			
+			
+			function adduser() {
+				
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+				
+				var postData = $("#form1").serializeArray();
+				$.post($("#form1").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						//成功
+						//layer.alert("保存成功");
+						//layer.msg("保存成功.");
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/userManage');
+						Toast.fire({
+							icon: 'success',
+							title: '添加成功',
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/userManage');
+						Toast.fire({
+							icon: 'error',
+							title: '添加失败',
+						})
+					}
+				}, "json");
+				
+				
+				
+				
+				
+				loadFrameContent('/u/userManage');
+			
+			}
 			
 			$(function() {
 				var Toast = Swal.mixin({

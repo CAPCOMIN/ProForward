@@ -377,12 +377,15 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
-	    beego.ControllerComments{
-	        Method: "Adduser",
-	        Router: `/u/Adduser`,
-	        AllowHTTPMethods: []string{"get","post"},
-	        MethodParams: param.Make(),
-	        Filters: nil,
-	        Params: nil})
+
+	// beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
+	// 	beego.ControllerComments{
+	// 		Method:           "Edituser",
+	// 		Router:           `/manageUser/edituser`,
+	// 		AllowHTTPMethods: []string{"get", "post"},
+	// 		MethodParams:     param.Make(),
+	// 		Filters:          nil,
+	// 		Params:           nil})
+			
+	
 }
