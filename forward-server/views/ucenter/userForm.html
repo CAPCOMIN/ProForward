@@ -14,12 +14,7 @@
 	<!-- Theme style -->
 	<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
 	<div class="card-body">
-
-
-
-
 		<form id="form1" action="/manageUser/add" method="post">
-			<div class="card-body">
 				<div class="form-group">
 					<label for="exampleInputEmail1">用户名（不得重复）</label>
 					<input type="text" class="form-control" name="UserName" id="exampleInputEmail1"
@@ -35,36 +30,7 @@
 					<input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
 					<label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
 				</div>
-
-			</div>
-
-			<!-- 	<div class="modal-footer justify-content-between">
-				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				<button type="submit" class="btn btn-primary">提交</button>
-			</div> -->
-
-			<!-- <div class="">
-				<label>用户名（不得重复）</label>
-				<div class="layui-input-inline col-md-5">
-					<input type="text" class="form-control" name="UserName" id="exampleInputEmail1"
-						placeholder="输入唯一的用户名">
-				</div>
-			</div>
-			<br>
-			<div class="">
-				<label>密码</label>
-				<div class="layui-input-inline col-md-5">
-					<input type="password" class="form-control" name="PassWord" id="exampleInputPassword1"
-						placeholder="Password">
-				</div>
-			</div>
-			<br>
-			<div class="">
-				<input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
-				<label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
-			</div> -->
 		</form>
-
 	</div>
 </div>
 
@@ -76,11 +42,17 @@
 
 			form.render();
 		});
-
-
 	});
 
 	function submitForm(index) {
+		var Toast = Swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000,
+		});
+		
+		
 		var postData = $("#form1").serializeArray();
 		$.post($("#form1").attr("action"), postData, function(json) {
 			//var data = $.parseJSON(json);
@@ -91,13 +63,18 @@
 				refreshGrid();
 				layer.close(index);
 				loadFrameContent('/u/userManage');
-
+				Toast.fire({
+					icon: 'success',
+					title: '添加成功',
+				})
 			} else {
-				//
-				layer.alert("失败了：" + json.Msg, {
-					icon: 2
-				});
+				refreshGrid();
+				layer.close(index);
 				loadFrameContent('/u/userManage');
+				Toast.fire({
+					icon: 'error',
+					title: '添加失败',
+				})
 			}
 		}, "json");
 	}

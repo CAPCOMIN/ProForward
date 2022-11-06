@@ -136,11 +136,17 @@
 													<td>{{.CreateTime.Format "Jan 02,2006 15:04:05 Monday"}}</td>
 
 													<td>{{if .Status}}
-														<button class='btn btn-outline-warning'
+														<!-- <button class='btn btn-outline-warning'
 															onclick="window.location.href='/manageUser/ban?id={{.Id}}'">停用账号</button>
-														{{else}}
+														 -->
+														 <button class='btn btn-outline-warning'
+														 	onclick="banuser({{.Id}});">停用账号</button>{{else}}
 															<button class='btn btn-outline-success'
+																onclick="enable({{.Id}});">启用账号</button>
+															
+															<!-- <button class='btn btn-outline-success'
 																onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
+															 -->
 															{{end}}
 															<button class='btn btn-info' onclick=''>编辑</button>
 
@@ -239,6 +245,64 @@
 				loadFrameContent('/u/userManage');
 			}
 
+			function enable(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+			
+				$.get("/manageUser/enable", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: '启用成功',
+						})
+			
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: '启用失败',
+						})
+					}
+				}, 'json');
+			
+				loadFrameContent('/u/userManage');
+			}
+			
+			function banuser(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+			
+				$.get("/manageUser/banuser", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: '停用成功',
+						})
+			
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: '停用失败',
+						})
+					}
+				}, 'json');
+			
+				loadFrameContent('/u/userManage');
+			}
+			
 			function adduser() {
 				
 				$.get('/u/Adduser', {
@@ -246,7 +310,7 @@
 				}, function(html) {
 					layer.open({
 						type: 1, //page层
-						area: ['880px', '350px'],
+						area: ['800px', '360px'],
 						title: '添加用户',
 						shade: 0.6, //遮罩透明度
 						moveType: 0, //拖拽风格，0是默认，1是传统拖动
