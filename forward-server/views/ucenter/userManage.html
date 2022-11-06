@@ -63,7 +63,7 @@
 													<button type="submit" class="btn btn-default">
 														<i class="fas fa-search"></i>
 													</button>
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"><i
+                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal-default"  onclick="adduser()"><i
 															class="fa fa-plus-circle"></i>添加用户
 													</button>
 												</div>
@@ -71,7 +71,7 @@
 										</div>
 									</div>
 
-                            <div class="modal fade" id="modal-default">
+                            <!-- <div class="modal fade" id="modal-default">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -109,7 +109,7 @@
 
                                 </div>
 
-                            </div>
+                            </div> -->
 
 									<div class="card-body table-responsive p-0">
 										<table class="table table-hover text-nowrap">
@@ -239,7 +239,35 @@
 				loadFrameContent('/u/userManage');
 			}
 
-
+			function adduser() {
+				
+				$.get('/u/Adduser', {
+					rnd: Math.random()
+				}, function(html) {
+					layer.open({
+						type: 1, //page层
+						area: ['880px', '350px'],
+						title: '添加用户',
+						shade: 0.6, //遮罩透明度
+						moveType: 0, //拖拽风格，0是默认，1是传统拖动
+						shift: 1, //0-6的动画形式，-1不开启
+						maxmin: false,
+						content: html,
+						btn: ['确定', '取消'],
+						yes: function(index, layero) {
+							submitForm(index);
+						},
+						btn2: function(index) {
+							layer.close(index);
+						},
+						cancel: function(index) {
+							layer.close(index);
+						}
+					});
+				});
+			}
+			
+			
 			$(function() {
 				var Toast = Swal.mixin({
 					toast: true,

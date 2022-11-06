@@ -1,0 +1,104 @@
+<div class="card card-success card-outline">
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>AdminLTE 3 | Fixed Sidebar</title>
+
+	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+	<!-- overlayScrollbars -->
+	<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+	<div class="card-body">
+
+
+
+
+		<form id="form1" action="/manageUser/add" method="post">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="exampleInputEmail1">用户名（不得重复）</label>
+					<input type="text" class="form-control" name="UserName" id="exampleInputEmail1"
+						placeholder="输入唯一的用户名">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">密码</label>
+					<input type="password" class="form-control" name="PassWord" id="exampleInputPassword1"
+						placeholder="Password">
+				</div>
+
+				<div class="custom-control custom-switch custom-switch-on-danger">
+					<input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
+					<label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
+				</div>
+
+			</div>
+
+			<!-- 	<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="submit" class="btn btn-primary">提交</button>
+			</div> -->
+
+			<!-- <div class="">
+				<label>用户名（不得重复）</label>
+				<div class="layui-input-inline col-md-5">
+					<input type="text" class="form-control" name="UserName" id="exampleInputEmail1"
+						placeholder="输入唯一的用户名">
+				</div>
+			</div>
+			<br>
+			<div class="">
+				<label>密码</label>
+				<div class="layui-input-inline col-md-5">
+					<input type="password" class="form-control" name="PassWord" id="exampleInputPassword1"
+						placeholder="Password">
+				</div>
+			</div>
+			<br>
+			<div class="">
+				<input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
+				<label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
+			</div> -->
+		</form>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		layui.use(["form", "element"], function() {
+			var form = layui.form;
+
+			form.render();
+		});
+
+
+	});
+
+	function submitForm(index) {
+		var postData = $("#form1").serializeArray();
+		$.post($("#form1").attr("action"), postData, function(json) {
+			//var data = $.parseJSON(json);
+			if (json.Code == 0) {
+				//成功
+				//layer.alert("保存成功");
+				//layer.msg("保存成功.");
+				refreshGrid();
+				layer.close(index);
+				loadFrameContent('/u/userManage');
+
+			} else {
+				//
+				layer.alert("失败了：" + json.Msg, {
+					icon: 2
+				});
+				loadFrameContent('/u/userManage');
+			}
+		}, "json");
+	}
+</script>

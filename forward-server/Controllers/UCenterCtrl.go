@@ -58,6 +58,15 @@ func (c *UCenterCtrl) UserManage() {
 	c.TplName = "ucenter/userManage.html"
 }
 
+func (c *UCenterCtrl) Adduser() {
+	entity := Models.PortForward{}
+	entity.Status = 1
+	
+	c.Data["entity"] = entity
+	
+	c.TplName = "ucenter/userForm.html"
+}
+
 func (c *UCenterCtrl) AddUser() {
 	var newUser Models.SysUser
 
@@ -80,6 +89,7 @@ func (c *UCenterCtrl) AddUser() {
 	} else {
 		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功添加账户，ID:" + strconv.FormatInt(id, 10)}
 	}
+	// c.Ctx.Redirect(302, "/u/userManage")
 	c.ServeJSON()
 }
 
