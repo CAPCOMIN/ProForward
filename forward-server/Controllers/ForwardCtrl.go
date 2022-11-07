@@ -7,6 +7,7 @@ import (
 	"forward-core/Utils"
 	"forward-server/Controllers/BaseCtrl"
 	"forward-server/Service"
+	"strconv"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
@@ -75,11 +76,41 @@ func (c *ForwardCtrl) EditForward() {
 
 	id, _ := c.GetInt("id")
 
-	entity := Service.SysDataS.GetPortForwardById(id)
-	c.Data["entity"] = entity
+	json := Service.SysDataS.GetPortForwardById(id)
+	c.Data["json"] = json
+	c.ServeJSON()
 
-	c.TplName = "ucenter/forwardForm.html"
+	// entity := Service.SysDataS.GetPortForwardById(id)
+	// c.Data["entity"] = entity
+	// c.TplName = "ucenter/forwardForm.html"
+}
 
+func (c *ForwardCtrl) DoEditForward() {
+
+	var updateUser Models.PortForward
+
+	updateUser.Id, _ = c.GetInt("id")
+	updateUser.Name = c.GetString("name")
+	updateUser.Addr = c.GetString("addr")
+	updateUser.Port, _ = c.GetInt("port")
+	updateUser.Status, _ = c.GetInt("status")
+	updateUser.Protocol = c.GetString("protocol")
+	updateUser.TargetAddr = c.GetString("targetAddr")
+	updateUser.TargetPort, _ = c.GetInt("targetPort")
+	updateUser.Others = c.GetString("others")
+	updateUser.FType, _ = c.GetInt("fType")
+
+	// logs.Warn("DoEditUser", updateUser.Id, updateUser.UserName, updateUser.PassWord, updateUser.Status, updateUser.CreateTime)
+
+	num, err := Service.SysDataS.UpdatePortForward(&updateUser)
+	if err != nil {
+		logs.Error("DoEditForward", err)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "更新账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功更新" + strconv.FormatInt(num, 10) + "个用户, " + "ID: " + strconv.Itoa(updateUser.Id)}
+	}
+
+	c.ServeJSON()
 }
 
 // @router /u/DelForward [post]
@@ -284,7 +315,7 @@ func (c *ForwardCtrl) CloseAllForward() {
 func (c *ForwardCtrl) ApiDoc() {
 	magicAddr := beego.AppConfig.DefaultString("magic.service", ":7000")
 	c.Data["magicAddr"] = magicAddr
-	
+
 	agentForward := Service.MagicServ.ForwardInfo
 	if agentForward == nil {
 		agentForward = new(Models.PortForward)

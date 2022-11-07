@@ -105,6 +105,12 @@ func (_self *SysDataService) UpdateSysUser(entity *Models.SysUser) (int64, error
 	return num, err
 }
 
+func (_self *SysDataService) UpdatePortForward(entity *Models.PortForward) (int64, error) {
+
+	num, err := OrmerS.Update(entity, "Name", "Status", "Addr", "Port", "Protocol", "TargetAddr", "TargetPort", "Others", "FType")
+	return num, err
+}
+
 func (_self *SysDataService) DelOneSysUsers(id int) error {
 
 	entity, _ := _self.GetSysUserById(id)

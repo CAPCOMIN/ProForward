@@ -5,6 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>AdminLTE 3 | Fixed Sidebar</title>
 
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet" />
+		<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script> -->
 		<!-- Google Font: Source Sans Pro -->
 		<link rel="stylesheet"
 			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,6 +17,8 @@
 		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+
+
 
 
 		<!-- SweetAlert2 -->
@@ -89,87 +94,105 @@
 										</button>
 									</div>
 								</div>
-								
+
 								<!-- /.modal -->
-								<div class="modal fade" id="modal-addForward">
+								<!-- <div class="modal fade" id="modal-addForward">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title">添加网络转发端口</h4>
+												<h4 class="modal-title">编辑网络转发端口</h4>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
 											<div class="modal-body">
-				
-												<form id="form1" action="/manageUser/add" method="post">
-												    <div class="card-body">
-												        <div class="form-group">
-												            <label for="exampleInputEmail1">名称</label>
-												            <input type="text" class="form-control" name="UserName" id="exampleInputEmail1" placeholder="输入唯一的用户名">
-												        </div>
-												        <div class="form-group">
-												            <label for="exampleInputPassword1">本地监听地址</label>
-												            <input type="text" class="form-control" name="addr" value="{{.entity.Addr}}" id="exampleInputPassword1" placeholder="默认监听所有地址" autocomplete="off">
-												        </div>
+												<form id="form4" action="/u/SaveForward" method="post">
+													<div class="card-body">
 														<div class="form-group">
-														    <label for="exampleInputPassword1">本地监听端口</label>
-														    <input type="text" class="form-control" name="addr" id="exampleInputPassword1" placeholder="默认监听所有地址" autocomplete="off">
+															<label for="forwardNames">名称</label>
+															<input type="text" class="form-control" name="name"
+																id="forwardNames" placeholder="输入唯一的名称" >
 														</div>
 														<div class="form-group">
-														    <label for="exampleInputPassword1">转发方式</label>
-														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+															<label for="exampleInputAddress2">本地监听地址</label>
+															<input type="text" class="form-control" name="addr"
+																id="exampleInputAddress2" placeholder="默认监听所有地址">
 														</div>
 														<div class="form-group">
-														    <label for="exampleInputPassword1">协议</label>
-														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+															<label for="exampleInputPorts">本地监听端口</label>
+															<input type="text" class="form-control" name="port"
+																id="exampleInputPorts" placeholder="端口号，例如8080">
 														</div>
 														<div class="form-group">
-														    <label for="exampleInputPassword1">转发到地址</label>
-														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+															<label for="">转发方式</label>
+															<select name="fType" class="form-select"
+																aria-label="Default select example">
+																<option value="0">端口到端口映射</option>
+															</select>
 														</div>
 														<div class="form-group">
-														    <label for="exampleInputPassword1">转发到端口</label>
-														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+															<label for="">协议</label>
+															<select name="protocol" class="form-select"
+																aria-label="Default select example">
+																<option value="TCP">TCP</option>
+																<option value="UDP">UDP</option>
+															</select>
 														</div>
 														<div class="form-group">
-														    <label for="exampleInputPassword1">多分发</label>
-														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+															<label for="exampleInputTargetAddrs">转发到地址</label>
+															<input type="text" class="form-control" name="targetAddr"
+																id="exampleInputTargetAddrs" placeholder="目标地址">
 														</div>
 														<div class="form-group">
-														    <label for="exampleInputPassword1">一键开启</label>
-														    <input type="text" class="form-control" name="PassWord" id="exampleInputPassword1" placeholder="Password">
+															<label for="exampleInputtargetPorts">转发到端口</label>
+															<input type="text" class="form-control" name="targetPort"
+																id="exampleInputtargetPorts" placeholder="目标端口号，例如3306">
 														</div>
-												        <!-- <div class="custom-control custom-switch custom-switch-on-danger">
-												            <input type="checkbox" class="custom-control-input" name="Status" id="customSwitch1">
-												            <label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
-												        </div> -->
-	<div class="callout callout-info">
-		<!-- <label class="layui-form-label">协议</label> -->
-*多分发说明：<br>
-如果不需要“多分发”，请留空；<br>
-如果需要分发到多个端口，填写格式为 “IP:端口”，多个用 ; 号隔开<br>
-如 192.1.1.100:8081;192.1.1.100:8082<br>
-<br>
-*一键开启说明，设置为“支持”后：<br>
-通过在配置文件中添加  onstart.forward = "true" ，可让程序每次运行后就开始转发该规则，或者在列表页面通过点击“一键开启”。<br>
-	</div>
-												    </div>
-												    <!-- <div class="modal-footer justify-content-between">
-												        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-												        <button type="button" class="btn btn-primary" onclick="adduser() $('#modal-default').modal('hide'); $('#modal-default').modal('hide');" data-dismiss="modal" >提交</button>
-												    </div> -->
+														<div class="form-group">
+															<label for="exampleInputotherss">多分发</label>
+															<input type="text" class="form-control" name="others"
+																id="exampleInputotherss"
+																placeholder="如 192.1.1.100:8081;192.1.1.100:8082">
+														</div>
+														<div class="form-group">
+															<label for="">一键开启</label>
+															<br>
+															<div class="form-check form-check-inline">
+															  <input class="form-check-input" type="radio" name="status" id="inlineRadio1s" value="0">
+															  <label class="form-check-label" for="inlineRadio1s">不支持</label>
+															</div>
+															<div class="form-check form-check-inline">
+															  <input class="form-check-input" type="radio" name="status" id="inlineRadio2s" value="1">
+															  <label class="form-check-label" for="inlineRadio2s">支持</label>
+															</div>
+														</div>
+													</div>
+													<div class="callout callout-info">
+														*多分发说明：<br>
+														如果不需要“多分发”，请留空；<br>
+														如果需要分发到多个端口，填写格式为 “IP:端口”，多个用 ; 号隔开<br>
+														如 192.1.1.100:8081;192.1.1.100:8082<br>
+														<br>
+														*一键开启说明，设置为“支持”后：<br>
+														通过在配置文件中添加 onstart.forward = "true"
+														，可让程序每次运行后就开始转发该规则，或者在列表页面通过点击“一键开启”。<br>
+													</div>
+													<div class="modal-footer justify-content-between">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">
+															取消
+														</button>
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal" onclick="submitEditedUser2()">提交
+														</button>
+													</div>
 												</form>
-											</div>
-											<div class="modal-footer justify-content-between">
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">关闭</button>
-												<button type="button" class="btn btn-primary">保存</button>
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
+
 								<!-- /.modal -->
 
 
@@ -270,67 +293,67 @@
 														data-toggle="modal" data-target="#modal-defaults">
 														<i class="fa fa-stop-circle"></i>一键关闭
 													</button>
-													</h4>
-													<div class="modal fade" id="modal-default">
-														<div class="modal-dialog">
-															<div class="modal-content" >
-																<div class="modal-header">
-																	<h4 class="modal-title">信息</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-label="Close">
-																		<span aria-hidden="true">&times;</span>
-																	</button>
-																</div>
-																<div class="modal-body">
-																	<p>确定一键开启所有转发吗？</p>
-																</div>
-																<div class="modal-footer justify-content-between">
-
-																	<button type="button" class="btn btn-primary Prabtn"
-																		data-dismiss="modal">确定</button>
-																	<button type="button" class="btn btn-default"
-																		data-dismiss="modal">取消</button>
-
-																</div>
+												</h4>
+												<div class="modal fade" id="modal-default">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h4 class="modal-title">信息</h4>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
 															</div>
+															<div class="modal-body">
+																<p>确定一键开启所有转发吗？</p>
+															</div>
+															<div class="modal-footer justify-content-between">
 
+																<button type="button" class="btn btn-primary Prabtn"
+																	data-dismiss="modal">确定</button>
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">取消</button>
+
+															</div>
 														</div>
 
 													</div>
 
-													<!-- <button class="btn btn-outline-info" onclick="CloseAllForward();"><i
+												</div>
+
+												<!-- <button class="btn btn-outline-info" onclick="CloseAllForward();"><i
 															class="fa fa-stop-circle"></i> 一键关闭
 													</button> -->
 
 
-													<div class="modal fade" id="modal-defaults">
-														<div class="modal-dialog">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title">信息</h4>
-																	<button type="button" class="close"
-																		data-dismiss="modal" aria-label="Close">
-																		<span aria-hidden="true">&times;</span>
-																	</button>
-																</div>
-																<div class="modal-body">
-																	<p>确定一键关闭所有转发吗？</p>
-																	
-																</div>
-																<div class="modal-footer justify-content-between">
-
-																	<button type="button" class="btn btn-primary Btnpra"
-																		data-dismiss="modal">确定</button>
-																	<button type="button" class="btn btn-default"
-																		data-dismiss="modal">取消</button>
-
-																</div>
+												<div class="modal fade" id="modal-defaults">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h4 class="modal-title">信息</h4>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
 															</div>
+															<div class="modal-body">
+																<p>确定一键关闭所有转发吗？</p>
 
+															</div>
+															<div class="modal-footer justify-content-between">
+
+																<button type="button" class="btn btn-primary Btnpra"
+																	data-dismiss="modal">确定</button>
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">取消</button>
+
+															</div>
 														</div>
 
 													</div>
-												
+
+												</div>
+
 												<!-- <br> -->
 												<b> 一键开启说明：</b> <br>
 												1、不需要批量勾选规则，只要规则设置了支持“一键开启”都会被一键开启转发。 <br>
@@ -368,12 +391,106 @@
 									</div>
 									<!-- /.card -->
 								</div>
-
-
-
-
-
 							</div>
+
+							<div class="modal fade" id="modal-editport">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">编辑网络转发端口</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form id="form3" action="/u/DoEditForward" method="post">
+												<div class="card-body">
+													<div class="form-group">
+														<label for="InputID">Forward ID</label>
+														<input type="text" class="form-control" name="id" id="InputID"
+															readonly>
+														<small class="form-text text-muted">系统用户ID修改已禁用</small>
+													</div>
+													<div class="form-group">
+														<label for="forwardName">名称</label>
+														<input type="text" class="form-control" name="name"
+															id="forwardName" placeholder="输入唯一的名称">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputAddress">本地监听地址</label>
+														<input type="text" class="form-control" name="addr"
+															id="exampleInputAddress" placeholder="默认监听所有地址">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputPort">本地监听端口</label>
+														<input type="text" class="form-control" name="port"
+															id="exampleInputPort" placeholder="端口号，例如8080">
+													</div>
+													<div class="form-group">
+														<label for="">转发方式</label>
+														<select name="fType" class="form-select"
+															aria-label="Default select example">
+															<option value="0">端口到端口映射</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="">协议</label>
+														<select name="protocol" class="form-select"
+															aria-label="Default select example">
+															<option value="TCP">TCP</option>
+															<option value="UDP">UDP</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="exampleInputTargetAddr">转发到地址</label>
+														<input type="text" class="form-control" name="targetAddr"
+															id="exampleInputTargetAddr" placeholder="目标地址">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputtargetPort">转发到端口</label>
+														<input type="text" class="form-control" name="targetPort"
+															id="exampleInputtargetPort" placeholder="目标端口号，例如3306">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputothers">多分发</label>
+														<input type="text" class="form-control" name="others"
+															id="exampleInputothers"
+															placeholder="如 192.1.1.100:8081;192.1.1.100:8082">
+													</div>
+													<div class="form-group">
+														<label for="">一键开启</label>
+														<br>
+														<input type="radio" class="btn-check" name="status" value="1"
+															id="success-outlined" autocomplete="off" checked>
+														<label class="btn btn-outline-success"
+															for="success-outlined">支持</label>
+
+														<input type="radio" class="btn-check" name="status" value="0"
+															id="danger-outlined" autocomplete="off">
+														<label class="btn btn-outline-danger"
+															for="danger-outlined">不支持</label>
+														<!-- <input type="radio" name="status" value="0" title="不支持"
+															>
+														<input type="radio" name="status" value="1" title="支持"
+															> -->
+													</div>
+												</div>
+
+												<div class="modal-footer justify-content-between">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														取消
+													</button>
+													<button type="button" class="btn btn-primary" data-dismiss="modal"
+														onclick="submitEditedUser()">提交
+													</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
 							<div class="col-md-12">
 								<div id="help1" class="card card-success card-outline">
 									<div class="card-header">
@@ -648,32 +765,132 @@
 				});
 			}
 
+			// function editForward(id) {
+			// 	$.get('/u/EditForward', {
+			// 		rnd: Math.random(),
+			// 		id: id
+			// 	}, function(html) {
+			// 		layer.open({
+			// 			type: 1, //page层
+			// 			area: ['600px', '550px'],
+			// 			title: '编辑网络转发端口',
+			// 			shade: 0.6, //遮罩透明度
+			// 			moveType: 1, //拖拽风格，0是默认，1是传统拖动
+			// 			shift: -1, //0-6的动画形式，-1不开启
+			// 			maxmin: false,
+			// 			content: html,
+			// 			btn: ['保存配置', '取消'],
+			// 			yes: function(index, layero) {
+			// 				submitForm(index);
+			// 			},
+			// 			btn2: function(index) {
+			// 				layer.close(index);
+			// 			},
+			// 			cancel: function(index) {
+			// 				layer.close(index);
+			// 			}
+			// 		});
+			// 	});
+			// }
+
 			function editForward(id) {
-				$.get('/u/EditForward', {
-					rnd: Math.random(),
-					id: id
-				}, function(html) {
-					layer.open({
-						type: 1, //page层
-						area: ['600px', '550px'],
-						title: '编辑网络转发端口',
-						shade: 0.6, //遮罩透明度
-						moveType: 1, //拖拽风格，0是默认，1是传统拖动
-						shift: -1, //0-6的动画形式，-1不开启
-						maxmin: false,
-						content: html,
-						btn: ['保存配置', '取消'],
-						yes: function(index, layero) {
-							submitForm(index);
-						},
-						btn2: function(index) {
-							layer.close(index);
-						},
-						cancel: function(index) {
-							layer.close(index);
-						}
-					});
+				let Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 4500,
 				});
+				$.get("/u/EditForward", {
+					id: id,
+					rnd: Math.random()
+				}, function(json) {
+					// Toast.fire({
+					//     icon: 'info',
+					//     title: "Editing "+json.UserName,
+					//     text: "CreateTime: "+json.CreateTime
+					// })
+					document.getElementById("InputID").setAttribute("value", json.Id);
+					document.getElementById("forwardName").setAttribute("value", json.Name);
+					document.getElementById("exampleInputAddress").setAttribute("value", json.Addr);
+					document.getElementById("exampleInputPort").setAttribute("value", json.Port);
+					document.getElementById("exampleInputTargetAddr").setAttribute("value", json.TargetAddr);
+					document.getElementById("exampleInputtargetPort").setAttribute("value", json.TargetPort);
+					document.getElementById("exampleInputothers").setAttribute("value", json.Others);
+
+				}, 'json')
+
+				$("#modal-editport").modal('show');
+			}
+
+
+			function submitEditedUser() {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form3").serializeArray();
+				$.post($("#form3").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+
+			function submitEditedUser2() {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form4").serializeArray();
+				$.post($("#form4").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
 			}
 
 			function delForward() {
@@ -839,7 +1056,49 @@
 				});
 			}
 
+			function addform() {
+				// layer.alert("没有勾选要批量操作的数据.", {
+				// 	icon: 3,
+				// 	title: "警告信息"
+				// });
 
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form2").serializeArray();
+				$.post($("#form2").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						//成功
+						//layer.alert("保存成功");
+						//layer.msg("保存成功.");
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: '添加成功',
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: '添加失败',
+						})
+					}
+				}, "json");
+
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+
+			}
 
 
 			// function OpenAllForward() {
@@ -886,13 +1145,13 @@
 
 
 			$(function() {
-				 // var Toast = Swal.mixin({
-				 //   toast: true,
-				 //   position: 'top-end',
-				 //   showConfirmButton: false,
-				 //   timer: 3000,
+				// var Toast = Swal.mixin({
+				//   toast: true,
+				//   position: 'top-end',
+				//   showConfirmButton: false,
+				//   timer: 3000,
 
-				 // });
+				// });
 
 				$('.Prabtn').click(function() {
 					query(1);
@@ -925,21 +1184,22 @@
 							query(1);
 						}
 					}, 'json');
+					loadFrameContent('/u/forwardList');
 					// close;
 				});
-				
+
 				$('.addbtn').click(function() {
-					
+
 					// Toast.fire({
 					//   icon: 'success',
 					//   title: '修改成功'
 					// })
-					
+
 					// function addForward() {
-					  
+
 					// }
-					
-				
+
+
 				});
 
 
