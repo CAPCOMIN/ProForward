@@ -94,7 +94,7 @@ func (a *PerformanceController) PerfGoroutine() {
 			grOne.Duration = durationGrp.String()
 		}
 
-		grOne.Detail = a.TrimEmptyLinesAndDelFirstLine(goroutineInfo)
+		grOne.Detail = a.TrimEmptyLinesAndDelFirstLine(goroutineInfoList[i])
 
 		grList = append(grList, grOne)
 		logs.Warn("PerfGoroutine", grOne.Id, grOne.Status, grOne.Duration)
