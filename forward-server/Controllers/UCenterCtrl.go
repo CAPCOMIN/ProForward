@@ -58,17 +58,41 @@ func (c *UCenterCtrl) UserManage() {
 	c.TplName = "ucenter/userManage.html"
 }
 
-// func (c *ForwardCtrl) Edituser() {
+func (c *UCenterCtrl) EditUser() {
+	id, err := c.GetInt("id")
+	if err != nil {
+		logs.Error("EditUser GetInt")
+	}
+	userToEdit, _ := Service.SysDataS.GetSysUserById(id)
+	c.Data["json"] = userToEdit
+	logs.Warn("EditUser", userToEdit.UserName)
+	c.ServeJSON()
+}
 
-// 	id, _ := c.GetInt("id")
+func (c *UCenterCtrl) DoEditUser() {
+	var updateUser Models.SysUser
+	updateUser.Id, _ = c.GetInt("Id")
+	updateUser.UserName = c.GetString("UserName")
+	updateUser.PassWord = Utils.GetMd5(c.GetString("PassWord"))
+	Switch := c.GetString("Status")
 
-// 	entity := Service.SysDataS.GetPortForwardById(id)
-	
-// 	c.Data["entity"] = entity
+	if Switch == "on" {
+		updateUser.Status = 0
+	} else {
+		updateUser.Status = 1
+	}
+	logs.Warn("DoEditUser", updateUser.Id, updateUser.UserName, updateUser.PassWord, updateUser.Status, updateUser.CreateTime)
 
-// 	c.TplName = "ucenter/userForm.html"
+	num, err := Service.SysDataS.UpdateSysUser(&updateUser)
+	if err != nil {
+		logs.Error("DoEditUser", err)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "更新账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功更新" + strconv.FormatInt(num, 10) + "个用户, " + "ID: " + strconv.Itoa(updateUser.Id)}
+	}
 
-// }
+	c.ServeJSON()
+}
 
 func (c *UCenterCtrl) AddUser() {
 	var newUser Models.SysUser
@@ -104,9 +128,9 @@ func (c *UCenterCtrl) BanUser() {
 	err2 := Service.SysDataS.ChangeSysUserStatus(id, 0)
 	if err2 != nil || err != nil {
 		logs.Error("BanUser2", err2)
-		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "停用账户失败，" + err.Error()}
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "停用账户失败，" + err.Error() + err2.Error()}
 	} else {
-		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功停用账户，ID:"}
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功停用账户，ID:" + strconv.Itoa(id)}
 	}
 	c.ServeJSON()
 }

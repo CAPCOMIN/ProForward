@@ -87,19 +87,20 @@
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">用户名（不得重复）</label>
                                                         <input type="text" class="form-control" name="UserName"
-                                                               id="exampleInputEmail1" placeholder="输入唯一的用户名">
+                                                               id="exampleInputEmail1" placeholder="输入唯一的用户名" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputPassword1">密码</label>
                                                         <input type="password" class="form-control" name="PassWord"
-                                                               id="exampleInputPassword1" placeholder="Password">
+                                                               id="exampleInputPassword1" placeholder="Password" required>
                                                     </div>
 
                                                     <div class="custom-control custom-switch custom-switch-on-danger">
                                                         <input type="checkbox" class="custom-control-input"
-                                                               name="Status" id="customSwitch1">
-                                                        <label class="custom-control-label" for="customSwitch1">添加后立即禁用该账户登录</label>
+                                                               name="Status" id="customSwitch22" checked>
+                                                        <label class="custom-control-label" for="customSwitch22">添加后立即禁用该账户登录</label>
                                                     </div>
+
 
                                                 </div>
 
@@ -118,6 +119,63 @@
                                 </div>
 
                             </div>
+
+
+							<div class="modal fade" id="modal-edit">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">编辑系统用户</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form id="form2" action="/manageUser/doEdit" method="post">
+												<div class="card-body">
+                                                    <div class="form-group">
+                                                        <label for="InputID">用户ID</label>
+                                                        <input type="text" class="form-control" name="Id"
+                                                               id="InputID"   readonly>
+                                                        <small  class="form-text text-muted">系统用户ID修改已禁用</small>
+                                                    </div>
+													<div class="form-group">
+														<label for="exampleInputEmail2">用户名（不得重复）</label>
+														<input type="text" class="form-control" name="UserName"
+															   id="exampleInputEmail2"  placeholder="输入唯一的用户名">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputPassword2">密码</label>
+														<input type="password" class="form-control" name="PassWord"
+															   id="exampleInputPassword2" placeholder="若不修改用户密码请勿填写此项">
+                                                        <small id="passwordHash" class="form-text text-muted"></small>
+													</div>
+
+													<div class="custom-control custom-switch custom-switch-on-danger">
+														<input type="checkbox" class="custom-control-input"
+															   name="Status" id="customSwitch2">
+														<label  class="custom-control-label" for="customSwitch2">是否停用该账户</label>
+                                                        <small id="currentStatus" class="form-text text-muted"></small>
+													</div>
+
+												</div>
+
+												<div class="modal-footer justify-content-between">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														取消
+													</button>
+													<button type="button" class="btn btn-primary" data-dismiss="modal"
+															onclick="submitEditedUser()">提交
+													</button>
+												</div>
+											</form>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
 
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover text-nowrap">
@@ -159,7 +217,7 @@
                                                 onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
                                              -->
                                             {{end}}
-                                            <button class='btn btn-info' onclick='edituser({{.Id}});'>编辑</button>
+                                            <button class='btn btn-info' onclick="edituser({{.Id}})">编辑</button>
 
 
                                             <button class='btn btn-danger'
@@ -242,13 +300,13 @@
             if (json.Code == 0) { //成功
                 Toast.fire({
                     icon: 'success',
-                    title: '删除成功',
+                    title: json.Msg,
                 })
 
             } else { //失败
                 Toast.fire({
                     icon: 'error',
-                    title: '删除失败',
+                    title: json.Msg,
                 })
             }
         }, 'json');
@@ -271,13 +329,13 @@
             if (json.Code == 0) { //成功
                 Toast.fire({
                     icon: 'success',
-                    title: '启用成功',
+                    title: json.Msg,
                 })
 
             } else { //失败
                 Toast.fire({
                     icon: 'error',
-                    title: '启用失败',
+                    title: json.Msg,
                 })
             }
         }, 'json');
@@ -300,13 +358,13 @@
             if (json.Code == 0) { //成功
                 Toast.fire({
                     icon: 'success',
-                    title: '停用成功',
+                    title: json.Msg,
                 })
 
             } else { //失败
                 Toast.fire({
                     icon: 'error',
-                    title: '停用失败',
+                    title: json.Msg,
                 })
             }
         }, 'json');
@@ -314,7 +372,39 @@
         loadFrameContent('/u/userManage');
     }
 
-    function edituser(id) {
+    function edituser(id){
+        let Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4500,
+        });
+        $.get("/manageUser/edit", {
+            id: id,
+            rnd: Math.random()
+        }, function (json) {
+                Toast.fire({
+                    icon: 'info',
+                    title: "Editing "+json.UserName,
+                    text: "CreateTime: "+json.CreateTime
+                })
+            document.getElementById("exampleInputEmail2").setAttribute("value",json.UserName);
+            // document.getElementById("exampleInputPassword2").setAttribute("value",json.PassWord);
+            document.getElementById("passwordHash").innerText = "当前密码哈希值："+ json.PassWord;
+            document.getElementById("InputID").setAttribute("value", json.Id);
+            if(json.Status == 0){
+                document.getElementById("currentStatus").innerHTML = "当前状态："+"<i style=\"color: orange\" class=\"fa fa-pause\"></i>"+"（停用）";
+                document.getElementById("customSwitch2").setAttribute("checked","true");
+            } else if(json.Status == 1) {
+                document.getElementById("currentStatus").innerHTML = "当前状态："+"<i style=\"color: limegreen\" class=\"fa fa-check\"></i>"+"（启用）";
+            }
+
+        }, 'json')
+
+        $("#modal-edit").modal('show');
+    }
+
+    function submitEditedUser() {
         var Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -322,35 +412,35 @@
             timer: 3000,
         });
 
-        $.get("/manageUser/edituser", {
-            rnd: Math.random(),
-            id: id
-        }, function (json) {
-            if (json.Code == 0) { //成功
+        var postData = $("#form2").serializeArray();
+        $.post($("#form2").attr("action"), postData, function (json) {
+            //var data = $.parseJSON(json);
+            if (json.Code == 0) {
+                refreshGrid();
+                loadFrameContent('/u/userManage');
                 Toast.fire({
                     icon: 'success',
-                    title: '编辑成功',
+                    title: json.Msg,
                 })
-
-            } else { //失败
+            } else {
+                refreshGrid();
+                // layer.close(index);
+                loadFrameContent('/u/userManage');
                 Toast.fire({
                     icon: 'error',
-                    title: '编辑失败',
+                    title: json.Msg,
                 })
             }
-        }, 'json');
+        }, "json");
 
+        // 解决灰屏且无法操作问题
+        $(".modal-backdrop").remove();
+        $('body').removeClass('modal-open');
         loadFrameContent('/u/userManage');
     }
 
 	function showModal(){
 		$("#modal-default").modal('show');
-	}
-
-	function activateAddUser(){
-
-		adduser();
-		// $("#modal-default").modal('hide');
 	}
 
     function adduser() {
@@ -375,7 +465,7 @@
                 loadFrameContent('/u/userManage');
                 Toast.fire({
                     icon: 'success',
-                    title: '添加成功',
+                    title: json.Msg,
                 })
             } else {
                 refreshGrid();
@@ -383,7 +473,7 @@
                 loadFrameContent('/u/userManage');
                 Toast.fire({
                     icon: 'error',
-                    title: '添加失败',
+                    title: json.Msg,
                 })
             }
         }, "json");

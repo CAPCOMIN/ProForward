@@ -27,7 +27,7 @@ func (_self *SysDataService) GetAllSysUser() []*Models.SysUser {
 	return userList
 }
 
-func (_self *SysDataService) GetSysUserById(userId int) *Models.SysUser {
+func (_self *SysDataService) GetSysUserById(userId int) (*Models.SysUser, error) {
 
 	entity := new(Models.SysUser)
 	qs := OrmerS.QueryTable(entity)
@@ -38,10 +38,10 @@ func (_self *SysDataService) GetSysUserById(userId int) *Models.SysUser {
 
 	if err != nil {
 		logs.Error("GetSysUserById ", err)
-		return nil
+		return nil, err
 	}
 
-	return entity
+	return entity, err
 
 }
 
@@ -73,7 +73,7 @@ func (_self *SysDataService) AddOneUser(entity *Models.SysUser) (int64, error) {
 }
 
 func (_self *SysDataService) ChangeSysUserStatus(userId int, newStatus int) error {
-	entity := _self.GetSysUserById(userId)
+	entity, _ := _self.GetSysUserById(userId)
 	entity.Status = newStatus
 	_, err := OrmerS.Update(entity, "Status")
 	if err != nil {
@@ -99,15 +99,15 @@ func (_self *SysDataService) ChangeUserPwd(id int, password string) error {
 	return err
 }
 
-func (_self *SysDataService) UpdateSysUser(entity *Models.SysUser) error {
+func (_self *SysDataService) UpdateSysUser(entity *Models.SysUser) (int64, error) {
 
-	_, err := OrmerS.Update(entity)
-	return err
+	num, err := OrmerS.Update(entity, "Id", "UserName", "PassWord", "Status")
+	return num, err
 }
 
 func (_self *SysDataService) DelOneSysUsers(id int) error {
 
-	entity := _self.GetSysUserById(id)
+	entity, _ := _self.GetSysUserById(id)
 	_, err := OrmerS.Delete(entity)
 	if err != nil {
 		logs.Error("DelOneSysUsers err：", err)
