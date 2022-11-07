@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"forward-server/Controllers/BaseCtrl"
+	"github.com/astaxie/beego/logs"
 	"github.com/beego/beego/v2/core/utils"
+	"github.com/dlclark/regexp2"
 	"io"
 	"log"
 	"os"
@@ -13,6 +15,7 @@ import (
 	"runtime/debug"
 	"runtime/pprof"
 	"strconv"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -26,11 +29,31 @@ type PerformanceController struct {
 	BaseCtrl.ConsoleCtrl
 	//servers []*HttpServer
 }
+type grInfo struct {
+	Id       int
+	Status   string
+	Duration string
+	Detail   string
+}
 
 //func (a *PerformanceController) registerHttpServer(svr *HttpServer) {
 //	a.servers = append(a.servers, svr)
 //}
 
+func (a *PerformanceController) TrimEmptyLinesAndDelFirstLine(str string) string {
+	strs := strings.Split(str, "\n")
+	str = ""
+	strs = strs[1:]
+	for _, s := range strs {
+		if len(strings.TrimSpace(s)) == 0 {
+			continue
+		}
+		str += s + "\n"
+	}
+	str = strings.TrimSuffix(str, "\n")
+
+	return str
+}
 func (a *PerformanceController) PerfGoroutine() {
 	//rw, r := a.Ctx.ResponseWriter, a.Ctx.Request
 	//err := r.ParseForm()
@@ -47,20 +70,43 @@ func (a *PerformanceController) PerfGoroutine() {
 		//data   = make(map[interface{}]interface{})
 		result bytes.Buffer
 	)
+	var grOne grInfo
+	var grList []grInfo
 	ProcessInput("lookup goroutine", &result)
-	a.Data["Content"] = template.HTMLEscapeString(result.String())
+	goroutineInfo := result.String()
+	goroutineInfoList := strings.Split(goroutineInfo, "\n\n")
 
-	//if format == "json" && command == "gc summary" {
-	//	dataJSON, err := json.Marshal(data)
-	//	if err != nil {
-	//		http.Error(rw, err.Error(), http.StatusInternalServerError)
-	//		return
-	//	}
-	//	writeJSON(rw, dataJSON)
-	//	return
-	//}
+	grStatusReg := regexp2.MustCompile(`(?<=\[).+(?=,)|(?<=\[).+(?=])`, 0)
+	grIdReg := regexp2.MustCompile(`(?<=goroutine )\d+`, 0)
+	grDurationReg := regexp2.MustCompile(`\d+ minutes`, 0)
+
+	for i, num := 0, len(goroutineInfoList); i < num; i++ {
+		idGroup, _ := grIdReg.FindStringMatch(goroutineInfoList[i])
+		grOne.Id, _ = strconv.Atoi(idGroup.String())
+
+		statusGrp, _ := grStatusReg.FindStringMatch(goroutineInfoList[i])
+		grOne.Status = statusGrp.String()
+
+		durationGrp, _ := grDurationReg.FindStringMatch(goroutineInfoList[i])
+		if durationGrp == nil {
+			grOne.Duration = "暂无"
+		} else {
+			grOne.Duration = durationGrp.String()
+		}
+
+		grOne.Detail = a.TrimEmptyLinesAndDelFirstLine(goroutineInfo)
+
+		grList = append(grList, grOne)
+		logs.Warn("PerfGoroutine", grOne.Id, grOne.Status, grOne.Duration)
+	}
+
+	//logs.Warn("PerfGoroutine ", len(goroutineInfoList))
+
+	a.Data["Content"] = template.HTMLEscapeString(goroutineInfo)
 
 	a.Data["Title"] = template.HTMLEscapeString("lookup goroutine")
+
+	a.Data["goroutineList"] = grList
 
 	//writeTemplate(rw, data, "performance/goroutine.html")
 	a.TplName = "performance/goroutine.html"
