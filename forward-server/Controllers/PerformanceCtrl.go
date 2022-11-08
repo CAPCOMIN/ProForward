@@ -112,6 +112,24 @@ func (a *PerformanceController) PerfGoroutine() {
 	a.TplName = "performance/goroutine.html"
 }
 
+func (a *PerformanceController) PerfCPU() {
+
+	a.Data["Title"] = "CPU调用图分析"
+	a.TplName = "performance/cpu.html"
+}
+
+func (a *PerformanceController) PerfHeap() {
+	var (
+		result bytes.Buffer
+	)
+	ProcessInput("lookup heap", &result)
+	a.Data["Content"] = template.HTMLEscapeString(result.String())
+
+	a.Data["Title"] = template.HTMLEscapeString("堆栈调用")
+
+	a.TplName = "performance/heap.html"
+}
+
 func ProcessInput(input string, w io.Writer) {
 	switch input {
 	case "lookup goroutine":
