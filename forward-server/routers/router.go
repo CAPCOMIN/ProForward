@@ -38,8 +38,9 @@ func init() {
 	beego.Router("/performance/heap", &Controllers.PerformanceController{}, "get:PerfHeap")
 
 	beego.Router("/u/EditForward", &Controllers.ForwardCtrl{}, "get:EditForward")
-
 	beego.Router("/u/DoEditForward", &Controllers.ForwardCtrl{}, "post:DoEditForward")
+
+	beego.Router("/u/Dosaveforward", &Controllers.ForwardCtrl{}, "post:DoSaveForward")
 
 	//beego.SetStaticPath("/swagger", "swagger")
 

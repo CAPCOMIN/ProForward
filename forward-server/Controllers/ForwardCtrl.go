@@ -85,6 +85,32 @@ func (c *ForwardCtrl) EditForward() {
 	// c.TplName = "ucenter/forwardForm.html"
 }
 
+func (c *ForwardCtrl) DoSaveForward() {
+	var newUser Models.PortForward
+
+	// newUser.Id, _ = c.GetInt("id")
+	newUser.Name = c.GetString("name")
+	newUser.Addr = c.GetString("addr")
+	newUser.Port, _ = c.GetInt("port")
+	newUser.Status, _ = c.GetInt("status")
+	newUser.Protocol = c.GetString("protocol")
+	newUser.TargetAddr = c.GetString("targetAddr")
+	newUser.TargetPort, _ = c.GetInt("targetPort")
+	newUser.Others = c.GetString("others")
+	newUser.FType, _ = c.GetInt("fType")
+
+	id, err := Service.SysDataS.AddOneForward(&newUser)
+	if err != nil {
+		logs.Error("DoSaveForward", err)
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "添加账户失败，" + err.Error()}
+	} else {
+		c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功添加账户，ID:" + strconv.FormatInt(id, 10)}
+	}
+	// c.Ctx.Redirect(302, "/u/userManage")
+	c.ServeJSON()
+
+}
+
 func (c *ForwardCtrl) DoEditForward() {
 
 	var updateUser Models.PortForward

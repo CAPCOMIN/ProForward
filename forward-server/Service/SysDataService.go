@@ -359,3 +359,14 @@ func (_self *SysDataService) GetForwardJob(entity *Models.PortForward) *ForWardJ
 	return ForWardServ.GetForwardJob(_self.ToForwardConfig(entity))
 
 }
+
+func (_self *SysDataService) AddOneForward(entity *Models.PortForward) (int64, error) {
+
+	id, err := OrmerS.Insert(entity)
+	if err != nil {
+		logs.Error("AddOneUserByName", err)
+	} else {
+		logs.Warn("AddOneUserByName 成功添加新用户 ID，UserName：", id, entity.Name)
+	}
+	return id, err
+}
