@@ -8,6 +8,7 @@ import (
 	"forward-server/Controllers/BaseCtrl"
 	"forward-server/Service"
 	"strconv"
+	"time"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
@@ -86,20 +87,21 @@ func (c *ForwardCtrl) EditForward() {
 }
 
 func (c *ForwardCtrl) DoSaveForward() {
-	var newUser Models.PortForward
+	var newForward Models.PortForward
 
-	// newUser.Id, _ = c.GetInt("id")
-	newUser.Name = c.GetString("name")
-	newUser.Addr = c.GetString("addr")
-	newUser.Port, _ = c.GetInt("port")
-	newUser.Status, _ = c.GetInt("status")
-	newUser.Protocol = c.GetString("protocol")
-	newUser.TargetAddr = c.GetString("targetAddr")
-	newUser.TargetPort, _ = c.GetInt("targetPort")
-	newUser.Others = c.GetString("others")
-	newUser.FType, _ = c.GetInt("fType")
+	// newForward.Id, _ = c.GetInt("id")
+	newForward.Name = c.GetString("name")
+	newForward.Addr = c.GetString("addr")
+	newForward.Port, _ = c.GetInt("port")
+	newForward.Status, _ = c.GetInt("status")
+	newForward.Protocol = c.GetString("protocol")
+	newForward.TargetAddr = c.GetString("targetAddr")
+	newForward.TargetPort, _ = c.GetInt("targetPort")
+	newForward.Others = c.GetString("others")
+	newForward.FType, _ = c.GetInt("fType")
+	newForward.CreateTime = time.Now()
 
-	id, err := Service.SysDataS.AddOneForward(&newUser)
+	id, err := Service.SysDataS.AddOneForward(&newForward)
 	if err != nil {
 		logs.Error("DoSaveForward", err)
 		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "添加账户失败，" + err.Error()}

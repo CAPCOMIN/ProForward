@@ -50,21 +50,58 @@
 
 
 			<div class="container-fluid">
+				<div id="shortcutOptions" class="card card-warning card-outline card-tabs">
+					<div class="card-header p-0 pt-1 border-bottom-0">
+						<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="custom-tabs-three-home-tab"
+								   data-toggle="pill" href="#custom-tabs-three-home" role="tab"
+								   aria-controls="custom-tabs-three-home" aria-selected="true">{{.Title}}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="custom-tabs-three-profile-tab"
+								   data-toggle="pill" href="#custom-tabs-three-profile" role="tab"
+								   aria-controls="custom-tabs-three-profile"
+								   aria-selected="false">Memory Analysis</a>
+							</li>
+							<!-- <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-three-control-tab"
+                                    data-toggle="pill" href="#custom-tabs-three-control" role="tab"
+                                    aria-controls="custom-tabs-three-control"
+                                    aria-selected="false">透传控制</a>
+                            </li> -->
+						</ul>
+					</div>
+					<div class="card-body">
+						<div class="tab-content" id="custom-tabs-three-tabContent">
+							<div class="tab-pane fade show active" id="custom-tabs-three-home"
+								 role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+								<div class="card-body">
+									<object data="../../static/img/pprof001.svg" width="1600" height="600"
+											type="image/svg+xml"></object>
+								</div>
 
-				<!--        <div class="row">-->
-				<div class="row">
-					<div class="col-md-12">
-						<div id="help1" class="card card-warning card-outline">
-							<div class="card-header">
-								<h3 class="card-title">{{.Title}}</h3>
 							</div>
-							<div class="card-body">
-								<object data="../../static/img/pprof001.svg" width="1600" height="688"
-										type="image/svg+xml"></object>
+							<div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel"
+								 aria-labelledby="custom-tabs-three-profile-tab">
+								<div class="card-body">
+									<object data="../../static/img/pprof002.svg" width="1600" height="600"
+											type="image/svg+xml"></object>
+								</div>
 							</div>
-							</div>
+
+
+
 						</div>
 					</div>
+					<!-- /.card -->
+				</div>
+
+				<!--        <div class="row">-->
+
+
+
+
 				</div>
 			</div>
 	</div>
