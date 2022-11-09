@@ -9,7 +9,9 @@ import (
 	"github.com/dlclark/regexp2"
 	"io"
 	"log"
+	"math"
 	"os"
+	"os/exec"
 	"path"
 	"runtime"
 	"runtime/debug"
@@ -131,6 +133,63 @@ func (a *PerformanceController) PerfHeap() {
 	a.TplName = "performance/heap.html"
 }
 
+func (a *PerformanceController) MonitorCPU() {
+	a.TplName = "performance/monitorCPU.html"
+}
+
+type MonitorResult struct {
+	Code     int
+	Msg      string
+	Filename string
+	Content  string
+}
+
+func (a *PerformanceController) DoMonitorCPU() {
+	var result bytes.Buffer
+	secFloat, err0 := strconv.ParseFloat(a.GetString("sec"), 10)
+	//logs.Warn("DoMonitorCPU", secFloat)
+	sec := int(math.Floor(secFloat + 0.5))
+	//logs.Warn("DoMonitorCPU", sec)
+	err, filename := GetCPUProfile(sec, &result)
+	content := template.HTMLEscapeString(result.String())
+
+	if err != nil || err0 != nil {
+		logs.Error("MonitorCPU", err)
+		a.Data["json"] = MonitorResult{Code: 1, Msg: "获取CPU调用失败，" + err.Error() + err0.Error(),
+			Filename: filename, Content: content}
+	} else {
+		a.Data["json"] = MonitorResult{Code: 0, Msg: "已成功获取CPU调用信息",
+			Filename: filename, Content: content}
+	}
+	logs.Warn("DoMonitorCPU", filename, content)
+	a.ServeJSON()
+}
+
+func (a *PerformanceController) PprofWebAnalysis() {
+	var cmd *exec.Cmd
+	operate := a.GetString("operate")
+
+	cmd = exec.Command("dir")
+
+	if operate == "start" {
+		err := cmd.Start()
+		if err != nil {
+			logs.Error("PprofWebAnalysis 1", err)
+		}
+		logs.Warn("state =>", cmd.Dir)
+		logs.Warn("result =>", cmd.ProcessState.String())
+		//a.Data["json"]
+	} else if operate == "stop" {
+		err := cmd.Process.Kill()
+		if err != nil {
+			logs.Error("PprofWebAnalysis 2", err)
+		}
+	} else if operate == "status" {
+		//todo
+	}
+
+}
+
 func ProcessInput(input string, w io.Writer) {
 	switch input {
 	case "lookup goroutine":
@@ -145,8 +204,8 @@ func ProcessInput(input string, w io.Writer) {
 	case "lookup block":
 		p := pprof.Lookup("block")
 		p.WriteTo(w, 2)
-	case "get cpuprof":
-		GetCPUProfile(w)
+	//case "get cpuprof":
+	//GetCPUProfile(w)
 	case "get memprof":
 		MemProf(w)
 	case "gc summary":
@@ -171,21 +230,24 @@ func MemProf(w io.Writer) {
 }
 
 // GetCPUProfile start cpu profile monitor
-func GetCPUProfile(w io.Writer) {
-	sec := 30
-	filename := "cpu-" + strconv.Itoa(pid) + ".pprof"
+func GetCPUProfile(sec int, w io.Writer) (error, string) {
+	//sec := 10
+	//filename := "cpu-" + strconv.Itoa(pid) + ".pprof"
+	filename := "cpu-0.pprof"
 	f, err := os.Create(filename)
 	if err != nil {
 		fmt.Fprintf(w, "Could not enable CPU profiling: %s\n", err)
 		log.Fatal("record cpu profile failed: ", err)
 	}
-	pprof.StartCPUProfile(f)
+	err2 := pprof.StartCPUProfile(f)
 	time.Sleep(time.Duration(sec) * time.Second)
 	pprof.StopCPUProfile()
 
 	fmt.Fprintf(w, "create cpu profile %s \n", filename)
 	_, fl := path.Split(os.Args[0])
 	fmt.Fprintf(w, "Now you can use this to check it: go tool pprof %s %s\n", fl, filename)
+
+	return err2, filename
 }
 
 // PrintGCSummary print gc information to io.Writer
