@@ -171,6 +171,7 @@ func (c *UCenterCtrl) ChangePwd() {
 	c.TplName = "ucenter/changePwd.html"
 }
 
+
 // @router /u/doChangePwd [post]
 func (c *UCenterCtrl) DoChangePwd() {
 	userInfo := c.GetUserInfo()

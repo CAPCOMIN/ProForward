@@ -54,6 +54,7 @@ func (a *PerformanceController) TrimEmptyLinesAndDelFirstLine(str string) string
 
 	return str
 }
+
 func (a *PerformanceController) PerfGoroutine() {
 	//rw, r := a.Ctx.ResponseWriter, a.Ctx.Request
 	//err := r.ParseForm()

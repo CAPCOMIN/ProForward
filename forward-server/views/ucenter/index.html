@@ -1,52 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Fixed Sidebar</title>
 
-<div style="margin: auto;width: 800px;height: 500px;">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>当前服务器信息</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                            <li class="breadcrumb-item active">Fixed Layout</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
 
 
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-  <legend>系统信息</legend>
-</fieldset>  
-<form class="layui-form  layui-form-pane" action="" method="POST">
-  <div class="layui-form-item">
-    <label class="layui-form-label">CPU核心数</label>
-    <div class="layui-input-inline">
-      <input type="text" value="{{.runtime_NumCPU}}" disabled="disabled" class="layui-input">
-    </div>
-    
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">CPU架构</label>
-    <div class="layui-input-block">
-      <input type="text" value="{{.runtime_GOARCH}}" disabled="disabled" class="layui-input">
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">系统类型</label>
-    <div class="layui-input-block">
-      <input type="text" value="{{.runtime_GOOS}}" disabled="disabled" class="layui-input">
-    </div>
-  </div>
-  <div class="layui-form-item">
-    <label class="layui-form-label">服务器时间</label>
-    <div class="layui-input-block">
-      <input type="text" value="{{.server_Time}}" disabled="disabled" class="layui-input">
+            <div class="container-fluid">
+                <!--        <div class="row">-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-danger card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">系统信息</h3>
+                            </div>
 
-    </div>
-  </div>
+     
+                            <div class="card-body table-responsive p-0">
+                                <div class="card-body p-0">
+                                <table class="table">
+                                <thead>
+                                <tr>
+                                <th style="width: 20px">#</th>
+                                <th>Type</th>
+                                <th>Data</th>
+                                </tr>
+                                </thead>
+								
+                                <tbody>
+                                <tr>
+                                <td>1.</td>
+                                <td>CPU核心数</td>
+                                <td>{{.runtime_NumCPU}}</td>
+                                </tr>
+								
+                                <tr>
+                                <td>2.</td>
+                                <td>CPU架构</td>
+                                <td>{{.runtime_GOARCH}}</td>
+                                </tr>
+								
+                                <tr>
+                                <td>3.</td>
+                                <td>系统类型</td>
+                                <td>{{.runtime_GOOS}}</td>
+                                </tr>
+								
+                                <tr>
+                                <td>4.</td>
+                                <td>服务器时间</td>
+                                <td>
+                                {{.server_Time}}
+                                </td>
+                                </tr>
+								
+                                </tbody>
+                                </table>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
 
-</form>
+                        </div>
+  
+
+</section>
+<!-- /.content -->
 </div>
+<!-- /.content-wrapper -->
 
-<script type="text/javascript">
+<footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2014-2022 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    reserved.
+</footer>
 
-    $(document).ready(function () {
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
-        layui.use(['jquery','layer', 'form', 'element'], function () {
-            var $ = layui.jquery, form = layui.form;
+<!-- jQuery -->
+<script src="../../static/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../static/dist/js/adminlte.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="../../static/plugins/toastr/toastr.min.js"></script>
+<!-- Page specific script -->
 
-
-        });
-
-    });
-
-</script>
-
+</body>
+</html>

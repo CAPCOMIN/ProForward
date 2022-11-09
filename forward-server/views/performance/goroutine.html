@@ -233,18 +233,14 @@
 			
 				$(document).ready(function() {
 
-					layui.use(["form", "element"], function() {
-						var form = layui.form;
-
-						form.on('submit(pwd)', function(data) {
-
-							submitForm();
-							loadFrameContent('/u/changePwd');
-							return false;
-						});
-
-					});
-
+					// var intervalBox =setInterval(function(){
+					// 	loadFrameContent('/performance/goroutine');
+					// 	// layer.alert("asdasdas")
+					// 	if(document.getElementById('option_b2') === null){
+					// 	            clearInterval(intervalBox);
+					// 	        }
+					// }, 3000);
+					
 				});
 
 

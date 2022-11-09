@@ -670,3 +670,4 @@ func (c *ForwardCtrl) SaveImportForward() {
 
 	c.ServeJSON()
 }
+
