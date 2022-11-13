@@ -39,6 +39,8 @@ func init() {
 	beego.Router("/performance/tbgc", &Controllers.PerformanceController{}, "get:PerfThreadBlockGC")
 	beego.Router("/performance/monitorcpu", &Controllers.PerformanceController{}, "get:MonitorCPU")
 	beego.Router("/performance/domonitorcpu", &Controllers.PerformanceController{}, "post:DoMonitorCPU")
+	beego.Router("/performance/mem", &Controllers.PerformanceController{}, "get:PerfMemInfo")
+	beego.Router("/performance/getmem", &Controllers.PerformanceController{}, "get:DoPerfMemInfo")
 	beego.Router("/performance/pprof", &Controllers.PerformanceController{}, "get:PprofWebAnalysis")
 
 	beego.Router("/u/EditForward", &Controllers.ForwardCtrl{}, "get:EditForward")

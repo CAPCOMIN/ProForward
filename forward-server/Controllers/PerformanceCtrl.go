@@ -180,7 +180,23 @@ func (a *PerformanceController) PprofWebAnalysis() {
 	} else if operate == "status" {
 		//todo
 	}
+}
 
+func (a *PerformanceController) PerfMemInfo() {
+	a.TplName = "performance/memory.html"
+}
+
+func (a *PerformanceController) DoPerfMemInfo() {
+	var result bytes.Buffer
+	err1, err2, filename := MemProf(&result)
+	if err1 == nil && err2 == nil {
+		a.Data["json"] = MonitorResult{Code: 0, Msg: "已成功获取内存信息",
+			Filename: filename, Content: result.String()}
+	} else {
+		a.Data["json"] = MonitorResult{Code: 1, Msg: "获取内存信息失败，" + err1.Error() + err2.Error(),
+			Filename: filename, Content: result.String()}
+	}
+	a.ServeJSON()
 }
 
 func (a *PerformanceController) PerfThreadBlockGC() {
@@ -229,18 +245,20 @@ func ProcessInput(input string, w io.Writer) {
 }
 
 // MemProf record memory profile in pprof
-func MemProf(w io.Writer) {
+func MemProf(w io.Writer) (error, error, string) {
 	filename := "mem-" + strconv.Itoa(pid) + ".memprof"
 	if f, err := os.Create(filename); err != nil {
 		fmt.Fprintf(w, "create file %s error %s\n", filename, err.Error())
-		log.Fatal("record heap profile failed: ", err)
+		logs.Error("record heap profile failed: ", err)
+		return err, err, ""
 	} else {
 		runtime.GC()
-		pprof.WriteHeapProfile(f)
-		f.Close()
+		err1 := pprof.WriteHeapProfile(f)
+		err2 := f.Close()
 		fmt.Fprintf(w, "create heap profile %s \n", filename)
 		_, fl := path.Split(os.Args[0])
 		fmt.Fprintf(w, "Now you can use this to check it: go tool pprof %s %s\n", fl, filename)
+		return err1, err2, filename
 	}
 }
 
