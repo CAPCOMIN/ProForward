@@ -116,7 +116,7 @@
 							<!-- /.col -->
 						</div>
 
-						<div class="row">
+						<div class="row" style="display: none;" id="hideResult">
 							<div class="col-12">
 								<div class="card card-danger card-outline">
 									<div class="card-header">
@@ -217,7 +217,7 @@
 						nows = 0;
 						document.getElementById("filename1").innerText = "生成文件名："+json.Filename;
 						document.getElementById("code1").innerText = "go tool pprof -http=:8081 .\\"+json.Filename;
-						// document.getElementById("countdown2").style.display="none";
+						document.getElementById("hideResult").style.display="";
 					} else {
 						refreshGrid();
 						// loadFrameContent('/performance/monitorcpu');
