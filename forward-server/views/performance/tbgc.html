@@ -30,7 +30,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>堆栈（Heap）信息</h1>
+                        <h1>线程创建/块/垃圾回收信息汇总显示</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -51,29 +51,21 @@
                 <!--        <div class="row">-->
                 <div class="row">
                     <div class="col-md-6">
-                        <div id="help1" class="card card-blue card-outline">
+                        <div id="help1" class="card card-danger card-outline">
                             <div class="card-header">
-                                <h3 class="card-title">堆栈信息汇总显示</h3>
+                                <h3 class="card-title">线程创建信息</h3>
                             </div>
                             <div class="card-body">
                                 <div class="card-body table-responsive p-0" id="style1">
-                                <table class="table table-hover text-nowrap">
-                                    <tbody>
-                                    {{range $v := .Summary}}
-                                    <tr>
-                                        <td><code>{{$v}}</code></td>
-                                    </tr>
-                                    {{end}}
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <pre>{{.thread}}</pre>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div id="help3" class="card card-gray-dark card-outline">
+                        <div id="help3" class="card card-success card-outline">
                             <div class="card-header">
-                                <h3 class="card-title">堆栈详细信息</h3>
+                                <h3 class="card-title">块/Block 信息</h3>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="table_search" class="form-control float-right"
@@ -88,22 +80,31 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-body table-responsive p-0" id="style1">
-                                    <table class="table table-hover text-nowrap">
-                                        <!--										<thead>-->
-                                        <!--										<tr>-->
-                                        <!--											<th>Goroutine ID</th>-->
-                                        <!--										</tr>-->
-                                        <!--										</thead>-->
-                                        <tbody>
-                                        {{range $v := .Detail}}
-                                        <tr>
-                                            <td>
-                                                <pre>{{$v}}</pre>
-                                            </td>
-                                        </tr>
-                                        {{end}}
-                                        </tbody>
-                                    </table>
+                                    <pre>{{.block}}</pre>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="help2" class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">垃圾回收/Garbage Collection</h3>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                               placeholder="Search">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-body table-responsive p-0" id="style1">
+                                    <pre>{{.gc}}</pre>
                                 </div>
                             </div>
 

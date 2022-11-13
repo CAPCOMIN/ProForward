@@ -58,16 +58,6 @@ func (a *PerformanceController) TrimEmptyLinesAndDelFirstLine(str string) string
 }
 
 func (a *PerformanceController) PerfGoroutine() {
-	//rw, r := a.Ctx.ResponseWriter, a.Ctx.Request
-	//err := r.ParseForm()
-	//if err != nil {
-	//	return
-	//}
-	//command := a.GetString("command")
-	//if command == "" {
-	//	return
-	//}
-
 	var (
 		//format = r.Form.Get("format")
 		//data   = make(map[interface{}]interface{})
@@ -126,9 +116,12 @@ func (a *PerformanceController) PerfHeap() {
 		result bytes.Buffer
 	)
 	ProcessInput("lookup heap", &result)
-	a.Data["Content"] = template.HTMLEscapeString(result.String())
+	heapInfo := template.HTMLEscapeString(result.String())
+	heapInfoList := strings.Split(heapInfo, "\n\n")
 
-	a.Data["Title"] = template.HTMLEscapeString("堆栈调用")
+	heapDetailList := strings.Split(heapInfoList[len(heapInfoList)-1], "\n")
+	a.Data["Summary"] = heapDetailList[1:]
+	a.Data["Detail"] = heapInfoList[:len(heapInfoList)-1]
 
 	a.TplName = "performance/heap.html"
 }
@@ -188,6 +181,28 @@ func (a *PerformanceController) PprofWebAnalysis() {
 		//todo
 	}
 
+}
+
+func (a *PerformanceController) PerfThreadBlockGC() {
+	var (
+		result1 bytes.Buffer
+		result2 bytes.Buffer
+		result3 bytes.Buffer
+	)
+	ProcessInput("lookup threadcreate", &result1)
+	threadInfo := template.HTMLEscapeString(result1.String())
+
+	ProcessInput("lookup block", &result2)
+	blockInfo := template.HTMLEscapeString(result2.String())
+
+	ProcessInput("gc summary", &result3)
+	gcInfo := template.HTMLEscapeString(result3.String())
+
+	a.Data["thread"] = threadInfo
+	a.Data["block"] = blockInfo
+	a.Data["gc"] = gcInfo
+
+	a.TplName = "performance/tbgc.html"
 }
 
 func ProcessInput(input string, w io.Writer) {

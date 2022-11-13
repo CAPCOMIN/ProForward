@@ -36,6 +36,7 @@ func init() {
 	beego.Router("/performance/goroutine", &Controllers.PerformanceController{}, "get:PerfGoroutine")
 	beego.Router("/performance/cpu", &Controllers.PerformanceController{}, "get:PerfCPU")
 	beego.Router("/performance/heap", &Controllers.PerformanceController{}, "get:PerfHeap")
+	beego.Router("/performance/tbgc", &Controllers.PerformanceController{}, "get:PerfThreadBlockGC")
 	beego.Router("/performance/monitorcpu", &Controllers.PerformanceController{}, "get:MonitorCPU")
 	beego.Router("/performance/domonitorcpu", &Controllers.PerformanceController{}, "post:DoMonitorCPU")
 	beego.Router("/performance/pprof", &Controllers.PerformanceController{}, "get:PprofWebAnalysis")
