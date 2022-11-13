@@ -85,7 +85,7 @@
 							<div class="col-12">
 								<div class="card card-danger card-outline">
 									<div class="card-header">
-										<h3 class="card-title">Ion Slider</h3>
+										<h3 class="card-title">生成CPU调用信息文件</h3>
 									</div>
 									<!-- /.card-header -->
 									<div class="card-body">
@@ -120,14 +120,18 @@
 							<div class="col-12">
 								<div class="card card-danger card-outline">
 									<div class="card-header">
-										<h3 class="card-title">Ion Slider</h3>
+										<h3 class="card-title">注意</h3>
 									</div>
 
 									<div class="card-body">
-										<p>Filename:</p>
-										<p>
-										<pre>123</pre>
-										</p>
+										<p>CPU Profiling文件已成功生成！生成路径：/ProForward/forward-server</p>
+										<p id="filename1">生成文件名：</p>
+										<p style="color: darkred"><b>请在生成路径内的Shell中执行如下指令：</b></p>
+										<code id="code1"></code>
+										<p>开启服务端口后在以下页面查看详细信息：</p>
+										<p><a  target="_blank" href="http://localhost:8081/ui/">详细CPU调用图（Goroutine）</a></p>
+										<p><a  target="_blank" href="http://localhost:8081/ui/flamegraph">火焰图（Goroutine）</a></p>
+										<p><a  target="_blank" href="http://localhost:8081/ui/source">完整信息展示</a></p>
 										<div class="d-grid gap-2">
 											<button class="btn btn-dark" type="button" onclick="pprof()">Pprof Web
 												Analysis</button>
@@ -211,6 +215,8 @@
 							text: json.Filename
 						})
 						nows = 0;
+						document.getElementById("filename1").innerText = "生成文件名："+json.Filename;
+						document.getElementById("code1").innerText = "go tool pprof -http=:8081 .\\"+json.Filename;
 						// document.getElementById("countdown2").style.display="none";
 					} else {
 						refreshGrid();
@@ -227,9 +233,9 @@
 			}
 
 			function pprof() {
-				$.get("/performance/pprof", {
-					operate: "start"
-				});
+				// $.get("/performance/pprof", {
+				// 	operate: "start"
+				// });
 			}
 
 			$(function() {
