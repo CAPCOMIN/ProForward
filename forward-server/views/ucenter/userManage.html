@@ -219,6 +219,7 @@
                                             {{end}}
                                             <button class='btn btn-info' onclick="edituser({{.Id}})">编辑</button>
 
+<!--                                            <button class='btn btn-success' onclick="copypassword({{.Id}})">复制</button>-->
 
                                             <button class='btn btn-danger'
                                                     data-toggle="modal" data-target="#modal-defaulted"
@@ -373,6 +374,7 @@
     }
 
     function edituser(id){
+
         let Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -389,7 +391,7 @@
                     text: "CreateTime: "+json.CreateTime
                 })
             document.getElementById("exampleInputEmail2").setAttribute("value",json.UserName);
-            // document.getElementById("exampleInputPassword2").setAttribute("value",json.PassWord);
+            document.getElementById("exampleInputPassword2").setAttribute("value",json.PassWord);
             document.getElementById("passwordHash").innerText = "当前密码哈希值："+ json.PassWord;
             document.getElementById("InputID").setAttribute("value", json.Id);
             if(json.Status == 0){
@@ -402,6 +404,23 @@
         }, 'json')
 
         $("#modal-edit").modal('show');
+    }
+
+    function copypassword(id){
+
+        let Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4500,
+        });
+
+
+        Toast.fire({
+            icon: 'success',
+            title: "复制成功"
+        })
+
     }
 
     function submitEditedUser() {

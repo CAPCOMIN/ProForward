@@ -27,8 +27,8 @@ func (c *LoginCtrl) Login() {
 
 }
 
-// @router /login [post]
 func (c *LoginCtrl) DoLogin() {
+	logs.Debug("用户登录")
 	userName := c.GetString("userName")
 	passWord := c.GetString("passWord")
 
@@ -49,19 +49,21 @@ func (c *LoginCtrl) DoLogin() {
 			loginUser.UserName = userName
 
 			c.SetSession("userInfo", loginUser)
-			c.Ctx.Redirect(302, "/u/main")
+			//c.Ctx.Redirect(302, "/u/main")
 			c.Data["json"] = Models.FuncResult{Code: 0, Msg: "登录成功"}
 			c.ServeJSON()
 		}
 		if sysUser.Status == 0 {
 			logs.Debug("此账号已被停用，ID：", sysUser.Id)
-			c.Ctx.Redirect(302, "/login")
+			//c.Ctx.Redirect(302, "/login")
 			c.Data["json"] = Models.FuncResult{Code: 1, Msg: "您的账号已被停用"}
 			c.ServeJSON()
 		}
 	} else {
 		logs.Debug("用户登录失败")
-		c.Ctx.Redirect(302, "/login")
+		// c.Ctx.Redirect(302, "/login")
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "登录失败"}
+		c.ServeJSON()
 	}
 
 }

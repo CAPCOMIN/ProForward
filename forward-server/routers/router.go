@@ -48,6 +48,8 @@ func init() {
 
 	beego.Router("/u/Dosaveforward", &Controllers.ForwardCtrl{}, "post:DoSaveForward")
 
+	beego.Router("/u/Dologins", &Controllers.LoginCtrl{}, "post:DoLogin")
+
 	//beego.SetStaticPath("/swagger", "swagger")
 
 }

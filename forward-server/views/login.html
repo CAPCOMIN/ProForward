@@ -14,8 +14,10 @@
 		<link rel="stylesheet" href="../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="../static/dist/css/adminlte.min.css">
-
-
+		
+		<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
+		<!-- <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet" /> -->
+		<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script> -->
 		<!-- SweetAlert2 -->
 		<link rel="stylesheet" href="../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 		<!-- Toastr -->
@@ -31,7 +33,7 @@
 				<div class="card-body">
 					<p class="login-box-msg">Enter your username and password</p>
 
-					<form action="" method="post">
+					<form id="forms" action="/u/Dologins" method="post">
 						<div class="input-group mb-3">
 							<input type="text" name="userName" class="form-control" placeholder="请输入用户名">
 							<div class="input-group-append">
@@ -58,28 +60,14 @@
 								</div>
 							</div>
 							<!-- /.col -->
-							<!-- <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div> -->
-							<!-- /.col -->
-						</div>
-						<div class="social-auth-links text-center mt-2 mb-3">
-							<!--  <a href="#" class="btn btn-block btn-primary">
-		          <i class="fab fa-facebook mr-2"></i> 登录
-		        </a> -->
-							<!--        <a href="#" class="btn btn-block btn-danger">
-		          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-		        </a> -->
-							<div class="layui-input-block">
-								<button class="btn btn-block btn-primary loginbtn" lay-submit=""
-									lay-filter="demo1">登录</button>
-								
-							</div>
 						</div>
 						<!-- /.social-auth-links -->
 					</form>
 
-
+					<div class="">
+						<button type="button" class="btn btn-block btn-primary"
+							onclick="loginfunceshi();">登录</button>
+					</div>
 
 					<p class="mb-1">
 						<a href="forgot-password.html">I forgot my password</a>
@@ -109,8 +97,41 @@
 		<script src="../static/plugins/toastr/toastr.min.js"></script>
 		<!-- Page specific script -->
 
-
 		<script type="text/javascript">
+		
+		
+			function loginfunceshi() {
+
+				
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+
+				var postData = $("#forms").serializeArray();
+				$.post($("#forms").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						window.location.href="/u/main";
+					} else {
+						Toast.fire({
+							icon: 'error',
+							title: '登录失败',
+							text: json.Msg
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				// loadFrameContent('/u/forwardList');
+			}
+		
+		
 			$(function() {
 				var Toast = Swal.mixin({
 					toast: true,
@@ -120,44 +141,10 @@
 
 				});
 
-
-				$(document).ready(function() {
-
-					layui.use(["form", "element"], function() {
-						var form = layui.form;
-						form.on('submit(pwd)', function(data) {
-
-							submitForm();
-							loadFrameContent('/login');
-							return false;
-						});
-
-					});
-
-				});
-
 				$('.loginbtn').click(function() {
 
-					// Toast.fire({
-					// 	icon: 'error',
-					// 	title: '修改失败',
-					// 	text: '两次输入的密码不一致'
-					// })
-
-					$.post("/login", {
-						rnd: Math.random()
-					}, function(json) {
-						if (json.Code == 0) { //成功
-							// query(1);
-						} else { //失败
-							Toast.fire({
-								icon: 'error',
-								title: '修改失败',
-								text: '两次输入的密码不一致'
-							})
-							// query(1);
-						}
-					}, 'json');
+					
+					
 				});
 
 			});

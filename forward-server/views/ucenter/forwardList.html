@@ -583,6 +583,24 @@
 		</script>
 		<script type="text/javascript">
 			$(document).ready(function() {
+				
+				if (document.referrer == "/u/Dologins") {
+				        
+				        let Toast = Swal.mixin({
+				        	toast: true,
+				        	position: 'top-end',
+				        	showConfirmButton: false,
+				        	timer: 4500,
+				        });
+						
+						Toast.fire({
+							icon: 'success',
+							// title: '登录成功',
+							text: '登录成功'
+							
+						})
+				} 
+				
 				layui.use(["jquery", "layer", "form", "element", "laytpl", "laypage"], function() {
 					var $ = layui.jquery,
 						layer = layui.layer,
@@ -1161,13 +1179,6 @@
 
 
 			$(function() {
-				// var Toast = Swal.mixin({
-				//   toast: true,
-				//   position: 'top-end',
-				//   showConfirmButton: false,
-				//   timer: 3000,
-
-				// });
 
 				$('.Prabtn').click(function() {
 					query(1);
@@ -1205,16 +1216,6 @@
 				});
 
 				$('.addbtn').click(function() {
-
-					// Toast.fire({
-					//   icon: 'success',
-					//   title: '修改成功'
-					// })
-
-					// function addForward() {
-
-					// }
-
 
 				});
 

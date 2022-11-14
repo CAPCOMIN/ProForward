@@ -250,14 +250,14 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["forward-server/Controllers:LoginCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:LoginCtrl"],
-		beego.ControllerComments{
-			Method:           "DoLogin",
-			Router:           `/login`,
-			AllowHTTPMethods: []string{"post"},
-			MethodParams:     param.Make(),
-			Filters:          nil,
-			Params:           nil})
+	//beego.GlobalControllerRouter["forward-server/Controllers:LoginCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:LoginCtrl"],
+	//	beego.ControllerComments{
+	//		Method:           "DoLogin",
+	//		Router:           `/login`,
+	//		AllowHTTPMethods: []string{"post"},
+	//		MethodParams:     param.Make(),
+	//		Filters:          nil,
+	//		Params:           nil})
 
 	beego.GlobalControllerRouter["forward-server/Controllers:LoginCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:LoginCtrl"],
 		beego.ControllerComments{
@@ -303,7 +303,6 @@ func init() {
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
-	
 
 	beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
 		beego.ControllerComments{
@@ -367,7 +366,7 @@ func init() {
 			MethodParams:     param.Make(),
 			Filters:          nil,
 			Params:           nil})
-	
+
 	beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
 		beego.ControllerComments{
 			Method:           "BanUser",
@@ -377,7 +376,6 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-
 	// beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"] = append(beego.GlobalControllerRouter["forward-server/Controllers:UCenterCtrl"],
 	// 	beego.ControllerComments{
 	// 		Method:           "Edituser",
@@ -386,6 +384,5 @@ func init() {
 	// 		MethodParams:     param.Make(),
 	// 		Filters:          nil,
 	// 		Params:           nil})
-			
-	
+
 }

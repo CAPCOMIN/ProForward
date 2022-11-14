@@ -19,7 +19,7 @@ func (c *ConsoleCtrl) Prepare() {
 	reqUrl := c.Ctx.Request.RequestURI
 	logs.Debug("执行Prepare，当前reqUrl：", reqUrl)
 
-	if ConsoleLoginUrl == reqUrl {
+	if ConsoleLoginUrl == reqUrl || reqUrl == "/u/Dologins" {
 		//如果是登录地址，则不校验
 		return
 	}
