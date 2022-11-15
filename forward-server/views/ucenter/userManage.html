@@ -235,9 +235,6 @@
 																onclick="edituser({{.Id}})">编辑</button>
 
 															<!--                                            <button class='btn btn-success' onclick="copypassword({{.Id}})">复制</button>-->
-															<button type="button" class="btn btn-success  "
-																onclick="copyFn3({{.Id}})">复制
-															</button>
 															<button class='btn btn-danger' data-toggle="modal"
 																data-target="#modal-defaulted"
 																onclick="dels({{.Id}});">删除
@@ -425,54 +422,6 @@
 				$("#modal-edit").modal('show');
 			}
 
-			function copyFn3(id) {
-
-				//   	var Toast = Swal.mixin({
-				//   		toast: true,
-				//   		position: 'top-end',
-				//   		showConfirmButton: false,
-				//   		timer: 3000,
-				//   	});
-
-				//   	var val = document.getElementById('copy{Id}');
-				//   	window.getSelection().selectAllChildren(val);
-				//   	document.execCommand("Copy");
-
-				//   	Toast.fire({
-				//   		icon: 'success',
-				//   		title: "复制成功，可粘贴"
-				//   	})
-				let Toast = Swal.mixin({
-					toast: true,
-					position: 'top-end',
-					showConfirmButton: false,
-					timer: 4500,
-				});
-				$.get("/manageUser/edit", {
-					id: id,
-					rnd: Math.random()
-				}, function(json) {
-					
-					var CopyCard = json.PassWord;
-					var oInput = document.createElement('input');
-					oInput.value = CopyCard;
-					document.body.appendChild(oInput);
-					oInput.select(); 
-					
-					// var val = json.PassWord;
-					// var val = document.getElementById();
-					// window.getSelection().selectAllChildren(oInput);
-					document.execCommand("Copy");
-					
-
-					Toast.fire({
-						icon: 'info',
-						title: "Editing " + json.UserName,
-						text: json.PassWord
-					})
-				}, 'json')
-
-			}
 
 			function submitEditedUser() {
 				var Toast = Swal.mixin({

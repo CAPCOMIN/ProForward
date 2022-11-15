@@ -135,6 +135,9 @@
 										<div class="d-grid gap-2">
 											<button class="btn btn-dark" type="button" onclick="pprof()">Pprof Web
 												Analysis</button>
+												<button type="button" class="btn btn-outline-info  "
+													onclick="copyFn4()">复制指令
+												</button>
 										</div>
 									</div>
 
@@ -183,6 +186,25 @@
 		<script src="../../static/plugins/toastr/toastr.min.js"></script>
 		<!-- Page specific script -->
 		<script>
+			function copyFn4() {
+				
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+				
+				var val = document.getElementById('code1');
+				window.getSelection().selectAllChildren(val);
+				document.execCommand("Copy");
+				// alert("已复制好，可贴粘。");
+				Toast.fire({
+					icon: 'success',
+					title: "复制成功，可粘贴"
+				})
+			}
+		
 			// 倒计时
 			var nows;
 

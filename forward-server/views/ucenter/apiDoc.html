@@ -77,11 +77,16 @@
 
 								<form id="form2" class="layui-form  layui-form-pane" action="/u/StartAgentJob"
 									method="POST">
-
+									
 									<div class="callout callout-info">
 										<p>本工具提供RestfulApi，方便与其它系统工具进行集成，可在其它系统中直接通过接口，实现端口转发的开启和关闭。</p><br>
 										当前API的AUTH鉴权密钥为：<span
-											style="color: #17a2b8;">{{config "String" "api.auth" "请在data.conf中配置api.auth属性"}}</span>
+											style="color: #17a2b8;" id="copy3">{{config "String" "api.auth" "请在data.conf中配置api.auth属性"}}</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-outline-info btn-sm "
+										onclick="copyFn3()">复制API
+									</button>
+									
 									</div>
 								</form>
 								<div id="shortcutOptions" class="card card-info card-outline card-tabs">
@@ -176,7 +181,7 @@
 													
 												</table>
 												<button type="button" class="btn btn-outline-info  "
-													onclick="copyFn()">复制API
+													onclick="copyFn()">复制请求示例
 												</button>
 												<!-- </div> -->
 												<!-- </div> -->
@@ -313,7 +318,7 @@
 													</tbody>
 												</table>
 												<button type="button" class="btn btn-outline-info  "
-													onclick="copyFn2()">复制API
+													onclick="copyFn2()">复制请求示例
 												</button>
 												<!-- <form class="layui-form layui-form-pane" action="" method="POST">
 													<div class="layui-form-item">
@@ -505,6 +510,25 @@ Msg: 成功或失败的消息内容
 				});
 				
 				var val = document.getElementById('copy2');
+				window.getSelection().selectAllChildren(val);
+				document.execCommand("Copy");
+				// alert("已复制好，可贴粘。");
+				Toast.fire({
+					icon: 'success',
+					title: "复制成功，可粘贴"
+				})
+			}
+			
+			function copyFn3() {
+				
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+				
+				var val = document.getElementById('copy3');
 				window.getSelection().selectAllChildren(val);
 				document.execCommand("Copy");
 				// alert("已复制好，可贴粘。");
