@@ -35,8 +35,9 @@ func (c *LoginCtrl) DoLogin() {
 	sysUser := Service.SysDataS.GetSysUserByName(userName)
 	if sysUser == nil {
 		logs.Debug("用户不存在")
-		c.Ctx.Redirect(302, "/login")
-		return
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "用户名或密码错误"}
+		c.ServeJSON()
+		//return
 	}
 
 	descryptPwd := Utils.GetMd5(passWord)
@@ -50,7 +51,7 @@ func (c *LoginCtrl) DoLogin() {
 
 			c.SetSession("userInfo", loginUser)
 			//c.Ctx.Redirect(302, "/u/main")
-			c.Data["json"] = Models.FuncResult{Code: 0, Msg: "登录成功"}
+			c.Data["json"] = Models.FuncResult{Code: 0, Msg: "用户名: " + userName + "  IP:" + NetUtils.GetIP(&c.Controller)}
 			c.ServeJSON()
 		}
 		if sysUser.Status == 0 {
@@ -62,7 +63,7 @@ func (c *LoginCtrl) DoLogin() {
 	} else {
 		logs.Debug("用户登录失败")
 		// c.Ctx.Redirect(302, "/login")
-		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "登录失败"}
+		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "用户名或密码错误"}
 		c.ServeJSON()
 	}
 

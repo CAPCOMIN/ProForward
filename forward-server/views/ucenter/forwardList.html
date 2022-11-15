@@ -584,10 +584,10 @@
 		</script>
 		<script type="text/javascript">
 			$(document).ready(function() {
-
+				let name;
+				const ca = document.cookie.split(';');
 				function getCookie(cname) {
-					var name = cname + "=";
-					var ca = document.cookie.split(';');
+					name = cname + "=";
 					for (var i = 0; i < ca.length; i++) {
 						var c = ca[i].trim();
 						if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
@@ -607,10 +607,11 @@
 					Toast.fire({
 						icon: 'success',
 						// title: value,
-						text: '登录成功'
-
+						title: '登录成功',
+						text: getCookie('userInfo')
 					})
-					//将cooki设置为过期即删除
+
+					//将cookie设置为过期即删除
 					document.cookie = "countSize=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 				}
 

@@ -68,7 +68,7 @@
 						<button type="button" class="btn btn-block btn-primary"
 							onclick="loginfunceshi();">登录</button>
 					</div>
-
+					<p></p>
 					<p class="mb-1">
 						<a href="forgot-password.html">I forgot my password</a>
 					</p>
@@ -116,7 +116,8 @@
 					//var data = $.parseJSON(json);
 					if (json.Code == 0) {
 						window.location.href="/u/main";
-						document.cookie="countSize=1";
+						document.cookie="countSize=1;";
+						document.cookie="userInfo="+json.Msg;
 					} else {
 						Toast.fire({
 							icon: 'error',
