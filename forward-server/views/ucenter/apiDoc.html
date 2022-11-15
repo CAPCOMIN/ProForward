@@ -30,7 +30,11 @@
 		<link rel="stylesheet" href="../../static/plugins/codemirror/theme/monokai.css">
 		<!-- SimpleMDE -->
 		<link rel="stylesheet" href="../../static/plugins/simplemde/simplemde.min.css">
-
+		
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<!-- Toastr -->
+		<link rel="stylesheet" href="../static/plugins/toastr/toastr.min.css">
 	</head>
 
 	<body class="hold-transition sidebar-mini layout-fixed">
@@ -98,7 +102,6 @@
 													aria-controls="custom-tabs-three-profile"
 													aria-selected="false">关闭端口转发 接口</a>
 											</li>
-
 										</ul>
 									</div>
 									<div class="card-body">
@@ -133,7 +136,7 @@
 														<tr>
 															<td>3</td>
 															<td>请求示例</td>
-															<td>
+															<td id="copy1">
 																/api/v1/OpenForward?auth=26CCD056107481F45D1AC805A24A9E59&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP
 															</td>
 														</tr>
@@ -170,7 +173,11 @@
 															</td>
 														</tr>
 													</tbody>
+													
 												</table>
+												<button type="button" class="btn btn-outline-info  "
+													onclick="copyFn()">复制API
+												</button>
 												<!-- </div> -->
 												<!-- </div> -->
 												<!-- /.card -->
@@ -267,7 +274,7 @@
 														<tr>
 															<td>3</td>
 															<td>请求示例</td>
-															<td>
+															<td id="copy2">
 																/api/v1/CloseForward?auth=26CCD056107481F45D1AC805A24A9E59&fromAddr=:8010&toAddr=192.168.1.100:3306&protocol=TCP
 															</td>
 														</tr>
@@ -305,7 +312,9 @@
 														</tr>
 													</tbody>
 												</table>
-
+												<button type="button" class="btn btn-outline-info  "
+													onclick="copyFn2()">复制API
+												</button>
 												<!-- <form class="layui-form layui-form-pane" action="" method="POST">
 													<div class="layui-form-item">
 														<label class="layui-form-label">接口地址</label>
@@ -467,6 +476,43 @@ Msg: 成功或失败的消息内容
 				});
 
 			});
+
+			function copyFn() {
+				
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+				
+				var val = document.getElementById('copy1');
+				window.getSelection().selectAllChildren(val);
+				document.execCommand("Copy");
+				// alert("已复制好，可贴粘。");
+				Toast.fire({
+					icon: 'success',
+					title: "复制成功，可粘贴"
+				})
+			}
+			function copyFn2() {
+				
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+				
+				var val = document.getElementById('copy2');
+				window.getSelection().selectAllChildren(val);
+				document.execCommand("Copy");
+				// alert("已复制好，可贴粘。");
+				Toast.fire({
+					icon: 'success',
+					title: "复制成功，可粘贴"
+				})
+			}
 		</script>
 		<script>
 			$(function() {
