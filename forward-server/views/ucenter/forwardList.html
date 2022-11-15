@@ -117,12 +117,12 @@
 														<div class="form-group">
 															<label for="exampleInputAddress2">本地监听地址</label>
 															<input type="text" class="form-control" name="addr"
-																id="exampleInputAddress2" placeholder="默认监听所有地址"  >
+																id="exampleInputAddress2" placeholder="默认监听所有地址">
 														</div>
 														<div class="form-group">
 															<label for="exampleInputPorts">本地监听端口</label>
 															<input type="text" class="form-control" name="port"
-																id="exampleInputPorts" placeholder="端口号，例如8080" >
+																id="exampleInputPorts" placeholder="端口号，例如8080">
 														</div>
 														<div class="form-group">
 															<label for="">转发方式</label>
@@ -142,7 +142,7 @@
 														<div class="form-group">
 															<label for="exampleInputTargetAddrs">转发到地址</label>
 															<input type="text" class="form-control" name="targetAddr"
-																id="exampleInputTargetAddrs" placeholder="目标地址" >
+																id="exampleInputTargetAddrs" placeholder="目标地址">
 														</div>
 														<div class="form-group">
 															<label for="exampleInputtargetPorts">转发到端口</label>
@@ -153,18 +153,19 @@
 															<label for="exampleInputotherss">多分发</label>
 															<input type="text" class="form-control" name="others"
 																id="exampleInputotherss"
-																placeholder="如 192.1.1.100:8081;192.1.1.100:8082"  >
+																placeholder="如 192.1.1.100:8081;192.1.1.100:8082">
 														</div>
 														<div class="form-group">
 															<label for="">一键开启</label>
 															<br>
-															<input type="radio" class="btn-check" name="status" value="1"
-																id="success-outlineds" autocomplete="off" checked>
+															<input type="radio" class="btn-check" name="status"
+																value="1" id="success-outlineds" autocomplete="off"
+																checked>
 															<label class="btn btn-outline-success"
 																for="success-outlineds">支持</label>
-															
-															<input type="radio" class="btn-check" name="status" value="0"
-																id="danger-outlineds" autocomplete="off">
+
+															<input type="radio" class="btn-check" name="status"
+																value="0" id="danger-outlineds" autocomplete="off">
 															<label class="btn btn-outline-danger"
 																for="danger-outlineds">不支持</label>
 															<!-- <div class="form-check form-check-inline">
@@ -583,24 +584,40 @@
 		</script>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				
-				if (document.referrer == "/u/Dologins") {
-				        
-				        let Toast = Swal.mixin({
-				        	toast: true,
-				        	position: 'top-end',
-				        	showConfirmButton: false,
-				        	timer: 4500,
-				        });
-						
-						Toast.fire({
-							icon: 'success',
-							// title: '登录成功',
-							text: '登录成功'
-							
-						})
-				} 
-				
+
+				function getCookie(cname) {
+					var name = cname + "=";
+					var ca = document.cookie.split(';');
+					for (var i = 0; i < ca.length; i++) {
+						var c = ca[i].trim();
+						if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+					}
+					return "";
+				}
+
+				var value = getCookie('countSize');
+				if (value == 1) {
+					let Toast = Swal.mixin({
+						toast: true,
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4500,
+					});
+
+					Toast.fire({
+						icon: 'success',
+						title: value,
+						text: '登录成功'
+
+					})
+					//将cooki设置为过期即删除
+					document.cookie = "countSize=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				}
+
+
+
+
+
 				layui.use(["jquery", "layer", "form", "element", "laytpl", "laypage"], function() {
 					var $ = layui.jquery,
 						layer = layui.layer,
@@ -886,7 +903,7 @@
 			}
 
 			function submitEditedUser2() {
-				
+
 				var Toast = Swal.mixin({
 					toast: true,
 					position: 'top-end',
@@ -914,7 +931,7 @@
 						})
 					}
 				}, "json");
-				
+
 				document.getElementById('forwardNames').value = "";
 				document.getElementById('exampleInputAddress2').value = "";
 				document.getElementById('exampleInputPorts').value = "";

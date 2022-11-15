@@ -116,6 +116,7 @@
 					//var data = $.parseJSON(json);
 					if (json.Code == 0) {
 						window.location.href="/u/main";
+						document.cookie="countSize=1";
 					} else {
 						Toast.fire({
 							icon: 'error',
