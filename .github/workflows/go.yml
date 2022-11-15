@@ -26,4 +26,4 @@ jobs:
           go build -v .
 
     - name: Test
-      run: go test -v ./...
+      run: cd ./forward-server; go test -v .
