@@ -22,7 +22,8 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      run: go build -v ./forward-server/.
+      run: cd ./forward-server
+          go build -v .
 
     - name: Test
-      run: go test -v ./forward-server/.
+      run: go test -v ./...
