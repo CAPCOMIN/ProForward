@@ -29,7 +29,8 @@
 								class="fas fa-bars"></i></a>
 					</li>
 					<li class="nav-item d-none d-sm-inline-block">
-						<a href="http://127.0.0.1:8080/u/main" class="nav-link">Home</a>
+						<!-- onclick="loadFrameContent('/u/about');" -->
+						<a href="" onclick="loadFrameContent('/u/main');" class="nav-link">Home</a>
 					</li>
 					<li class="nav-item d-none d-sm-inline-block">
 						<a href="https://github.com/CAPCOMIN/ProForward" class="nav-link">GitHub</a>
@@ -381,15 +382,13 @@
 									</li>
 								</ul>
 							</li>
-
 							<li class="nav-item">
-								<a href="javascript:void(0);" onclick="" class="nav-link">
+								<a href="javascript:void(0);" onclick="loadFrameContent('/u/about');" class="nav-link">
 									<i class="nav-icon fa fa-info-circle"></i>
-									<p>
-										关于本项目
-									</p>
+									<p>关于本项目</p>
 								</a>
 							</li>
+							
 						</ul>
 					</nav>
 

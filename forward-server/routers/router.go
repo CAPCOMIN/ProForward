@@ -50,6 +50,7 @@ func init() {
 
 	beego.Router("/u/Dologins", &Controllers.LoginCtrl{}, "post:DoLogin")
 
+	beego.Router("/u/about", &Controllers.ForwardCtrl{}, "get:AboutForward")
 	//beego.SetStaticPath("/swagger", "swagger")
 
 }

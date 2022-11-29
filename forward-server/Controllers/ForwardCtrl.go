@@ -511,6 +511,14 @@ func (c *ForwardCtrl) AddBatchForward() {
 
 }
 
+// @router /u/AddBatchForward [get]
+func (c *ForwardCtrl) AboutForward() {
+	
+	
+	c.TplName = "ucenter/about.html"
+
+}
+
 // @router /u/SaveBatchForward [post]
 func (c *ForwardCtrl) SaveBatchForward() {
 	rows, _ := c.GetInt("rows")
