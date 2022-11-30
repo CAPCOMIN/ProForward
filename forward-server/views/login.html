@@ -1,155 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>{{config "String" "app.cname" "端口转发系统"}} - V1.3</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{config "String" "app.cname" "端口转发系统"}} Web Server</title>
+    <link rel="icon" href="../static/img/server.svg" type="image/x-icon">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../static/plugins/fontawesome-free/css/all.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../static/dist/css/adminlte.min.css">
 
-		<!-- Google Font: Source Sans Pro -->
-		<link rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="../static/plugins/fontawesome-free/css/all.min.css">
-		<!-- overlayScrollbars -->
-		<link rel="stylesheet" href="../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-		<!-- Theme style -->
-		<link rel="stylesheet" href="../static/dist/css/adminlte.min.css">
-		
-		<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
-		<!-- <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet" /> -->
-		<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script> -->
-		<!-- SweetAlert2 -->
-		<link rel="stylesheet" href="../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-		<!-- Toastr -->
-		<link rel="stylesheet" href="../static/plugins/toastr/toastr.min.css">
-	</head>
-	<body class="hold-transition login-page">
-		<div class="login-box">
-			<!-- /.login-logo -->
-			<div class="card card-outline card-primary">
-				<div class="card-header text-center">
-					<a href="" class="h1">Pro<b>Forward</b></a>
-				</div>
-				<div class="card-body">
-					<p class="login-box-msg">Enter your username and password</p>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" /> -->
+    <!-- <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet" /> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../static/plugins/toastr/toastr.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="" class="h1">Pro<b>Forward</b></a>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">Enter your username and password</p>
 
-					<form id="forms" action="/u/Dologins" method="post">
-						<div class="input-group mb-3">
-							<input type="text" name="userName" class="form-control" placeholder="请输入用户名">
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span class="fas fa-envelope"></span>
-								</div>
-							</div>
-						</div>
-						<div class="input-group mb-3">
-							<input type="password" name="passWord" class="form-control" placeholder="请输入密码">
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span class="fas fa-lock"></span>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-8">
-								<div class="icheck-primary">
-									<input type="checkbox" id="remember">
-									<label for="remember">
-										Remember Me
-									</label>
-								</div>
-							</div>
-							<!-- /.col -->
-						</div>
-						<!-- /.social-auth-links -->
-					</form>
+            <form id="forms" action="/u/Dologins" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" name="userName" class="form-control" placeholder="请输入用户名">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" name="passWord" class="form-control" placeholder="请输入密码">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">
+                                Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.social-auth-links -->
+            </form>
 
-					<div class="">
-						<button type="button" class="btn btn-block btn-primary"
-							onclick="loginfunceshi();">登录</button>
-					</div>
-					<p></p>
-					<p class="mb-1">
-						<a href="forgot-password.html">I forgot my password</a>
-					</p>
-					<p class="mb-0">
-						<a href="register.html" class="text-center">Register a new membership</a>
-					</p>
-				</div>
-				<!-- /.card-body -->
-			</div>
-			<!-- /.card -->
-		</div>
-		<!-- /.login-box -->
-
-		<!-- jQuery -->
-		<script src="../static/plugins/jquery/jquery.min.js"></script>
-		<!-- Bootstrap 4 -->
-		<script src="../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- overlayScrollbars -->
-		<script src="../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-		<!-- AdminLTE App -->
-		<script src="../static/dist/js/adminlte.min.js"></script>
-
-		<!-- SweetAlert2 -->
-		<script src="../static/plugins/sweetalert2/sweetalert2.min.js"></script>
-		<!-- Toastr -->
-		<script src="../static/plugins/toastr/toastr.min.js"></script>
-		<!-- Page specific script -->
-
-		<script type="text/javascript">
-		
-		
-			function loginfunceshi() {
-
-				
-				var Toast = Swal.mixin({
+            <div class="">
+                <button id="loginbtn" type="submit" class="btn btn-block btn-primary"
+                        onclick="loginfunceshi();">登录
+                </button>
+            </div>
+            <p></p>
+            <p class="mb-1">
+                <a onclick="function forgetPass() {
+						var Toast = Swal.mixin({
 					toast: true,
 					position: 'top-end',
 					showConfirmButton: false,
 					timer: 3000,
 				});
-
-
-				var postData = $("#forms").serializeArray();
-				$.post($("#forms").attr("action"), postData, function(json) {
-					//var data = $.parseJSON(json);
-					if (json.Code == 0) {
-						window.location.href="/u/main";
-						document.cookie="countSize=1;";
-						document.cookie="userInfo="+json.Msg;
-					} else {
 						Toast.fire({
-							icon: 'error',
-							title: '登录失败',
-							text: json.Msg
+							icon: 'warning',
+							title: '管理员已禁用该功能',
+							text: 'Contact administrator'
 						})
-					}
-				}, "json");
-
-				// 解决灰屏且无法操作问题
-				$(".modal-backdrop").remove();
-				$('body').removeClass('modal-open');
-				// loadFrameContent('/u/forwardList');
-			}
-		
-		
-			$(function() {
-				var Toast = Swal.mixin({
+						}
+						forgetPass();" href="javascript:void(0);">I forgot my password</a>
+            </p>
+            <p class="mb-0">
+                <a onclick="function signup() {
+						var Toast = Swal.mixin({
 					toast: true,
 					position: 'top-end',
 					showConfirmButton: false,
 					timer: 3000,
-
 				});
+						Toast.fire({
+							icon: 'warning',
+							title: '管理员已禁止注册',
+							text: 'Contact administrator'
+						})
+						}
+						signup();" href="javascript:void(0);" class="text-center">Register a new membership</a>
+            </p>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.login-box -->
 
-				$('.loginbtn').click(function() {
+<!-- jQuery -->
+<script src="../static/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../static/dist/js/adminlte.min.js"></script>
 
-					
-					
-				});
+<!-- SweetAlert2 -->
+<script src="../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="../static/plugins/toastr/toastr.min.js"></script>
+<!-- Page specific script -->
 
-			});
-		</script>
-	</body>
+<script type="text/javascript">
+
+	//键盘回车操作监控
+	document.onkeydown = function(e) {
+		// e = e || window.event;
+		if(e.key === "Enter") {
+			$("#loginbtn").click();//提交按钮的id.click();
+			return false;//防止页面跳转刷新掉
+		}
+	}
+
+    function loginfunceshi() {
+
+
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+        });
+
+
+        var postData = $("#forms").serializeArray();
+        $.post($("#forms").attr("action"), postData, function (json) {
+            //var data = $.parseJSON(json);
+            if (json.Code == 0) {
+                window.location.href = "/u/main";
+                document.cookie = "countSize=1;";
+                document.cookie = "userInfo=" + json.Msg;
+            } else {
+                Toast.fire({
+                    icon: 'error',
+                    title: '登录失败',
+                    text: json.Msg
+                })
+            }
+        }, "json");
+
+        // 解决灰屏且无法操作问题
+        $(".modal-backdrop").remove();
+        $('body').removeClass('modal-open');
+        // loadFrameContent('/u/forwardList');
+    }
+
+
+    $(function () {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+
+        });
+
+        $('.loginbtn').click(function () {
+
+
+        });
+
+    });
+</script>
+</body>
 </html>

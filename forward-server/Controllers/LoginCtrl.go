@@ -37,7 +37,7 @@ func (c *LoginCtrl) DoLogin() {
 		logs.Debug("用户不存在")
 		c.Data["json"] = Models.FuncResult{Code: 1, Msg: "用户名或密码错误"}
 		c.ServeJSON()
-		//return
+		return
 	}
 
 	descryptPwd := Utils.GetMd5(passWord)
