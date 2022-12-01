@@ -41,7 +41,8 @@
 							</div>
 							<div class="col-sm-6">
 								<ol class="breadcrumb float-sm-right">
-									<li class="breadcrumb-item"><a href="" onclick="loadFrameContent('/u/main');">Home</a></li>
+									<li class="breadcrumb-item"><a href=""
+											onclick="loadFrameContent('/u/main');">Home</a></li>
 									<!-- <li class="breadcrumb-item"><a href="#">端口转发控制</a></li> -->
 									<li class="breadcrumb-item active">端口转发控制</li>
 								</ol>
@@ -204,7 +205,127 @@
 								</div>
 
 								<!-- /.modal -->
+								<div class="modal fade" id="modal-addQuick">
+									<div class="modal-dialog modal-xl">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">快速批量添加</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
 
+											<div class="modal-body">
+												<div class="text-right">
+													<button type="button" class="btn btn-primary" onclick="addTableRow2();">
+														添加一行
+													</button>
+												</div>
+												
+												<form id="form5" action="/u/SaveBatchForward" method="post">
+													<div class="card-body" id="batchForwardTable2">
+														<div class="row">
+															<div class="col-2">
+																<input type="text" class="form-control" name="name[]"
+																	 placeholder="输入唯一的名称">
+															</div>
+															<div class="col-2">
+																<input type="text" class="form-control" name="port[]"
+																	 placeholder="监听端口号">
+															</div>
+															<div class="col-2">
+																<select name="protocol[]" class="form-select"
+																	aria-label="Default select example">
+																	<option value="TCP">TCP</option>
+																	<option value="UDP">UDP</option>
+																</select>
+															</div>
+															<div class="col-2">
+																<input type="text" class="form-control"
+																	name="targetAddr[]"
+																	placeholder="目标地址">
+															</div>
+															<div class="col-2">
+																<input type="text" class="form-control"
+																	name="targetPort[]"
+																	placeholder="目标端口号">
+															</div>
+															<div class="col-2">
+																<button type="button" class="btn btn-danger" onclick="delRow2(this)">
+																	删除
+																</button>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer justify-content-between">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">
+															取消
+														</button>
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal" onclick="submitEditedUser3()">提交
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="modal fade" id="modal-importQuick">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">批量导入</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form id="form6" action="/u/SaveImportForward" method="post">
+													
+													<div class="card-body">
+														<div class="form-group">
+															<label for="">分割符号：</label>
+															<input type="text" class="form-control" name="splitChar" value=","
+																id="splitChar2" placeholder="，">
+<!--															<input name="splitChar" placeholder="分割符号，如 , : | - 等" class="layui-input" style="font-size: x-large;" lay-verType="tips" lay-verify="required" value="," maxlength="1" required/>-->
+														</div>
+														<div class="form-group">
+															<label for="">导入数据：</label>
+<!--															<input type="text" class="form-control" name="inputDatas"-->
+<!--																id="inputDatas2" placeholder="">-->
+															<textarea class="form-control" rows="10" placeholder="Enter ..." name="inputDatas" required></textarea>
+<!--															<textarea name="inputDatas" class="input-textarea" rows="15" style="height:200px;width:90%;margin-top:5px;padding:5px;" lay-verify="required" required></textarea>-->
+														</div>
+													</div>
+													
+													<div class="callout callout-info">
+														假设分隔符为 , 号，导入数据格式为：<br>
+														名称,本地监听地址,本地监听端口,协议类型,目标地址,目标端口<br>
+														举例：<br>
+														测试1,127.0.0.1,8000,TCP,127.0.0.1,3306<br>
+														测试2,0.0.0.0,8001,TCP,127.0.0.1,27017<br>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,8002,UDP,192.168.1.100,1443
+													</div>
+													
+													<div class="modal-footer justify-content-between">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">
+															取消
+														</button>
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal" onclick="submitEditedUser4()">提交
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
 
 								<div id="forwardTable" class="card card-olive">
 									<div class="card-header">
@@ -216,17 +337,26 @@
 											<!-- <button class="btn btn-outline-success" onclick="addForward();"><i
 													class="fa fa-plus-circle"></i>添加转发
 											</button> -->
-											<button class="btn btn-outline-success addbtn" data-toggle="modal"
+											<button class="btn btn-outline-success" data-toggle="modal"
 												data-target="#modal-addForward"><i class="fa fa-plus-circle"></i>添加转发
 											</button>
 											<button class="btn btn-outline-success" onclick="delForward();"><i
 													class="fa fa-minus-circle"></i>批量删除
 											</button>
-											<button class="btn btn-outline-success" onclick="AddBatchForward();"><i
+											<!-- <button class="btn btn-outline-success" onclick="AddBatchForward();"><i
 													class="fa fa-share-alt"></i>快速批量添加
+											</button> -->
+
+											<button class="btn btn-outline-success" data-toggle="modal"
+												data-target="#modal-addQuick"><i class="fa fa-share-alt"></i>快速批量添加
 											</button>
-											<button class="btn btn-outline-success" onclick="ImportForward();"><i
-													class="fa fa-reply-all"></i>批量导入
+
+<!--											<button class="btn btn-outline-success" onclick="ImportForward();"><i-->
+<!--													class="fa fa-reply-all"></i>批量导入-->
+<!--											</button>-->
+											
+											<button class="btn btn-outline-success" data-toggle="modal"
+												data-target="#modal-importQuick"><i class="fa fa-reply-all"></i>批量导入
 											</button>
 										</h4>
 										<table class="table table-bordered table-hover">
@@ -529,7 +659,8 @@
 			<div class="float-right d-none d-sm-block">
 				<b>Version</b> 1.0.0.22112
 			</div>
-			<strong>Copyright &copy; 2022 <a href="https://github.com/CAPCOMIN/ProForward">ProForward Team</a>.</strong> All rights
+			<strong>Copyright &copy; 2022 <a href="https://github.com/CAPCOMIN/ProForward">ProForward Team</a>.</strong>
+			All rights
 			reserved.
 		</footer>
 
@@ -582,10 +713,55 @@
     </tr>
     {Start{# }); }End} {Start{# } }End}
 		</script>
+		
+		<script type="text/html" id="forwardRow3">
+			<div class="row">
+			<div>
+				<br>
+			</div>
+				<div class="col-2">
+					<!-- <label for="forwardNames">名称</label> -->
+					<input type="text" class="form-control" name="name[]"
+						 placeholder="输入唯一的名称">
+				</div>
+				<div class="col-2">
+					<!-- <label for="exampleInputPorts">本地监听端口</label> -->
+					<input type="text" class="form-control" name="port[]"
+						 placeholder="监听端口号">
+				</div>
+				<div class="col-2">
+					<!-- <label for="">协议</label> -->
+					<select name="protocol[]" class="form-select"
+						aria-label="Default select example">
+						<option value="TCP">TCP</option>
+						<option value="UDP">UDP</option>
+					</select>
+				</div>
+				<div class="col-2">
+					<!-- <label for="exampleInputTargetAddrs">转发到地址</label> -->
+					<input type="text" class="form-control"
+						name="targetAddr[]"
+						placeholder="目标地址">
+				</div>
+				<div class="col-2">
+					<!-- <label for="exampleInputtargetPorts">转发到端口</label> -->
+					<input type="text" class="form-control"
+						name="targetPort[]"
+						placeholder="目标端口号">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-danger" onclick="delRow2(this)">
+						删除
+					</button>
+				</div>
+			</div>
+		</script>
+		
 		<script type="text/javascript">
 			$(document).ready(function() {
 				let name;
 				const ca = document.cookie.split(';');
+
 				function getCookie(cname) {
 					name = cname + "=";
 					for (var i = 0; i < ca.length; i++) {
@@ -902,7 +1078,17 @@
 				$('body').removeClass('modal-open');
 				loadFrameContent('/u/forwardList');
 			}
-
+			
+			function addTableRow2(){
+			      var data = {};
+			      var script_tpl = document.getElementById('forwardRow3').innerHTML;
+			      layui.laytpl(script_tpl).render(data, function(html){
+			          layui.jquery(html).appendTo("#batchForwardTable2");				
+			          
+			          layui.form.render();
+			      });
+			  }
+			
 			function submitEditedUser2() {
 
 				var Toast = Swal.mixin({
@@ -933,18 +1119,98 @@
 					}
 				}, "json");
 
-				document.getElementById('forwardNames').value = "";
-				document.getElementById('exampleInputAddress2').value = "";
-				document.getElementById('exampleInputPorts').value = "";
-				document.getElementById('exampleInputTargetAddrs').value = "";
-				document.getElementById('exampleInputtargetPorts').value = "";
-				document.getElementById('exampleInputotherss').value = "";
+				// document.getElementById('forwardNames').value = "";
+				// document.getElementById('exampleInputAddress2').value = "";
+				// document.getElementById('exampleInputPorts').value = "";
+				// document.getElementById('exampleInputTargetAddrs').value = "";
+				// document.getElementById('exampleInputtargetPorts').value = "";
+				// document.getElementById('exampleInputotherss').value = "";
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+			function submitEditedUser3() {
+			
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+			
+				var postData = layui.form.getValue(null, $("#form5"));
+				postData.rows = $("#batchForwardTable2").children().length;
+				$.post($("#form5").attr("action"), postData, function(json) {
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+			
+				// document.getElementById('forwardNames').value = "";
+				// document.getElementById('exampleInputAddress2').value = "";
+				// document.getElementById('exampleInputPorts').value = "";
+				// document.getElementById('exampleInputTargetAddrs').value = "";
+				// document.getElementById('exampleInputtargetPorts').value = "";
+				// document.getElementById('exampleInputotherss').value = "";
 				// 解决灰屏且无法操作问题
 				$(".modal-backdrop").remove();
 				$('body').removeClass('modal-open');
 				loadFrameContent('/u/forwardList');
 			}
 
+			function submitEditedUser4() {
+
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = layui.form.getValue(null, $("#form6"));
+				$.post($("#form6").attr("action"), postData, function(json) {
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+
+			function delRow2(obj){
+			    layui.jquery(obj).parent().parent().remove();
+			}
+			
 			function delForward() {
 				var selectedItems = getChkValues("id");
 				if (selectedItems.length == 0) {
@@ -1231,10 +1497,6 @@
 					}, 'json');
 					loadFrameContent('/u/forwardList');
 					// close;
-				});
-
-				$('.addbtn').click(function() {
-
 				});
 
 

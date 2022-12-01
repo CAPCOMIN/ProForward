@@ -113,6 +113,40 @@ func (c *ForwardCtrl) DoSaveForward() {
 
 }
 
+func (c *ForwardCtrl) DoRowForward() {
+	rows, _ := c.GetInt("rows")
+
+	// var entities []*Models.PortForward
+
+	for i := 0; i < rows; i++ {
+
+		var newForward Models.PortForward
+
+		newForward.Id, _ = c.GetInt("id")
+		newForward.Name = c.GetString("name")
+		newForward.Addr = ""
+		newForward.Port, _ = c.GetInt("port")
+		// newForward.Status, _ = 1
+		newForward.Protocol = c.GetString("protocol")
+		newForward.TargetAddr = c.GetString("targetAddr")
+		newForward.TargetPort, _ = c.GetInt("targetPort")
+		newForward.Others = ""
+		// newForward.FType, _ = 0
+		newForward.CreateTime = time.Now()
+
+		id, err := Service.SysDataS.AddOneForward(&newForward)
+		if err != nil {
+			logs.Error("DoSaveForward", err)
+			c.Data["json"] = Models.FuncResult{Code: 1, Msg: "添加账户失败，" + err.Error()}
+		} else {
+			c.Data["json"] = Models.FuncResult{Code: 0, Msg: "已成功添加账户，ID:" + strconv.FormatInt(id, 10)}
+		}
+		// entities = append(entities, newForward)
+	}
+
+	c.ServeJSON()
+}
+
 func (c *ForwardCtrl) DoEditForward() {
 
 	var updateUser Models.PortForward
@@ -513,8 +547,7 @@ func (c *ForwardCtrl) AddBatchForward() {
 
 // @router /u/AddBatchForward [get]
 func (c *ForwardCtrl) AboutForward() {
-	
-	
+
 	c.TplName = "ucenter/about.html"
 
 }
@@ -577,7 +610,7 @@ func (c *ForwardCtrl) SaveBatchForward() {
 		}
 	}
 
-	c.Data["json"] = Models.FuncResult{Code: 0, Msg: ""}
+	c.Data["json"] = Models.FuncResult{Code: 0, Msg: "批量添加转发规则成功"}
 
 	c.ServeJSON()
 
@@ -674,8 +707,7 @@ func (c *ForwardCtrl) SaveImportForward() {
 		}
 	}
 
-	c.Data["json"] = Models.FuncResult{Code: 0, Msg: ""}
+	c.Data["json"] = Models.FuncResult{Code: 0, Msg: "批量导入转发规则成功"}
 
 	c.ServeJSON()
 }
-
