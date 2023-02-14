@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>高并发端口转发内网穿透系统</title>
+    <title>{{config "String" "app.cname" "端口转发系统"}} Web Server</title>
     <link rel="icon" href="../static/img/server.svg" type="image/x-icon">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -28,10 +28,10 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="" class="h5"><b>高并发端口转发内网穿透控制系统</b></a>
+            <a href="" class="h1">Pro<b>Forward</b></a>
         </div>
         <div class="card-body">
-            <p class="login-box-msg">输入用户名和密码：</p>
+            <p class="login-box-msg">Enter your username and password</p>
 
             <form id="forms" action="/u/Dologins" method="post">
                 <div class="input-group mb-3">
@@ -55,7 +55,7 @@
                         <div class="icheck-primary">
                             <input type="checkbox" id="remember">
                             <label for="remember">
-                                记住密码
+                                Remember Me
                             </label>
                         </div>
                     </div>
@@ -70,38 +70,38 @@
                 </button>
             </div>
             <p></p>
-<!--            <p class="mb-1">-->
-<!--                <a onclick="function forgetPass() {-->
-<!--						var Toast = Swal.mixin({-->
-<!--					toast: true,-->
-<!--					position: 'top-end',-->
-<!--					showConfirmButton: false,-->
-<!--					timer: 3000,-->
-<!--				});-->
-<!--						Toast.fire({-->
-<!--							icon: 'warning',-->
-<!--							title: '管理员已禁用该功能',-->
-<!--							text: 'Contact administrator'-->
-<!--						})-->
-<!--						}-->
-<!--						forgetPass();" href="javascript:void(0);">I forgot my password</a>-->
-<!--            </p>-->
-<!--            <p class="mb-0">-->
-<!--                <a onclick="function signup() {-->
-<!--						var Toast = Swal.mixin({-->
-<!--					toast: true,-->
-<!--					position: 'top-end',-->
-<!--					showConfirmButton: false,-->
-<!--					timer: 3000,-->
-<!--				});-->
-<!--						Toast.fire({-->
-<!--							icon: 'warning',-->
-<!--							title: '管理员已禁止注册',-->
-<!--							text: 'Contact administrator'-->
-<!--						})-->
-<!--						}-->
-<!--						signup();" href="javascript:void(0);" class="text-center">Register a new membership</a>-->
-<!--            </p>-->
+            <p class="mb-1">
+                <a onclick="function forgetPass() {
+						var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+						Toast.fire({
+							icon: 'warning',
+							title: '管理员已禁用该功能',
+							text: 'Contact administrator'
+						})
+						}
+						forgetPass();" href="javascript:void(0);">I forgot my password</a>
+            </p>
+            <p class="mb-0">
+                <a onclick="function signup() {
+						var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+						Toast.fire({
+							icon: 'warning',
+							title: '管理员已禁止注册',
+							text: 'Contact administrator'
+						})
+						}
+						signup();" href="javascript:void(0);" class="text-center">Register a new membership</a>
+            </p>
         </div>
         <!-- /.card-body -->
     </div>

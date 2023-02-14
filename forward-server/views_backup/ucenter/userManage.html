@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>AdminLTE 3 | Fixed Sidebar</title>
+
+		<!-- Google Font: Source Sans Pro -->
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+		<!-- overlayScrollbars -->
+		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+		<!-- Theme style -->
+		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<!-- Toastr -->
+		<link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
+	</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<!-- Site wrapper -->
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1>用户管理</h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a href="" onclick="loadFrameContent('/u/main');">Home</a></li>
+									<!-- <li class="breadcrumb-item"><a href="#">Layout</a></li> -->
+									<li class="breadcrumb-item active">用户管理</li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+
+
+					<div class="container-fluid">
+						<!--        <div class="row">-->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card card-danger card-outline">
+									<div class="card-header">
+										<h3 class="card-title">系统用户管理</h3>
+										<div class="card-tools">
+											<div class="input-group input-group-sm" style="width: 300px;">
+												<input type="text" name="table_search" class="form-control float-right"
+													placeholder="Search">
+
+												<div class="input-group-append">
+													<button type="submit" class="btn btn-default">
+														<i class="fas fa-search"></i>
+													</button>
+													<button class="btn btn-success" onclick="showModal()"><i
+															class="fa fa-plus-circle"></i>
+														添加用户
+														<!-- onclick="adduser()" -->
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="modal fade" id="modal-default">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title">添加系统用户</h4>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<form id="form1" action="/manageUser/add" method="post">
+														<div class="card-body">
+															<div class="form-group">
+																<label for="exampleInputEmail1">用户名（不得重复）</label>
+																<input type="text" class="form-control" name="UserName"
+																	id="exampleInputEmail1" placeholder="输入唯一的用户名"
+																	required>
+															</div>
+															<div class="form-group">
+																<label for="exampleInputPassword1">密码</label>
+																<input type="password" class="form-control"
+																	name="PassWord" id="exampleInputPassword1"
+																	placeholder="Password" required>
+															</div>
+
+															<div
+																class="custom-control custom-switch custom-switch-on-danger">
+																<input type="checkbox" class="custom-control-input"
+																	name="Status" id="customSwitch22" checked>
+																<label class="custom-control-label"
+																	for="customSwitch22">添加后立即禁用该账户登录</label>
+															</div>
+
+
+														</div>
+
+														<div class="modal-footer justify-content-between">
+															<button type="button" class="btn btn-default"
+																data-dismiss="modal">
+																取消
+															</button>
+															<button type="button" class="btn btn-primary"
+																data-dismiss="modal" onclick="adduser()">提交
+															</button>
+														</div>
+													</form>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+
+
+									<div class="modal fade" id="modal-edit">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title">编辑系统用户</h4>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<form id="form2" action="/manageUser/doEdit" method="post">
+														<div class="card-body">
+															<div class="form-group">
+																<label for="InputID">用户ID</label>
+																<input type="text" class="form-control" name="Id"
+																	id="InputID" readonly>
+																<small class="form-text text-muted">系统用户ID修改已禁用</small>
+															</div>
+															<div class="form-group">
+																<label for="exampleInputEmail2">用户名（不得重复）</label>
+																<input type="text" class="form-control" name="UserName"
+																	id="exampleInputEmail2" placeholder="输入唯一的用户名">
+															</div>
+															<div class="form-group">
+																<label for="exampleInputPassword2">密码</label>
+																<input type="password" class="form-control"
+																	name="PassWord" id="exampleInputPassword2"
+																	placeholder="若不修改用户密码请勿填写此项">
+																<small id="passwordHash"
+																	class="form-text text-muted"></small>
+															</div>
+
+															<div
+																class="custom-control custom-switch custom-switch-on-danger">
+																<input type="checkbox" class="custom-control-input"
+																	name="Status" id="customSwitch2">
+																<label class="custom-control-label"
+																	for="customSwitch2">是否停用该账户</label>
+																<small id="currentStatus"
+																	class="form-text text-muted"></small>
+															</div>
+
+														</div>
+
+														<div class="modal-footer justify-content-between">
+															<button type="button" class="btn btn-default"
+																data-dismiss="modal">
+																取消
+															</button>
+															<button type="button" class="btn btn-primary"
+																data-dismiss="modal" onclick="submitEditedUser()">提交
+															</button>
+														</div>
+													</form>
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+
+
+									<div class="card-body table-responsive p-0">
+										<table class="table table-hover text-nowrap">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>用户名</th>
+													<th>当前状态</th>
+													<th>密码哈希</th>
+													<th>创建时间</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody>
+												{{range .userList}}
+												<tr>
+													<td>{{.Id}}</td>
+													<td>{{.UserName}}</td>
+													<td>{{if .Status}}<i style="color: limegreen"
+															class="fa fa-check"></i>
+														{{else}}<i style="color: orange" class="fa fa-pause"></i>{{end}}
+													</td>
+													<td><code>{{.PassWord}}</code></td>
+													<td>{{.CreateTime.Format "Jan 02,2006 15:04:05 Monday"}}</td>
+
+													<td>{{if .Status}}
+														<!-- <button class='btn btn-outline-warning'
+                                                onclick="window.location.href='/manageUser/ban?id={{.Id}}'">停用账号</button>
+                                             -->
+														<button class='btn btn-outline-warning'
+															onclick="banuser({{.Id}});">停用账号
+														</button>
+														{{else}}
+															<button class='btn btn-outline-success'
+																onclick="enable({{.Id}});">启用账号
+															</button>
+
+															<!-- <button class='btn btn-outline-success'
+                                                onclick="window.location.href='/manageUser/enable?id={{.Id}}'">启用账号</button>
+                                             -->
+															{{end}}
+															<button class='btn btn-info'
+																onclick="edituser({{.Id}})">编辑</button>
+
+															<!--                                            <button class='btn btn-success' onclick="copypassword({{.Id}})">复制</button>-->
+															<button class='btn btn-danger' data-toggle="modal"
+																data-target="#modal-defaulted"
+																onclick="dels({{.Id}});">删除
+															</button>
+													</td>
+												</tr>
+												{{end}}
+
+											</tbody>
+										</table>
+									</div>
+
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<span style="text-align: center;display:block;"
+											class="direct-chat-timestamp float">Top Secret. Unauthorized distribution is
+											prohibited.</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			</div>
+		</div>
+		</div>
+		</section>
+		<!-- /.content -->
+		</div>
+
+
+		<!-- /.content-wrapper -->
+
+		<footer class="main-footer">
+			<div class="float-right d-none d-sm-block">
+				<b>Version</b> 1.0.0.22112
+			</div>
+			<strong>Copyright &copy; 2022 <a href="https://github.com/CAPCOMIN/ProForward">ProForward Team</a>.</strong> All rights
+			reserved.
+		</footer>
+
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+		</div>
+		<!-- ./wrapper -->
+
+		<!-- jQuery -->
+		<script src="../../static/plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+		<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- overlayScrollbars -->
+		<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="../../static/dist/js/adminlte.min.js"></script>
+		<!-- SweetAlert2 -->
+		<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+		<!-- Toastr -->
+		<script src="../../static/plugins/toastr/toastr.min.js"></script>
+		<!-- Page specific script -->
+
+
+		<script type="text/javascript">
+			function dels(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				$.get("/manageUser/del", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, 'json');
+
+				loadFrameContent('/u/userManage');
+			}
+
+			function enable(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				$.get("/manageUser/enable", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, 'json');
+
+				loadFrameContent('/u/userManage');
+			}
+
+			function banuser(id) {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				$.get("/manageUser/banuser", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+
+					} else { //失败
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, 'json');
+
+				loadFrameContent('/u/userManage');
+			}
+
+			function edituser(id) {
+
+				let Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 4500,
+				});
+				$.get("/manageUser/edit", {
+					id: id,
+					rnd: Math.random()
+				}, function(json) {
+					Toast.fire({
+						icon: 'info',
+						title: "Editing " + json.UserName,
+						text: "CreateTime: " + json.CreateTime
+					})
+					document.getElementById("exampleInputEmail2").setAttribute("value", json.UserName);
+					document.getElementById("exampleInputPassword2").setAttribute("value", json.PassWord);
+					document.getElementById("passwordHash").innerText = "当前密码哈希值：" + json.PassWord;
+					document.getElementById("InputID").setAttribute("value", json.Id);
+					if (json.Status == 0) {
+						document.getElementById("currentStatus").innerHTML = "当前状态：" +
+							"<i style=\"color: orange\" class=\"fa fa-pause\"></i>" + "（停用）";
+						document.getElementById("customSwitch2").setAttribute("checked", "true");
+					} else if (json.Status == 1) {
+						document.getElementById("currentStatus").innerHTML = "当前状态：" +
+							"<i style=\"color: limegreen\" class=\"fa fa-check\"></i>" + "（启用）";
+					}
+
+				}, 'json')
+
+				$("#modal-edit").modal('show');
+			}
+
+
+			function submitEditedUser() {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form2").serializeArray();
+				$.post($("#form2").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/userManage');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/userManage');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/userManage');
+			}
+
+			function showModal() {
+				$("#modal-default").modal('show');
+			}
+
+			function adduser() {
+				$("#modal-default").modal('hide');
+
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form1").serializeArray();
+				$.post($("#form1").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						//成功
+						//layer.alert("保存成功");
+						//layer.msg("保存成功.");
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/userManage');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/userManage');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/userManage');
+			}
+
+			$(function() {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+
+				});
+
+			});
+		</script>
+
+
+	</body>
+</html>

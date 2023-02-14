@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>AdminLTE 3 | Fixed Sidebar</title>
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet" />
+		<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script> -->
+		<!-- Google Font: Source Sans Pro -->
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+		<!-- overlayScrollbars -->
+		<link rel="stylesheet" href="../../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+		<!-- Theme style -->
+		<link rel="stylesheet" href="../../static/dist/css/adminlte.min.css">
+
+
+
+
+		<!-- SweetAlert2 -->
+		<link rel="stylesheet" href="../../static/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+		<!-- Toastr -->
+		<link rel="stylesheet" href="../../static/plugins/toastr/toastr.min.css">
+	</head>
+	<body class="hold-transition sidebar-mini layout-fixed">
+		<!-- Site wrapper -->
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1>端口转发控制</h1>
+							</div>
+							<div class="col-sm-6">
+								<ol class="breadcrumb float-sm-right">
+									<li class="breadcrumb-item"><a href=""
+											onclick="loadFrameContent('/u/main');">Home</a></li>
+									<!-- <li class="breadcrumb-item"><a href="#">端口转发控制</a></li> -->
+									<li class="breadcrumb-item active">端口转发控制</li>
+								</ol>
+							</div>
+						</div>
+					</div><!-- /.container-fluid -->
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+
+
+					<div class="container-fluid">
+						<!--        <div class="row">-->
+						<div class="">
+							<div class="col-12">
+								<!-- Default box -->
+								<div id="forwardSearch" class="card card-success card-outline">
+									<div class="card-header">
+										<h3 class="card-title">转发查询</h3>
+									</div>
+									<div class="card-body">
+										<div class="row">
+
+											<div class="col-4">
+												<label for="exampleInputEmail1">本地端口</label>
+												<input type="text" id="port" name="port" class="form-control"
+													placeholder="本地监听端口">
+											</div>
+
+											<div class="col-4">
+												<label for="exampleInputEmail1">目标地址</label>
+												<input type="text" id="targetAddr" name="targetAddr"
+													class="form-control" placeholder="转发到地址">
+											</div>
+
+											<div class="col-4">
+												<label for="exampleInputEmail1">目标端口</label>
+												<input type="text" id="targetPort" name="targetPort"
+													class="form-control" placeholder="转发到端口">
+											</div>
+
+										</div>
+
+									</div>
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<button type="button" class="btn btn-outline-success  " onclick="query(1);"><i
+												class="fa fa-search"></i> 立即查询
+										</button>
+									</div>
+								</div>
+
+								<!-- /.modal -->
+								<div class="modal fade" id="modal-addForward">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">添加网络转发端口</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form id="form4" action="/u/Dosaveforward" method="post">
+													<div class="card-body">
+														<div class="form-group">
+															<label for="forwardNames">名称</label>
+															<input type="text" class="form-control" name="name"
+																id="forwardNames" placeholder="输入唯一的名称">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputAddress2">本地监听地址</label>
+															<input type="text" class="form-control" name="addr"
+																id="exampleInputAddress2" placeholder="默认监听所有地址">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPorts">本地监听端口</label>
+															<input type="text" class="form-control" name="port"
+																id="exampleInputPorts" placeholder="端口号，例如8080">
+														</div>
+														<div class="form-group">
+															<label for="">转发方式</label>
+															<select name="fType" class="form-select"
+																aria-label="Default select example">
+																<option value="0">端口到端口映射</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="">协议</label>
+															<select name="protocol" class="form-select"
+																aria-label="Default select example">
+																<option value="TCP">TCP</option>
+																<option value="UDP">UDP</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputTargetAddrs">转发到地址</label>
+															<input type="text" class="form-control" name="targetAddr"
+																id="exampleInputTargetAddrs" placeholder="目标地址">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputtargetPorts">转发到端口</label>
+															<input type="text" class="form-control" name="targetPort"
+																id="exampleInputtargetPorts" placeholder="目标端口号，例如3306">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputotherss">多分发</label>
+															<input type="text" class="form-control" name="others"
+																id="exampleInputotherss"
+																placeholder="如 192.1.1.100:8081;192.1.1.100:8082">
+														</div>
+														<div class="form-group">
+															<label for="">一键开启</label>
+															<br>
+															<input type="radio" class="btn-check" name="status"
+																value="1" id="success-outlineds" autocomplete="off"
+																checked>
+															<label class="btn btn-outline-success"
+																for="success-outlineds">支持</label>
+
+															<input type="radio" class="btn-check" name="status"
+																value="0" id="danger-outlineds" autocomplete="off">
+															<label class="btn btn-outline-danger"
+																for="danger-outlineds">不支持</label>
+															<!-- <div class="form-check form-check-inline">
+															  <input class="form-check-input" type="radio" name="status" id="inlineRadio1s" value="0">
+															  <label class="form-check-label" for="inlineRadio1s">不支持</label>
+															</div>
+															<div class="form-check form-check-inline">
+															  <input class="form-check-input" type="radio" name="status" id="inlineRadio2s" value="1">
+															  <label class="form-check-label" for="inlineRadio2s">支持</label>
+															</div> -->
+														</div>
+													</div>
+													<div class="callout callout-info">
+														*多分发说明：<br>
+														如果不需要“多分发”，请留空；<br>
+														如果需要分发到多个端口，填写格式为 “IP:端口”，多个用 ; 号隔开<br>
+														如 192.1.1.100:8081;192.1.1.100:8082<br>
+														<br>
+														*一键开启说明，设置为“支持”后：<br>
+														通过在配置文件中添加 onstart.forward = "true"
+														，可让程序每次运行后就开始转发该规则，或者在列表页面通过点击“一键开启”。<br>
+													</div>
+													<div class="modal-footer justify-content-between">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">
+															取消
+														</button>
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal" onclick="submitEditedUser2()">提交
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- /.modal -->
+								<div class="modal fade" id="modal-addQuick">
+									<div class="modal-dialog modal-xl">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">快速批量添加</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+
+											<div class="modal-body">
+												<div class="text-right">
+													<button type="button" class="btn btn-primary" onclick="addTableRow2();">
+														添加一行
+													</button>
+												</div>
+												
+												<form id="form5" action="/u/SaveBatchForward" method="post">
+													<div class="card-body" id="batchForwardTable2">
+														<div class="row">
+															<div class="col-2">
+																<input type="text" class="form-control" name="name[]"
+																	 placeholder="输入唯一的名称">
+															</div>
+															<div class="col-2">
+																<input type="text" class="form-control" name="port[]"
+																	 placeholder="监听端口号">
+															</div>
+															<div class="col-2">
+																<select name="protocol[]" class="form-select"
+																	aria-label="Default select example">
+																	<option value="TCP">TCP</option>
+																	<option value="UDP">UDP</option>
+																</select>
+															</div>
+															<div class="col-2">
+																<input type="text" class="form-control"
+																	name="targetAddr[]"
+																	placeholder="目标地址">
+															</div>
+															<div class="col-2">
+																<input type="text" class="form-control"
+																	name="targetPort[]"
+																	placeholder="目标端口号">
+															</div>
+															<div class="col-2">
+																<button type="button" class="btn btn-danger" onclick="delRow2(this)">
+																	删除
+																</button>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer justify-content-between">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">
+															取消
+														</button>
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal" onclick="submitEditedUser3()">提交
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="modal fade" id="modal-importQuick">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">批量导入</h4>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form id="form6" action="/u/SaveImportForward" method="post">
+													
+													<div class="card-body">
+														<div class="form-group">
+															<label for="">分割符号：</label>
+															<input type="text" class="form-control" name="splitChar" value=","
+																id="splitChar2" placeholder="，">
+<!--															<input name="splitChar" placeholder="分割符号，如 , : | - 等" class="layui-input" style="font-size: x-large;" lay-verType="tips" lay-verify="required" value="," maxlength="1" required/>-->
+														</div>
+														<div class="form-group">
+															<label for="">导入数据：</label>
+<!--															<input type="text" class="form-control" name="inputDatas"-->
+<!--																id="inputDatas2" placeholder="">-->
+															<textarea class="form-control" rows="10" placeholder="Enter ..." name="inputDatas" required></textarea>
+<!--															<textarea name="inputDatas" class="input-textarea" rows="15" style="height:200px;width:90%;margin-top:5px;padding:5px;" lay-verify="required" required></textarea>-->
+														</div>
+													</div>
+													
+													<div class="callout callout-info">
+														假设分隔符为 , 号，导入数据格式为：<br>
+														名称,本地监听地址,本地监听端口,协议类型,目标地址,目标端口<br>
+														举例：<br>
+														测试1,127.0.0.1,8000,TCP,127.0.0.1,3306<br>
+														测试2,0.0.0.0,8001,TCP,127.0.0.1,27017<br>
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,,8002,UDP,192.168.1.100,1443
+													</div>
+													
+													<div class="modal-footer justify-content-between">
+														<button type="button" class="btn btn-default"
+															data-dismiss="modal">
+															取消
+														</button>
+														<button type="button" class="btn btn-primary"
+															data-dismiss="modal" onclick="submitEditedUser4()">提交
+														</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div id="forwardTable" class="card card-olive">
+									<div class="card-header">
+										<h3 class="card-title">端口转发列表</h3>
+									</div>
+
+									<div class="card-body">
+										<h4>
+											<!-- <button class="btn btn-outline-success" onclick="addForward();"><i
+													class="fa fa-plus-circle"></i>添加转发
+											</button> -->
+											<button class="btn btn-outline-success" data-toggle="modal"
+												data-target="#modal-addForward"><i class="fa fa-plus-circle"></i>添加转发
+											</button>
+											<button class="btn btn-outline-success" onclick="delForward();"><i
+													class="fa fa-minus-circle"></i>批量删除
+											</button>
+											<!-- <button class="btn btn-outline-success" onclick="AddBatchForward();"><i
+													class="fa fa-share-alt"></i>快速批量添加
+											</button> -->
+
+											<button class="btn btn-outline-success" data-toggle="modal"
+												data-target="#modal-addQuick"><i class="fa fa-share-alt"></i>快速批量添加
+											</button>
+
+<!--											<button class="btn btn-outline-success" onclick="ImportForward();"><i-->
+<!--													class="fa fa-reply-all"></i>批量导入-->
+<!--											</button>-->
+											
+											<button class="btn btn-outline-success" data-toggle="modal"
+												data-target="#modal-importQuick"><i class="fa fa-reply-all"></i>批量导入
+											</button>
+										</h4>
+										<table class="table table-bordered table-hover">
+											<thead>
+												<tr>
+													<th>
+														<input type="checkbox" name="" lay-skin="primary"
+															lay-filter="allChoose">
+													</th>
+													<th>ID</th>
+													<th>名称</th>
+													<th>本地监听地址</th>
+													<th>本地监听端口</th>
+													<th>转发方式</th>
+													<th>协议</th>
+													<th>转发到地址</th>
+													<th>转发到端口</th>
+													<th>状态</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody id="gridBody">
+											</tbody>
+										</table>
+									</div>
+
+
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<div id="pagination"></div>
+										<!--               <button type="submit" class="btn btn-success" onclick="query(1);" >查询</button>-->
+									</div>
+								</div>
+								<!-- /.card -->
+
+								<div class="row">
+									<div class="col-12">
+										<h4>快捷功能 <small> 一键控制 / 日志 </small></h4>
+									</div>
+								</div>
+
+
+								<div id="shortcutOptions" class="card card-info card-outline card-tabs">
+									<div class="card-header p-0 pt-1 border-bottom-0">
+										<ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+											<li class="nav-item">
+												<a class="nav-link active" id="custom-tabs-three-home-tab"
+													data-toggle="pill" href="#custom-tabs-three-home" role="tab"
+													aria-controls="custom-tabs-three-home" aria-selected="true">一键控制</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="custom-tabs-three-profile-tab"
+													data-toggle="pill" href="#custom-tabs-three-profile" role="tab"
+													aria-controls="custom-tabs-three-profile"
+													aria-selected="false">日志选项</a>
+											</li>
+
+										</ul>
+									</div>
+									<div class="card-body">
+										<div class="tab-content" id="custom-tabs-three-tabContent">
+											<div class="tab-pane fade show active" id="custom-tabs-three-home"
+												role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+												<h4>
+													<!-- <button class="btn btn-outline-info" onclick="OpenAllForward();"><i
+															class="fa fa-play-circle"></i> 一键开启
+													</button> -->
+
+													<button type="button" class="btn btn-outline-info"
+														data-toggle="modal" data-target="#modal-default">
+														<i class="fa fa-play-circle"></i> 一键开启
+													</button>
+													<button type="button" class="btn btn-outline-info"
+														data-toggle="modal" data-target="#modal-defaults">
+														<i class="fa fa-stop-circle"></i> 一键关闭
+													</button>
+												</h4>
+												<div class="modal fade" id="modal-default">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h4 class="modal-title">信息</h4>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<p>确定一键开启所有转发吗？</p>
+															</div>
+															<div class="modal-footer justify-content-between">
+
+																<button type="button" class="btn btn-primary Prabtn"
+																	data-dismiss="modal">确定</button>
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">取消</button>
+
+															</div>
+														</div>
+
+													</div>
+
+												</div>
+
+												<!-- <button class="btn btn-outline-info" onclick="CloseAllForward();"><i
+															class="fa fa-stop-circle"></i> 一键关闭
+													</button> -->
+
+
+												<div class="modal fade" id="modal-defaults">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h4 class="modal-title">信息</h4>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<p>确定一键关闭所有转发吗？</p>
+
+															</div>
+															<div class="modal-footer justify-content-between">
+
+																<button type="button" class="btn btn-primary Btnpra"
+																	data-dismiss="modal">确定</button>
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">取消</button>
+
+															</div>
+														</div>
+
+													</div>
+
+												</div>
+
+												<!-- <br> -->
+												<b> 一键开启说明：</b> <br>
+												1、只要设置了支持“一键开启”都允许被一键开启转发。 <br>
+												2、通过在配置文件中添加 onstart.forward = "true" ，可让程序每次运行后就开始转发该规则。 <br>
+												3、点击“一键开启”或“一键关闭”来开启/关闭所有转发。 <br>
+
+											</div>
+											<div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel"
+												aria-labelledby="custom-tabs-three-profile-tab">
+
+												<div class="layui-inline pull-left">
+													<label class="form-label">详细日志开关</label>
+													<div class="layui-form text-left">
+														<div class="layui-inline pull-left">
+															<p>
+																<input type="checkbox" name="debugStatus"
+																	lay-skin="switch" {{if eq .ForWardDebug true}}
+																	checked {{end}} lay-filter="ForWardDebug"
+																	lay-text="ON|OFF">
+															</p>
+
+														</div>
+													</div>
+
+													<b>详细日志开关说明：</b> <br>
+													1、主要对网络流量突然增大时，连接多、日志多，可以临时关闭。 <br>
+													2、详细日志功能开启时，日志文件会记录后台处理信息来帮助分析问题。 <br>
+													3、详细日志默认开启，只能临时关闭。 <br>
+
+												</div>
+
+											</div>
+
+										</div>
+									</div>
+									<!-- /.card -->
+								</div>
+							</div>
+
+							<div class="modal fade" id="modal-editport">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">编辑网络转发端口</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form id="form3" action="/u/DoEditForward" method="post">
+												<div class="card-body">
+													<div class="form-group">
+														<label for="InputID">Forward ID</label>
+														<input type="text" class="form-control" name="id" id="InputID"
+															readonly>
+														<small class="form-text text-muted">系统用户ID修改已禁用</small>
+													</div>
+													<div class="form-group">
+														<label for="forwardName">名称</label>
+														<input type="text" class="form-control" name="name"
+															id="forwardName" placeholder="输入唯一的名称">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputAddress">本地监听地址</label>
+														<input type="text" class="form-control" name="addr"
+															id="exampleInputAddress" placeholder="默认监听所有地址">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputPort">本地监听端口</label>
+														<input type="text" class="form-control" name="port"
+															id="exampleInputPort" placeholder="端口号，例如8080">
+													</div>
+													<div class="form-group">
+														<label for="">转发方式</label>
+														<select name="fType" class="form-select"
+															aria-label="Default select example">
+															<option value="0">端口到端口映射</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="">协议</label>
+														<select name="protocol" class="form-select"
+															aria-label="Default select example">
+															<option value="TCP">TCP</option>
+															<option value="UDP">UDP</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="exampleInputTargetAddr">转发到地址</label>
+														<input type="text" class="form-control" name="targetAddr"
+															id="exampleInputTargetAddr" placeholder="目标地址">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputtargetPort">转发到端口</label>
+														<input type="text" class="form-control" name="targetPort"
+															id="exampleInputtargetPort" placeholder="目标端口号，例如3306">
+													</div>
+													<div class="form-group">
+														<label for="exampleInputothers">多分发</label>
+														<input type="text" class="form-control" name="others"
+															id="exampleInputothers"
+															placeholder="如 192.1.1.100:8081;192.1.1.100:8082">
+													</div>
+													<div class="form-group">
+														<label for="">一键开启</label>
+														<br>
+														<input type="radio" class="btn-check" name="status" value="1"
+															id="success-outlined" autocomplete="off" checked>
+														<label class="btn btn-outline-success"
+															for="success-outlined">支持</label>
+
+														<input type="radio" class="btn-check" name="status" value="0"
+															id="danger-outlined" autocomplete="off">
+														<label class="btn btn-outline-danger"
+															for="danger-outlined">不支持</label>
+														<!-- <input type="radio" name="status" value="0" title="不支持"
+															>
+														<input type="radio" name="status" value="1" title="支持"
+															> -->
+													</div>
+												</div>
+
+												<div class="modal-footer justify-content-between">
+													<button type="button" class="btn btn-default" data-dismiss="modal">
+														取消
+													</button>
+													<button type="button" class="btn btn-primary" data-dismiss="modal"
+														onclick="submitEditedUser()">提交
+													</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-md-12">
+								<div id="help1" class="card card-success card-outline">
+									<div class="card-header">
+										<h3 class="card-title">帮助说明</h3>
+									</div>
+									<div class="card-body">
+
+
+										说明文档请访问：<a href="https://github.com/CAPCOMIN/ProForward"
+											target="_blank">https://github.com/CAPCOMIN/ProForward</a><br>
+										Funded by the Innovation Training Program for College Students
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		</section>
+		<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<footer class="main-footer">
+			<div class="float-right d-none d-sm-block">
+				<b>Version</b> 1.0.0.22112
+			</div>
+			<strong>Copyright &copy; 2022 <a href="https://github.com/CAPCOMIN/ProForward">ProForward Team</a>.</strong>
+			All rights
+			reserved.
+		</footer>
+
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+		</div>
+		<!-- ./wrapper -->
+
+		<!-- jQuery -->
+		<script src="../../static/plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+		<script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- overlayScrollbars -->
+		<script src="../../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="../../static/dist/js/adminlte.min.js"></script>
+
+		<!-- SweetAlert2 -->
+		<script src="../../static/plugins/sweetalert2/sweetalert2.min.js"></script>
+		<!-- Toastr -->
+		<script src="../../static/plugins/toastr/toastr.min.js"></script>
+		<!-- Page specific script -->
+
+
+		<script id="grid_tpl" type="text/html">
+			{Start{# if(d.Data === null || d.Data.length === 0){ }End}
+    <tr>
+        <td colspan="10">
+            查询转发配置规则结果为空
+        </td>
+    </tr>
+    {Start{# } else { }End} {Start{# layui.each(d.Data, function(index, item){ }End}
+    <tr>
+        <td>
+            <input type="checkbox" name="id" lay-skin="primary" value="{Start{ item.Id }End}">
+        </td>
+        <td>{Start{ item.Id }End}</td>
+        <td>{Start{ item.Name }End}</td>
+        <td>{Start{ fmtAddr(item.Addr) }End}</td>
+        <td>{Start{ item.Port }End}</td>
+        <td>{Start{ fmtFType(item.FType) }End}</td>
+        <td>{Start{ item.Protocol }End}</td>
+        <td>{Start{ item.TargetAddr }End}</td>
+        <td>{Start{ item.TargetPort }End}</td>
+        <td>{Start{ fmtStatus(item.Status) }End}</td>
+        <td>{Start{ oprFormatLink(item.Status,item) }End}</td>
+    </tr>
+    {Start{# }); }End} {Start{# } }End}
+		</script>
+		
+		<script type="text/html" id="forwardRow3">
+			<div class="row">
+			<div>
+				<br>
+			</div>
+				<div class="col-2">
+					<!-- <label for="forwardNames">名称</label> -->
+					<input type="text" class="form-control" name="name[]"
+						 placeholder="输入唯一的名称">
+				</div>
+				<div class="col-2">
+					<!-- <label for="exampleInputPorts">本地监听端口</label> -->
+					<input type="text" class="form-control" name="port[]"
+						 placeholder="监听端口号">
+				</div>
+				<div class="col-2">
+					<!-- <label for="">协议</label> -->
+					<select name="protocol[]" class="form-select"
+						aria-label="Default select example">
+						<option value="TCP">TCP</option>
+						<option value="UDP">UDP</option>
+					</select>
+				</div>
+				<div class="col-2">
+					<!-- <label for="exampleInputTargetAddrs">转发到地址</label> -->
+					<input type="text" class="form-control"
+						name="targetAddr[]"
+						placeholder="目标地址">
+				</div>
+				<div class="col-2">
+					<!-- <label for="exampleInputtargetPorts">转发到端口</label> -->
+					<input type="text" class="form-control"
+						name="targetPort[]"
+						placeholder="目标端口号">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-danger" onclick="delRow2(this)">
+						删除
+					</button>
+				</div>
+			</div>
+		</script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				let name;
+				const ca = document.cookie.split(';');
+
+				function getCookie(cname) {
+					name = cname + "=";
+					for (var i = 0; i < ca.length; i++) {
+						var c = ca[i].trim();
+						if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+					}
+					return "";
+				}
+
+				var value = getCookie('countSize');
+				if (value == 1) {
+					let Toast = Swal.mixin({
+						toast: true,
+						position: 'top-end',
+						showConfirmButton: false,
+						timer: 4500,
+					});
+
+					Toast.fire({
+						icon: 'success',
+						// title: value,
+						title: '登录成功',
+						text: getCookie('userInfo')
+					})
+
+					//将cookie设置为过期即删除
+					document.cookie = "countSize=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				}
+
+
+
+
+
+				layui.use(["jquery", "layer", "form", "element", "laytpl", "laypage"], function() {
+					var $ = layui.jquery,
+						layer = layui.layer,
+						form = layui.form,
+						laytpl = layui.laytpl,
+						laypage = layui.laypage;
+
+					var element = layui.element;
+
+					//全选
+					form.on('checkbox(allChoose)', function(data) {
+						var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+						child.each(function(index, item) {
+							item.checked = data.elem.checked;
+						});
+						form.render('checkbox');
+					});
+
+					layui.laytpl.config({
+						open: "{Start{",
+						close: "}End}"
+					});
+
+					element.on('tab(tabForwardList)', function(data) {
+						console.log(data);
+						form.render('checkbox');
+						form.render();
+					});
+
+					form.on('checkbox()', function(data) {
+						console.log(data.elem); //得到checkbox原始DOM对象
+						console.log(data.elem.checked); //是否被选中，true或者false
+						console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+						console.log(data.othis); //得到美化后的DOM对象
+					});
+
+					form.on('switch(ForWardDebug)', function(data) {
+						$.get("/u/ChangeForwardDebug", {
+							rnd: Math.random(),
+							status: data.elem.checked ? 1 : 0
+						}, function(json) {
+
+						}, 'json');
+
+					});
+
+					//
+					form.render('checkbox');
+					form.render();
+					//
+					query(1);
+
+				});
+			});
+
+			function query(pIndex) {
+				// var columnFiled = $("#columnFiled").val();
+				// var keyWord = $("#keyWord").val();
+				var port = $("#port").val();
+				var targetAddr = $("#targetAddr").val();
+				var targetPort = $("#targetPort").val();
+
+				$.post("ForwardList/json", {
+					port: port,
+					targetAddr: targetAddr,
+					targetPort: targetPort,
+					pIndex: pIndex,
+					pSize: 10
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						renderGrid(json.Data);
+						var totalPages = json.Data.Pages;
+						var totalRows = json.Data.TotalRows;
+						//显示分页
+						layui.laypage.render({
+							elem: 'pagination', //容器
+							pages: totalPages, //通过后台拿到的总页数
+							count: totalRows,
+							limit: 10,
+							limits: [10, 20, 30, 50, 100],
+							groups: 5, //连续分页数
+							skin: "#51b921", //控制分页皮肤。目前支持：molv、yahei、flow 除此之外，还支持16进制颜色值，如:skin:'#c00'
+							curr: pIndex || 1, //当前页
+							skip: true,
+							layout: ['count', 'prev', 'page', 'next', 'skip'],
+							jump: function(obj, first) { //触发分页后的回调
+								if (!first) { //点击跳页触发函数自身，并传递当前页：obj.curr
+									query(obj.curr);
+								}
+							}
+						});
+						layui.form.render('checkbox');
+					} else { //失败
+						layui.layer.alert("失败：" + json.Msg, {
+							icon: 2
+						});
+					}
+				}, 'json');
+			}
+
+			function renderGrid(data) {
+				var grid_tpl = document.getElementById('grid_tpl').innerHTML;
+				layui.laytpl(grid_tpl).render(data, function(html) {
+					$("#gridBody").html(html);
+				});
+			}
+
+			function oprFormatLink(val, row) {
+				var html = "";
+				if (row.Status == 1) {
+					html += "<button class='btn btn-success' onclick='CloseForward(" + row.Id +
+						");'><i class='layui-icon'></i></button>";
+				} else {
+					html += "<button class='btn btn-danger' onclick='OpenForward(" + row.Id +
+						");'><i class='layui-icon'></i></button>";
+				}
+				html += "<p>  </p><button class='btn btn-warning' onclick='editForward(" + row.Id +
+					");'><i class='layui-icon'></i></button>";
+				return html;
+			}
+
+			function fmtAddr(val) {
+				if (val == "") {
+					return "监听所有地址";
+				} else {
+					return val;
+				}
+			}
+
+			function fmtFType(val) {
+				var html = "";
+				switch (val) {
+					case 0:
+						html = "<font color='blue'>端口到端口映射</font>";
+						break;
+					case 1:
+						html = "<font color='orange'>内网映射 S->C</font>";
+						break;
+					case 2:
+						html = "<font color='red'>内网反向映射 C->S</font>";
+						break;
+					default:
+						html = "<font color='gray'>其它:" + val + "</font>";
+						break;
+				}
+				return html;
+			}
+
+			function fmtStatus(val) {
+				var html = "";
+				switch (val) {
+					case 0:
+						html = "<font color='red'>停止</font>";
+						break;
+					case 1:
+						html = "<font color='green'>转发中</font>";
+						break;
+					default:
+						html = "<font color='gray'>其它:" + val + "</font>";
+						break;
+				}
+				return html;
+			}
+
+			function addForward() {
+				$.get('/u/AddForward', {
+					rnd: Math.random()
+				}, function(html) {
+					layer.open({
+						type: 1, //page层
+						area: ['880px', '660px'],
+						title: '添加网络转发端口',
+						shade: 0.6, //遮罩透明度
+						moveType: 0, //拖拽风格，0是默认，1是传统拖动
+						shift: 1, //0-6的动画形式，-1不开启
+						maxmin: false,
+						content: html,
+						btn: ['保存配置', '取消'],
+						yes: function(index, layero) {
+							submitForm(index);
+						},
+						btn2: function(index) {
+							layer.close(index);
+						},
+						cancel: function(index) {
+							layer.close(index);
+						}
+					});
+				});
+			}
+
+			// function editForward(id) {
+			// 	$.get('/u/EditForward', {
+			// 		rnd: Math.random(),
+			// 		id: id
+			// 	}, function(html) {
+			// 		layer.open({
+			// 			type: 1, //page层
+			// 			area: ['600px', '550px'],
+			// 			title: '编辑网络转发端口',
+			// 			shade: 0.6, //遮罩透明度
+			// 			moveType: 1, //拖拽风格，0是默认，1是传统拖动
+			// 			shift: -1, //0-6的动画形式，-1不开启
+			// 			maxmin: false,
+			// 			content: html,
+			// 			btn: ['保存配置', '取消'],
+			// 			yes: function(index, layero) {
+			// 				submitForm(index);
+			// 			},
+			// 			btn2: function(index) {
+			// 				layer.close(index);
+			// 			},
+			// 			cancel: function(index) {
+			// 				layer.close(index);
+			// 			}
+			// 		});
+			// 	});
+			// }
+
+			function editForward(id) {
+				let Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 4500,
+				});
+				$.get("/u/EditForward", {
+					id: id,
+					rnd: Math.random()
+				}, function(json) {
+					// Toast.fire({
+					//     icon: 'info',
+					//     title: "Editing "+json.UserName,
+					//     text: "CreateTime: "+json.CreateTime
+					// })
+					document.getElementById("InputID").setAttribute("value", json.Id);
+					document.getElementById("forwardName").setAttribute("value", json.Name);
+					document.getElementById("exampleInputAddress").setAttribute("value", json.Addr);
+					document.getElementById("exampleInputPort").setAttribute("value", json.Port);
+					document.getElementById("exampleInputTargetAddr").setAttribute("value", json.TargetAddr);
+					document.getElementById("exampleInputtargetPort").setAttribute("value", json.TargetPort);
+					document.getElementById("exampleInputothers").setAttribute("value", json.Others);
+
+				}, 'json')
+
+				$("#modal-editport").modal('show');
+			}
+
+
+			function submitEditedUser() {
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form3").serializeArray();
+				$.post($("#form3").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+			
+			function addTableRow2(){
+			      var data = {};
+			      var script_tpl = document.getElementById('forwardRow3').innerHTML;
+			      layui.laytpl(script_tpl).render(data, function(html){
+			          layui.jquery(html).appendTo("#batchForwardTable2");				
+			          
+			          layui.form.render();
+			      });
+			  }
+			
+			function submitEditedUser2() {
+
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form4").serializeArray();
+				$.post($("#form4").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// document.getElementById('forwardNames').value = "";
+				// document.getElementById('exampleInputAddress2').value = "";
+				// document.getElementById('exampleInputPorts').value = "";
+				// document.getElementById('exampleInputTargetAddrs').value = "";
+				// document.getElementById('exampleInputtargetPorts').value = "";
+				// document.getElementById('exampleInputotherss').value = "";
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+			function submitEditedUser3() {
+			
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+			
+				var postData = layui.form.getValue(null, $("#form5"));
+				postData.rows = $("#batchForwardTable2").children().length;
+				$.post($("#form5").attr("action"), postData, function(json) {
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+			
+				// document.getElementById('forwardNames').value = "";
+				// document.getElementById('exampleInputAddress2').value = "";
+				// document.getElementById('exampleInputPorts').value = "";
+				// document.getElementById('exampleInputTargetAddrs').value = "";
+				// document.getElementById('exampleInputtargetPorts').value = "";
+				// document.getElementById('exampleInputotherss').value = "";
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+
+			function submitEditedUser4() {
+
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = layui.form.getValue(null, $("#form6"));
+				$.post($("#form6").attr("action"), postData, function(json) {
+					if (json.Code == 0) {
+						refreshGrid();
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: json.Msg,
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: json.Msg,
+						})
+					}
+				}, "json");
+
+				// 解决灰屏且无法操作问题
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+			}
+
+			function delRow2(obj){
+			    layui.jquery(obj).parent().parent().remove();
+			}
+			
+			function delForward() {
+				var selectedItems = getChkValues("id");
+				if (selectedItems.length == 0) {
+					layer.alert("没有勾选要批量操作的数据.", {
+						icon: 3,
+						title: "警告信息"
+					});
+					return;
+				}
+				var ids = selectedItems.join(',');
+				layer.confirm("确定批量删除勾选的数据吗？", {
+					btn: ['确定', '取消'] //按钮
+				}, function(index, layero) {
+					$.post("/u/DelForward", {
+						rnd: Math.random(),
+						ids: ids
+					}, function(json) {
+						if (json.Code == 0) { //成功
+							layer.msg("执行成功.");
+							layer.close(index);
+							query(1);
+						} else { //失败
+							layer.alert(json.Msg, {
+								icon: 2
+							});
+							query(1);
+						}
+					}, 'json');
+				});
+			}
+
+			function AddBatchForward() {
+				$.get('/u/AddBatchForward', {
+					rnd: Math.random()
+				}, function(html) {
+					layer.open({
+						type: 1, //page层
+						area: ['1200px', '700px'],
+						title: '批量添加规则',
+						shade: 0.6, //遮罩透明度
+						moveType: 0, //拖拽风格，0是默认，1是传统拖动
+						shift: -1, //0-6的动画形式，-1不开启
+						maxmin: false,
+						content: html,
+						btn: ['保存', '取消'],
+						yes: function(index, layero) {
+							submitForm(index);
+						},
+						cancel: function(index) {
+							layer.close(index);
+						}
+					});
+				});
+			}
+
+			function ImportForward() {
+				$.get('/u/ImportForward', {
+					rnd: Math.random()
+				}, function(html) {
+					layer.open({
+						type: 1, //page层
+						area: ['750px', '500px'],
+						title: '批量导入规则',
+						shade: 0.6, //遮罩透明度
+						moveType: 1, //拖拽风格，0是默认，1是传统拖动
+						shift: -1, //0-6的动画形式，-1不开启
+						maxmin: false,
+						content: html,
+						btn: ['保存', '取消'],
+						yes: function(index, layero) {
+							submitForm(index);
+						},
+						cancel: function(index) {
+							layer.close(index);
+						}
+					});
+				});
+			}
+
+			function refreshGrid() {
+				query(1);
+			}
+
+			function OpenForward(id) {
+				$.post("/u/OpenForward", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						//layer.msg("执行成功.");
+						//layer.close(index);
+						query(1);
+					} else { //失败
+						layer.alert(json.Msg, {
+							icon: 2
+						});
+						query(1);
+					}
+				}, 'json');
+			}
+
+			function CloseForward(id) {
+				$.post("/u/CloseForward", {
+					rnd: Math.random(),
+					id: id
+				}, function(json) {
+					if (json.Code == 0) { //成功
+						//layer.msg("执行成功.");
+						//layer.close(index);
+						query(1);
+					} else { //失败
+						layer.alert(json.Msg, {
+							icon: 2
+						});
+						query(1);
+					}
+				}, 'json');
+			}
+
+			function OpenForward2(id) {
+				layer.confirm("确定启动该转发吗？", {
+					btn: ['确定', '取消'], //按钮
+				}, function(index, layero) {
+					$.post("/u/OpenForward", {
+						rnd: Math.random(),
+						id: id
+					}, function(json) {
+						if (json.Code == 0) { //成功
+							layer.msg("执行成功.");
+							layer.close(index);
+							query(1);
+						} else { //失败
+							layer.alert(json.Msg, {
+								icon: 2
+							});
+							query(1);
+						}
+					}, 'json');
+				});
+			}
+
+			function CloseForward2(id) {
+				layer.confirm("确定停止该转发吗？", {
+					btn: ['确定', '取消'] //按钮
+				}, function(index, layero) {
+					$.post("/u/CloseForward", {
+						rnd: Math.random(),
+						id: id
+					}, function(json) {
+						if (json.Code == 0) { //成功
+							layer.msg("执行成功.");
+							layer.close(index);
+							query(1);
+						} else { //失败
+							layer.alert(json.Msg, {
+								icon: 2
+							});
+							query(1);
+						}
+					}, 'json');
+				});
+			}
+
+			function addform() {
+				// layer.alert("没有勾选要批量操作的数据.", {
+				// 	icon: 3,
+				// 	title: "警告信息"
+				// });
+
+				var Toast = Swal.mixin({
+					toast: true,
+					position: 'top-end',
+					showConfirmButton: false,
+					timer: 3000,
+				});
+
+				var postData = $("#form2").serializeArray();
+				$.post($("#form2").attr("action"), postData, function(json) {
+					//var data = $.parseJSON(json);
+					if (json.Code == 0) {
+						//成功
+						//layer.alert("保存成功");
+						//layer.msg("保存成功.");
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'success',
+							title: '添加成功',
+						})
+					} else {
+						refreshGrid();
+						// layer.close(index);
+						loadFrameContent('/u/forwardList');
+						Toast.fire({
+							icon: 'error',
+							title: '添加失败',
+						})
+					}
+				}, "json");
+
+				$(".modal-backdrop").remove();
+				$('body').removeClass('modal-open');
+				loadFrameContent('/u/forwardList');
+
+			}
+
+
+			// function OpenAllForward() {
+			// 	layer.confirm("确定一键开启所有转发吗？", {
+			// 		btn: ['确定', '取消'] //按钮
+			// 	}, function(index, layero) {
+			// 		$.post("/u/OpenAllForward", {
+			// 			rnd: Math.random()
+			// 		}, function(json) {
+			// 			if (json.Code == 0) { //成功
+			// 				layer.msg("执行成功.");
+			// 				layer.close(index);
+			// 				query(1);
+			// 			} else { //失败
+			// 				layer.alert(json.Msg, {
+			// 					icon: 2
+			// 				});
+			// 				query(1);
+			// 			}
+			// 		}, 'json');
+			// 	});
+			// }
+
+			// function CloseAllForward() {
+			// 	layer.confirm("确定一键关闭所有转发吗？", {
+			// 		btn: ['确定', '取消'] //按钮
+			// 	}, function(index, layero) {
+			// 		$.post("/u/CloseAllForward", {
+			// 			rnd: Math.random()
+			// 		}, function(json) {
+			// 			if (json.Code == 0) { //成功
+			// 				layer.msg("执行成功.");
+			// 				layer.close(index);
+			// 				query(1);
+			// 			} else { //失败
+			// 				layer.alert(json.Msg, {
+			// 					icon: 2
+			// 				});
+			// 				query(1);
+			// 			}
+			// 		}, 'json');
+			// 	});
+			// }
+
+
+			$(function() {
+
+				$('.Prabtn').click(function() {
+					query(1);
+					$.post("/u/OpenAllForward", {
+						rnd: Math.random()
+					}, function(json) {
+						if (json.Code == 0) { //成功
+
+							query(1);
+						} else { //失败
+							layer.alert(json.Msg, {
+								icon: 2
+							});
+							query(1);
+						}
+					}, 'json');
+
+				});
+
+				$('.Btnpra').click(function() {
+					$.post("/u/CloseAllForward", {
+						rnd: Math.random()
+					}, function(json) {
+						if (json.Code == 0) { //成功
+							query(1);
+						} else { //失败
+							layer.alert(json.Msg, {
+								icon: 2
+							});
+							query(1);
+						}
+					}, 'json');
+					loadFrameContent('/u/forwardList');
+					// close;
+				});
+
+
+
+			});
+		</script>
+
+	</body>
+</html>
